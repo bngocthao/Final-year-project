@@ -12,10 +12,11 @@ class Unit extends Model
 
     protected $table = 'units';
 
-    // self referrence 
+    // self referrence
     protected $fillable = [
         'name',
         'level',
+        'head_of_unit_id'
     ];
 
     // đơn vị có nhiều ngành
@@ -23,5 +24,7 @@ class Unit extends Model
     {
         return $this->hasMany(Major::class);
     }
+
+
 
 }

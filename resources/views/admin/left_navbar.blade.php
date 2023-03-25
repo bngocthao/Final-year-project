@@ -17,10 +17,10 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MANAGEMENT SIDE</li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="{{route('users.index')}}">
             {{-- <i class="fa fa-dashboard"></i> --}}
-            <span>User Management</span>
+            <span>User And Role</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -30,6 +30,9 @@
               <a href="{{route('users.index')}}">
                   <span class="pcoded-mtext">User List</span>
               </a>
+                <a href="{{route('roles.index')}}">
+                    <span class="pcoded-mtext">Role List</span>
+                </a>
           </li>
           </ul>
         </li>
@@ -45,26 +48,24 @@
             </span> --}}
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">
+            <li><a href="{{route('postponse_apps.index')}}">
               <span class="pcoded-mtext">Form List</span></a>
             </li>
           </ul>
         </li>
-        
+
         <li class="treeview">
           <a href="#">
-            <span>Unit Mangement</span>
+            <span>Unit Management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">  
-            <li><a href="#"><i class="fa fa-circle-o"></i>Unit List</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>College List</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Department List</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Institude List</a></li>
+          <ul class="treeview-menu">
+            <li><a href="{{route('units.index')}}"><i class="fa fa-circle-o"></i>Unit List</a></li>
           </ul>
         </li>
+
         <li class="treeview">
           <a href="#">
             <span>Major And Subject</span>
@@ -74,10 +75,22 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{route('majors.index')}}"><i class="fa fa-circle-o"></i>Major List</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Subject List</a></li>
+            <li><a href="{{route('subjects.index')}}"><i class="fa fa-circle-o"></i>Subject List</a></li>
           </ul>
         </li>
 
+          <li class="treeview">
+              <a href="#">
+                  <span>Year Management</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{route('years.index')}}"><i class="fa fa-circle-o"></i>Year List</a></li>
+              </ul>
+          </li>
+      </ul>
     </section>
     <!-- /.sidebar -->
   </aside>

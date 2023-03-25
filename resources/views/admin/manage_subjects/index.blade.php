@@ -1,112 +1,103 @@
 @extends('layouts.app')
 @section('content')
+  <!-- Content Wrapper. Contains page content -->
 
-    <title>Subjects List</title>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    {{-- <section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol> --}}
-    </section>
-    {{-- Trang hiển thị danh sách người dùng --}}
-
-    <!-- Edit With Button card start -->
-    <div class="card">
-    <div class="card-header">
-        {{-- <h5>Danh sách người dùng</h5> --}}
-        {{-- <span>Click on buttons to perform actions</span> --}}
-        <a href="{{route('subjects.create')}}" class="btn btn-primary waves-effect waves-light" style="float: none;margin: 5px;">New Subject</a>
+  <title>Subject Index</title>
 
 
+    <div class="box" style="align-items: stretch">
+      <div class="box-header">
+        {{-- <h3 class="box-title">User List</h3> --}}
+        <p class="pull-left">
+          <a href="{{route('subjects.create')}}" style="margin-left: 50px" class="btn btn-success waves-effect waves-light form-control pull-right" style="float: none;margin: 5px;">
+            New Subject</a>
+        </p>
+      </div>
+
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th style="width:10px; !important">#</th>
+            <th>Subject Code</th>
+            <th>Name</th>
+            <th class="tabledit-toolbar-column" style="text-align: center;">Tools</th>
+          </tr>
+          </thead>
+          <tbody>
+
+            @foreach($subjects as $u)
+            <tr>
+              <td style="width:10px;">{{ $u->id}}</td>
+              <td>{{ $u->subject_code}}</td>
+              <td>{!! $u->name !!}</td>
+                <td class="tabledit-toolbar-column" style="text-align: center;">
+                    <a href="{{route('subjects.edit', $u->id)}}">
+                        <form action="{{ route('subjects.edit',  $u->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
+                            @csrf
+                            @method('GET')
+                            <button class="btn btn-primary btn" type="submit" id="del-confirm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                            </button>
+                        </form></a>
+                    <a href="{{route("subjects.destroy",$u->id)}}"  onclick="return confirm('Are you sure you want to delete?')">
+                        <form action="{{route("subjects.destroy",$u->id)}}" method="post" class="tabledit-edit-button btn btn primary waves-effect waves-light float-left">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn" type="submit" onclick="delete_confirm()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg>
+                            </button>
+                        </form>
+                    </a>
+                </td>
+            </tr>
+          @endforeach
+
+
+          </tbody>
+          <tfoot>
+          <tr>
+            {{-- <th>Rendering engine</th>
+            <th>Browser</th>
+            <th>Platform(s)</th>
+            <th>Engine version</th>
+            <th>CSS grade</th> --}}
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+      <!-- /.box-body -->
     </div>
-    <div class="card-block">
-        <div class="table-responsive">
-            <table class="table table-striped table-bordered" id="example-2">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Major</th>
-                        <th class="tabledit-toolbar-column" style="text-align: center;">Tools</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($majors as $i)
-                    <tr>
-                        <th scope="row"></th>
-                        <th scope="row">{{ $i->id}}</th>
-                        <th scope="row">{{ $i->name}}</th>
-                        <th scope="row">{{ $i->units->name ?? "Trống"}}</th>
-                        {{-- Các button --}}
-                        <td style="white-space: nowrap; width: 1%;">
-                            <div class="tabledit-toolbar btn-toolbar" style="text-align: left;">
-                                <div class="btn-group btn-group-sm" style="float: none;">
-                                    {{-- <a href="{{route('admin.major.edit',[$i->id])}}" class="tabledit-edit-button btn btn-primary waves-effect waves-light" style="float: none;margin: 5px;"><span class="icofont icofont-ui-edit"></span></a> --}}
-                                    <form action="{{ route('majors.edit', $i->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light" style="float: none;margin: 5px;" method="get">
-                                        @csrf
-                                        @method('GET')
-                                        <button class="btn btn-primary btn" type="submit"><span class="icofont icofont-ui-edit"></span></button>
-                                    </form>
-                                    <form action="{{ route('majors.destroy', $i->id)}}" class="tabledit-edit-button btn btn waves-effect waves-light" style="float: none;margin: 5px;" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger btn" type="submit" id="submitForm"><span class="icofont icofont-ui-delete"></span></button>
-                                    </form>
-                                    <button type="button" class="tabledit-save-button btn btn-sm btn-success" style="display: none; float: none;">Save</button>
-                                    <button type="button" class="tabledit-confirm-button btn btn-sm btn-danger" style="display: none; float: none;">Confirm</button>
-                                    <button type="button" class="tabledit-restore-button btn btn-sm btn-warning" style="display: none; float: none;">Restore</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>          
-            </table>
-        </div>
-    </div>
-    
-</div>
+
 
   <!-- Edit With Button card end -->
-  @include('admin.footer')
     <!-- Editable-table js -->
     {{-- <script type="text/javascript" src={{asset("admin/files\assets\pages/edit-table\jquery.tabledit.js")}}></script>
     <script type="text/javascript" src={{asset("admin/files\assets\pages/edit-table/editable.js")}}></script> --}}
-    
+
     {{-- sweet alert Thông báo khi xóa bản ghi --}}
-    <script>
-        
-        $('#submitForm').on('click',function(e){
-            e.preventDefault();
-            var form = $(this).parents('form');
-            Swal.fire({
-                title: 'Bạn Có Chắc Muốn Xóa Bảng Ghi?',
-                text: "Bạn Sẽ Không Thể Khôi Phục Một Khi Đã Xóa!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Có',
-                cancelButtonText: 'Không'
-            }).then((result) => {
-                if (result.value) {
-    
-                    form.submit();
-                }
-            });
+    <script type="text/javascript">
+
+        $('.delete-confirm').on('click', function (e) {
+        e.preventDefault();
+        const url = $(this).attr('href');
+        swal.fire({
+            title: 'Are you sure?',
+            text: 'This record and it`s details will be permanantly deleted!',
+            icon: 'warning',
+            buttons: ["Cancel", "Yes!"],
+        }).then(function(value) {
+            if (value) {
+                window.location.href = url;
+            }
         });
+    });
     </script>
-    
+
     <link href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
-</body>
-</html>
+@endsection

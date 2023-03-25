@@ -70,11 +70,11 @@
         border-radius: 48px;
         mso-padding-alt:0;">
         <!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt">&nbsp;</i><![endif]-->
-        <span style="mso-text-raise:10pt;font-weight:bold;">Application management</span>
+        <span style="mso-text-raise:10pt;font-weight:bold;"><a link="/admin/postponse_apps/"> Application management</a></span>
         <!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%">&nbsp;</i><![endif]-->
     </a>
     </p>
-    <p>best regard,</p>
+    <p>Best regard,</p>
 </div>
 </body>
 

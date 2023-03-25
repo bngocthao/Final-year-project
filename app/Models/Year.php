@@ -11,7 +11,7 @@ class Year extends Model
 
     protected $table = 'years';
 
-    // self referrence 
+    // self referrence
     protected $fillable = [
         'name',
     ];
@@ -19,6 +19,6 @@ class Year extends Model
     // một năm học có nhiều đơn xin vắng
     public function postpone_applications()
     {
-        return $this->hasMany(postpone_application::class);
+        return $this->hasMany(PostponeApplication::class);
     }
 }

@@ -11,7 +11,7 @@ class Major extends Model
 
     protected $table = 'majors';
 
-    // self referrence 
+    // self referrence
     protected $fillable = [
         'name',
         'major_code',
@@ -19,20 +19,23 @@ class Major extends Model
     ];
 
     //Ngành thuộc 1 đơn vị
+    //ngành có nhiều học phần - có thể model k nhận đc id
+
     public function units()
     {
-        return $this->belongsTo(Unit::class, 'unit_id', 'id');
+        return $this->belongsTo(Unit::class,'unit_id','id');
     }
-
-    //ngành có nhiều học phần - có thể model k nhận đc id
     public function subjects()
     {
-    return $this->belongsToMany(Subject::class);
+        return $this->belongsToMany(Subject::class,'major_subject','major_id','subject_id');
     }
-    
+
     // Ngành có nhiều người dùng
     public function users()
     {
         return $this->hasMany(User::class);
     }
+
+
+
 }

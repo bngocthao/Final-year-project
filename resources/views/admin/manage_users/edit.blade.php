@@ -1,7 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
-<title>Cập Nhật Tài Khoản</title>
+    <title>User Edit</title>
+
+    <!-- Content Wrapper. Contains page content -->
+
 
     <style>
         .image-cropper {
@@ -13,13 +16,13 @@
         }
         .card {
             margin: auto;
-            width: 70%;
+            width: 100%;
             border: 3px;
             padding: 10px;
-            }
-            
+        }
     </style>
-    <div class="col-sm-12">
+
+    <div class="col-sm-50">
         <!-- Basic Form Inputs card start -->
         <div class="card">
             <div class="card-header">
@@ -27,102 +30,79 @@
                     <i class="icofont icofont-spinner-alt-5"></i>
                 </div>
             </div>
+            <h4 class="sub-title">UPDATE USER</h4>
+            <div class=" box box-info">
+                <div class="box-body">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form action="{{route('users.update', $e_user)}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="box-body">
 
-            <div class="card-block">
-                <h4 class="sub-title">ACCOUNT INFORMATION</h4>
-                <form action="{{route('users.update',[$user->id])}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <input hidden name="id" value="{{$user->id}}">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Usercode</label>
-                        <div class="col-sm-10">
-                            <input required name="user_code" type="text" class="form-control" value="{{$user->user_code}}" style="font-weight: bold" disabled>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="exampleInputEmail1">User code</label>
+                                <div class="col-sm-10">
+                                    <input required name="user_code" type="text" class="form-control" value="{{$e_user->user_code}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input required type="text"  class="form-control" name="name" value="{{$e_user->name}}" >
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-label">Major</label>
+                                <div class="col-sm-10">
+                                    <select name="major_id" class="form-control">
+                                        @foreach ($majors as $item)
+                                            <option value="{{$item->id}}" @if($e_user->major_id == $item->id) selected @endif>{!!$item->name?? 'Trống' !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Role</label>
+                                <div class="col-sm-10">
+                                    <select name="role_id" class="form-control">
+                                        @foreach ($roles as $item)
+                                            <option value="{{$item->id}}" @if($e_user->role_id == $item->id) selected @endif>{!!$item->name?? 'Trống' !!}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="exampleInputEmail1">Email address</label>
+                                <div class="col-sm-10">
+                                    <input required type="email" name="email" class="form-control" id="exampleInputEmail1" value="{{$e_user->email}}">
+                                </div>
+                            </div>
+
+
+
+                            {{--                            <div class="form-group">--}}
+                            {{--                                <label for="exampleInputFile">File input</label>--}}
+                            {{--                                <input type="file" id="exampleInputFile">--}}
+
+                            {{--                                <p class="help-block">Example block-level help text here.</p>--}}
+                            {{--                            </div>--}}
                         </div>
-                    </div>
+                        <!-- /.box-body -->
 
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input required name="email" type="text" class="form-control" value="{{$user->email}}" disabled>
+                        <div class="form-group pull-right">
+                            <button type="submit" class="btn btn-success float-right btn-round">Update</button>
+                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/users'">Return</button>
                         </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Full Name</label>
-                        <div class="col-sm-10">
-                            <input required name="name" type="text" class="form-control" value="{{$user->name}}">
-                        </div>
-                    </div>
-
-                        <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Title</label>
-                        <div class="col-sm-10">
-                        <select name="role_id" class="form-control">
-                            <option @if($user->role_id == '0') selected @endif value="0">Admin</option>
-                            <option @if($user->role_id == '1') selected @endif value="1">Head of training</option>
-                            <option @if($user->role_id == '2') selected @endif value="2">Principal</option>
-                            <option @if($user->role_id == '3') selected @endif value="3">Chief of department</option>
-                            <option @if($user->role_id == '4') selected @endif value="4">President</option>
-                            <option @if($user->role_id == '5') selected @endif value="5">Professor</option>
-                            <option @if($user->role_id == '6') selected @endif value="6">Student</option>
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Permission</label>
-                        <div class="col-sm-10">
-                            <select name="major_id" class="form-control">
-                                    <option @if($user->permission == '0') selected @endif value="{{$user->permission}}">Admin</option>
-                                    <option @if($user->permission == '1') selected @endif value="{{$user->permission}}">Unit 1</option>
-                                    <option @if($user->permission == '2') selected @endif value="{{$user->permission}}">Unit 2</option>
-                                    <option @if($user->permission == '3') selected @endif value="{{$user->permission}}">Professor</option>
-                                    <option @if($user->permission == '4') selected @endif value="{{$user->permission}}">Student</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Major</label>
-                        <div class="col-sm-10">
-                            <select name="major_id" class="form-control">
-                                @foreach($major as $item)
-                                    <option @if($item->id == $user->major_id) selected @endif value="{{$item->id}}">{{$item->name ?? 'Empty'}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    {{-- <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Đơn vị</label>
-                        <div class="col-sm-10">
-                            <input required name="don_vi" type="text" class="form-control" value="{{$dv_nd ?? 'Trống'}}" disabled> 
-                        </div>
-                    </div> --}}
-
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Unit</label>
-                        <div class="col-sm-10">
-                        <select name="unit_id" class="form-control">
-                            @foreach ($unit as $item)
-                                <option  @if($item->id == $user->nganh->ma_don_vi) selected @endif value="{{$item->id}}">{{$item->ten_don_vi ?? 'Trống'}}</option>     
-                            @endforeach
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-info float-right btn-round">Update Account</button>
-                        <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="history.back()">Back</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-
-
-
-
-
 @endsection
+

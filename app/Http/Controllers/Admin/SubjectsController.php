@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Major;
+use App\Models\major_subject;
 use App\Models\Subject;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,10 +19,17 @@ class SubjectsController extends Controller
      */
     public function index()
     {
+        $users = User::all();
         $id = Auth::user();
         $user = User::find($id);
+        $majors = Major::all();
+        $subjects = Subject::all();
+        $user->name = $user[0]['name'];
         $context = [
             'user' => $user,
+            'majors' => $majors,
+            'subjects' => $subjects,
+            'users' => $users,
         ];
         return view('admin.manage_subjects.index', $context);
     }
@@ -34,11 +42,10 @@ class SubjectsController extends Controller
         $id = Auth::user();
         $user = User::find($id);
         $majors = Major::all();
-        // $id = abs( crc32( uniqid() ) );
+        $user->name = $user[0]['name'];
         $context = [
             'majors' => $majors,
             'user' => $user,
-            // 'id' => $id,
         ];
         return view('admin.manage_subjects.create', $context);
     }
@@ -48,17 +55,22 @@ class SubjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $add = Subject::create($request->all());
-        // check thử xem có thể lấy môn học thông qua ngành đc không
-        $majors = Major::find($request->major_id);
-        $sub = $majors->subjects()->attach($request->id);
-        if($add){
-            Alert()->success('Successfully added');
+        try {
+            $result = Subject::create($request->all());
+            if($result){
+                Alert::success('Successfully created');
+            }else{
+                Alert::warning('Sorry, something went wrong');
+            }
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                Alert::error('Error', 'Dupplicate subject code!');
+                return redirect()->back();
+            }
         }
-        else{
-            Alert()->error('There was an error creating the subject');
-        }
-        return redirect()->back();
+
+        return redirect()->to('admin/subjects');
     }
 
     /**
@@ -74,7 +86,15 @@ class SubjectsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $subject = Subject::find($id);
+        $id = Auth::user();
+        $user = User::find($id);
+        $user->name = $user[0]['name'];
+        $context = [
+            'subject' => $subject,
+            'user' => $user
+        ];
+        return view('admin.manage_subjects.edit', $context);
     }
 
     /**
@@ -82,7 +102,13 @@ class SubjectsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $update = Subject::find($id)->update($request->all());
+        if($update){
+            Alert::success('Successfully updated');
+        }else{
+            Alert::warning('Sorry, something went wrong');
+        }
+        return redirect()->to('admin/subjects');
     }
 
     /**
@@ -90,6 +116,14 @@ class SubjectsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $delete = Subject::find($id)->delete();
+        if($delete){
+            Alert::success('Successfully deleted');
+        }
+        else{
+            Alert::error('Sorry, something went wrong');
+        }
+//        return redirect()->route('home');
+        return redirect()->back();
     }
 }

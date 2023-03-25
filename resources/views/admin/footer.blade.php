@@ -1,11 +1,20 @@
-
-<?
+ <script>
+  ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .then( editor => {
+            console.log( editor );
+    } )
+    .catch( error => {
+            console.error( error );
+    } );
+</script>
 
 <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 
-<script src="{{asset('admin/bower_components/morris.js/morris.min.js')}}"></script>
 <!-- jQuery 3 -->
 <script src="{{asset('admin\bower_components\jquery\dist\jquery.min.js')}}"></script>
+<script src="{{asset('admin/bower_components/morris.js/morris.min.js')}}"></script>
+
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('admin/bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -46,8 +55,14 @@
 <script src="{{asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 <!-- page script -->
+
+    <!-- Select2 -->
+    <script src="{{asset('admin/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 <script>
   $(function () {
+
+    $('.select2').select2()
+
     $('#example1').DataTable()
     $('#example2').DataTable({
       'paging'      : true,

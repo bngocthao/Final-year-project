@@ -13,16 +13,22 @@ class Subject extends Model
     protected $table = 'subjects';
 
     protected $fillable = [
-        'subject_code',  
+        'subject_code',
         'name',
         'credit',
-        'major_id'
     ];
 
     // Học phần có nhiều ngành, dùng pivot để lấy data của bảng trung gian
+    // public function majors()
+    // {
+    //     return $this->belongsToMany(Major::class);
+    //     // return $this->belongsToMany(Major::class);
+    // }
+
     public function majors()
     {
-        return $this->belongsToMany(Major::class);
+        return $this->belongsToMany(Major::class,'major_subject','subject_id','major_id');
+        // return $this->belongsToMany(Major::class);
     }
 
 }

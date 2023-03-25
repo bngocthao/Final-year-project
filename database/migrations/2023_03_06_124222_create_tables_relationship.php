@@ -11,44 +11,48 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::table('units', function (Blueprint $table) 
+        // Schema::table('units', function (Blueprint $table)
         // {
         //     $table->foreign('don_vi_cha')->references('id')->on('don_vi')->onDelete('set null');
         // });
-
-        Schema::table('majors', function (Blueprint $table) 
-        {
-            $table->foreign('unit_id')->references('id')->on('units');
-        });
-
-
-        // Schema::table('hoc_phan', function (Blueprint $table) 
+        // Schema::table('hoc_phan', function (Blueprint $table)
         // {
         // $table->unsignedBigInteger('ma_nganh')->change();
         // $table->foreign('ma_nganh')->references('id')->on('hoc_phan_nganh');
         // });
 
-
-        Schema::table('users', function (Blueprint $table) 
+        Schema::table('majors', function (Blueprint $table)
         {
-            $table->foreign('major_id')->references('id')->on('majors');
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('set null');
         });
 
-        Schema::table('comments', function (Blueprint $table) 
+        Schema::table('users', function (Blueprint $table)
+        {
+            $table->foreign('major_id')->references('id')->on('majors')->onDelete('set null');
+            $table->foreign('role_id')->references('id')->on('roles');
+
+        });
+
+
+        Schema::table('comments', function (Blueprint $table)
         {
             $table->foreign('postpone_application_id')->references('id')->on('postpone_applications');
             $table->foreign('user_id')->references('id')->on('users');
         });
 
-        Schema::table('postpone_applications', function (Blueprint $table) 
+        Schema::table('postpone_applications', function (Blueprint $table)
         {
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('teach_id')->references('id')->on('users');
             $table->foreign('semester_id')->references('id')->on('semesters');
             $table->foreign('year_id')->references('id')->on('years');
         });
 
-
+        Schema::table('major_subject', function (Blueprint $table)
+        {
+            $table->foreign('major_id')->references('id')->on('majors')->onDelete('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+        });
     }
 
     /**

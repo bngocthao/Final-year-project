@@ -24,13 +24,15 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {  
-        $id = Auth::id();
-        $user = User::find($id);
-        $context = [
-            'user' => $user,
-        ];
-        return view('admin.layouts.home', $context);
+    {
+        if (Auth::check()) {
+            $id = Auth::id();
+            $user = User::find($id);
+            $context = [
+                'user' => $user,
+            ];
+            return view('admin.layouts.home', $context);
+        }else return view('login');
     }
 
 

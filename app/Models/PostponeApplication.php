@@ -24,7 +24,8 @@ class PostponeApplication extends Model
         'teach_status',
         'teach_description',
         'comment_id',
-        'result'
+        'result',
+        'point'
     ];
 
     // Một đơn xin vắng có nhiều ý kiến
@@ -36,18 +37,23 @@ class PostponeApplication extends Model
     // một đơn thuộc về một người dùng
     public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function teach()
+    {
+        return $this->belongsTo(User::class, 'teach_id', 'id');
     }
 
     // một đơn thuộc 1 hk
     public function semesters()
     {
-        return $this->belongsTo(Semmester::class);
+        return $this->belongsTo(Semester::class,'semester_id', 'id');
     }
 
     // 1 năm học
     public function years()
     {
-        return $this->belongsTo(Year::class);
+        return $this->belongsTo(Year::class, 'year_id', 'id');
     }
 }

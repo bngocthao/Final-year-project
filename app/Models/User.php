@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Athenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Athenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -46,6 +46,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = bcrypt($value);
+    }
 
     // Người dùng thuộc một ngành
     public function majors()
@@ -56,7 +59,12 @@ class User extends Authenticatable
     // Người dùng có nhiều đơn xin vắng
     public function postpone_applications()
     {
-        return $this->hasMany(PostponeApplication::class);
+        return $this->hasMany(PostponeApplication::class, 'id', 'user_id');
+    }
+
+    public function teach()
+    {
+        return $this->hasOne(PostponeApplication::class, 'id', 'teach_id');
     }
 
     // Người dùng thuộc một vai trò
@@ -71,4 +79,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
 }

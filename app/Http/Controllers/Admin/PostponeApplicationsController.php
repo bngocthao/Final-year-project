@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Models\Semester;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
 use App\Models\Major;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Mail\ClientMail;
+use Illuminate\Support\Facades\DB;
 
 class PostponeApplicationsController extends Controller
 {
@@ -22,7 +24,23 @@ class PostponeApplicationsController extends Controller
      */
     public function index()
     {
-        //
+        // Phân quyèn trong index ?
+        // sv chỉ được thấy đơn của mình
+        // Giảng viên chỉ được thấy dơn gởi cho mình
+        // unit chỉ được thấy đơn của major thuộc mìn
+            $id = Auth::user();
+            $user = User::find($id);
+            $user->name = $user[0]['name'];
+            $app = PostponeApplication::all();
+            $aws =  DB::table('postpone_applications')
+                ->leftJoin('subjects', 'postpone_applications.subject_id', '=', 'subjects.id')
+                ->get();
+            dd($aws);
+            $context = [
+                    'user' => $user,
+                    'app' => $app,
+                ];
+                return view('admin.manage_forms.index', $context);
     }
 
     /**
@@ -48,7 +66,6 @@ class PostponeApplicationsController extends Controller
             'years' => $years,
             'id' => $id,
         ];
-
         return view('admin.manage_applications.create', $context);
     }
 
@@ -57,6 +74,7 @@ class PostponeApplicationsController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $result = PostponeApplication::create($request->all());
         if($result){
             $id = Auth::id();
@@ -97,7 +115,23 @@ class PostponeApplicationsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $appli = PostponeApplication::find($id);
+        $id = Auth::user();
+        $user = User::find($id);
+        $user->name = $user[0]['name'];
+        $subjects = Subject::all();
+        $semesters = Semester::all();
+        $years = Year::all();
+        $teach_list = User::select('id', 'name', 'email')->where('role_id','3')->get();
+        $context = [
+            'apply' => $appli,
+            'user' => $user,
+            'subjects' => $subjects,
+            'semesters' => $semesters,
+            'years' => $years,
+            'teach_list' => $teach_list,
+        ];
+        return view('admin.manage_forms.edit');
     }
 
     /**
@@ -113,6 +147,14 @@ class PostponeApplicationsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $delete = PostponeApplication::find($id)->delete();
+        if($delete){
+            Alert::success('Successfully deleted');
+        }
+        else{
+            Alert::error('Sorry, something went wrong');
+        }
+//        return redirect()->route('home');
+        return redirect()->back();
     }
 }

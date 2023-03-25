@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Semmester extends Model
+class Semester extends Model
 {
     use HasFactory;
 
-    protected $table = 'semmester';
+    protected $table = 'semesters';
 
-    // self referrence 
+    // self referrence
     protected $fillable = [
         'name',
     ];

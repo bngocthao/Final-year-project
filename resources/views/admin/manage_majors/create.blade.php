@@ -4,18 +4,7 @@
 <title>Major Create</title>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-    {{-- <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol> --}}
-    </section>
+
 
     <style>
         .image-cropper {
@@ -27,25 +16,11 @@
         }
         .card {
             margin: auto;
-            width: 70%;
+            width: 100%;
             border: 3px;
             padding: 10px;
             }
     </style>
-    
-  <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        {{-- <h1>
-            Dashboard
-            <small>Control panel</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
-        </ol> --}}
-    </section>
 
     <div class="col-sm-12">
         <!-- Basic Form Inputs card start -->
@@ -55,54 +30,66 @@
                     <i class="icofont icofont-spinner-alt-5"></i>
                 </div>
             </div>
-
-            <div class="card-block">
-                <h4 class="sub-title">NEW MAJOR</h4>
+        <h4 class="sub-title">NEW MAJOR</h4>
+        <div class=" box box-info">
+            <div class="box-body">
                 <form action="{{route('majors.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     {{-- <input hidden name="ma_nguoi_dung" > --}}
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Major id</label>
+                        <label class="col-sm-2 col-form-label">Major code(<span style="color: red;">*</span>)</label>
                         <div class="col-sm-10">
-                            <input required name="id" type="text" class="form-control" style="font-weight: bold" value="7{{$ma_nganh}}">
-                        </div>
-                    </div>
-                        
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                            <input required type="text" class="form-control" name="name">
+                            <input required name="major_code" type="text" class="form-control" style="font-weight: bold" value="5{{$major_code}}">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Belong to unit</label>
+                        <label class="col-sm-2 col-form-label">Name(<span style="color: red;">*</span>)</label>
+                        <div class="col-sm-10">
+                            <input required type="text"  class="form-control" name="name" >
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Belong to unit(<span style="color: red;">*</span>)</label>
                         <div class="col-sm-10">
                         <select name="unit_id" class="form-control">
-                                    {{-- <option value="9999">Trống</option> --}}
-                                @foreach ($units as $item)
-                                    <option value="{{$item->id}}">{{$item->name?? 'Trống'}}</option>             
-                                @endforeach
+                            @foreach ($units as $item)
+                                @if ($item->level != '0')
+                                    <option value="{{$item->id}}">{!!$item->name?? 'Trống' !!}</option>
+                                @endif
+                            @endforeach
                         </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-info float-right btn-round">Update</button>
-                        <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="history.back()">Return</button>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Subject</label>
+                        <div class="col-sm-10">
+                            <select class="form-control select2 select2-hidden-accessible"
+                                    name = 'subject_id[]'
+                                    multiple="" data-placeholder="Select Subjects"
+                                    style="width: 100%;"
+                                    data-select2-id="7"
+                                    tabindex="-1"
+                                    aria-hidden="true">
+                                @foreach ($subjects as $value )
+                                    <option value="{{$value->id}}">{!! $value->name !!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group pull-right">
+                        <button type="submit" class="btn btn-success float-right btn-round">Create</button>
+                        <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
 
-{{-- <script>
-    $('#submit').click(function() {
-    var data = $('#myForm').serializeArray();
-    for(i in data){
-        console.log(data[i]);
-    }  
-});
-</script> --}}
 
 @endsection

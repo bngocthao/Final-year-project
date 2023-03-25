@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RolesController extends Controller
 {
@@ -12,7 +16,14 @@ class RolesController extends Controller
      */
     public function index()
     {
-        //
+        $id = Auth::id();
+        $user = User::find($id);
+        $roles = Role::all();
+        $context = [
+            'roles' => $roles,
+            'user' => $user,
+        ];
+        return view('admin.manage_roles.index',$context);
     }
 
     /**
@@ -20,7 +31,12 @@ class RolesController extends Controller
      */
     public function create()
     {
-        //
+        $id = Auth::id();
+        $user = User::find($id);
+        $context = [
+            'user' => $user,
+        ];
+        return view('admin.manage_roles.create', $context);
     }
 
     /**
@@ -28,9 +44,22 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
+        try {
+            $result = Role::create($request->all());
+            if($result){
+                Alert::success('Successfully created');
+            }else{
+                Alert::warning('Sorry, something went wrong');
+            }
+        } catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062'){
+                Alert::error('Error', 'Dupplicate username or usercode!');
+                return redirect()->back();
+            }
+        }
+        return redirect()->to('admin/roles');
+        }
     /**
      * Display the specified resource.
      */
@@ -44,7 +73,14 @@ class RolesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $a_id = Auth::id();
+        $user = User::find($a_id);
+        $role = Role::find($id);
+        $context = [
+            'user' => $user,
+            'role' => $role
+        ];
+        return view('manage_roles.edit');
     }
 
     /**
@@ -52,7 +88,13 @@ class RolesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $update = Role::find($id)->update($request->all());
+        if($update){
+            Alert::success('Successfully updated');
+        }else{
+            Alert::warning('Sorry, something went wrong');
+        }
+        return redirect()->to('admin/roles');
     }
 
     /**
@@ -60,6 +102,14 @@ class RolesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $delete = Role::find($id)->delete();
+        if($delete){
+            Alert::success('Successfully deleted');
+        }
+        else{
+            Alert::error('Sorry, something went wrong');
+        }
+//        return redirect()->route('home');
+        return redirect()->back();
     }
 }

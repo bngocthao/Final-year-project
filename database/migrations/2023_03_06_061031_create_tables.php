@@ -14,17 +14,18 @@ return new class extends Migration
        //bảng đơn vị: phòng đào tạo cấp 1, mấy cái kia cấp 2
        Schema::create('units', function (Blueprint $table) {
         $table->id();
-        $table->string('name');
+        $table->string('name')->unique();
         $table->integer('level')->nullable();
+        $table->unsignedBigInteger('head_of_unit_id')->nullable();
         $table->timestamps();
     });
 
-        // bảng ngành 
+        // bảng ngành
         Schema::create('majors', function (Blueprint $table) {
             $table->id();
-            $table->string('major_code');
-            $table->string('name');
-            $table->unsignedBigInteger('unit_id');
+            $table->string('major_code')->unique();
+            $table->string('name')->unique();
+            $table->unsignedBigInteger('unit_id')->nullable();
             $table->timestamps();
         });
 
@@ -32,13 +33,20 @@ return new class extends Migration
         // bảng học phần
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            $table->string('subject_code');
+            $table->string('subject_code')->unique();
             $table->string('name');
             $table->integer('credit');
-            $table->unsignedBigInteger('major_id');
+            // $table->unsignedBigInteger('major_id');
             $table->timestamps();
         });
 
+        //Bảng học phần_ngành
+        Schema::create('major_subject', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('major_id');
+            $table->unsignedBigInteger('subject_id');
+            $table->timestamps();
+        });
 
         // bảng học kỳ
         Schema::create('semesters', function (Blueprint $table) {
@@ -73,15 +81,16 @@ return new class extends Migration
             $table->unsignedBigInteger('year_id');
             $table->string('reason');
             $table->unsignedBigInteger('confirmation_id')->nullable();
-            $table->string('teach_id');
+            $table->unsignedBigInteger('teach_id');
             $table->string('teach_status')->nullable();
             $table->integer('teach_description')->nullable();
             $table->unsignedBigInteger('comment_id')->nullable();
             $table->integer('result');
+            $table->string('point');
             $table->timestamps();
         });
 
-            // Bảng bổ sung lý do 
+            // Bảng bổ sung lý do
             // Schema::create('confirmations', function (Blueprint $table) {
             //     $table->id();
             //     $table->string('name');

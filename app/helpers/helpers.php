@@ -1,5 +1,13 @@
 <?php
 
+
+if(!function_exists('test111')){
+    function test()
+    {
+        return 123;
+    }
+}
+
 if(!function_exists('config_path'))
 {
         /**

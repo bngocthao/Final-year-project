@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->integer("permission");
+            $table->integer("permission")->nullable();
         });
     }
 

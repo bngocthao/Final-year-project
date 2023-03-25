@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\UnitsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Client\PostponeApplicationController;
+use App\Http\Controllers\Client\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,7 @@ use App\Http\Controllers\Admin\UsersController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('client.home');
 });
 
 Auth::routes(['register'=>true]);
@@ -40,19 +42,28 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // sv khong vao dc admin
 
 // is_admin, is_teacher, is_student - 0 1 2
-// user -> role. Dùng enum or 1 bảng mới 
+// user -> role. Dùng enum or 1 bảng mới
 // ENumValue(Status, adm) )
 
-// php artsisan make:middlware 
+// php artsisan make:middlware
 
 // Route::middleware(['is_admin'])->prefix('admin')->group(function(){
 //     Route::get('/testmid',[NguoiDungController::class, 'test'])->name('test.get');
 // });
-    
-Route::resource('admin/users', UsersController::class);
-Route::resource('admin/postponse_apps', PostponeApplicationsController::class,);
-Route::resource('admin/units', UnitsController::class);
-Route::resource('admin/majors', MajorsController::class);
-Route::resource('admin/subjects', SubjectsController::class);
-Route::resource('admin/comments', CommentsController::class);
 
+// admin controller
+Route::resource('admin/users', UsersController::class)->middleware('auth');
+Route::resource('admin/roles', \App\Http\Controllers\Admin\RolesController::class)->middleware('auth');
+Route::resource('admin/postponse_apps', PostponeApplicationsController::class)->middleware('auth');
+Route::resource('admin/units', UnitsController::class)->middleware('auth');
+Route::resource('admin/majors', MajorsController::class)->middleware('auth');
+Route::resource('admin/subjects', SubjectsController::class)->middleware('auth');
+Route::resource('admin/comments', CommentsController::class)->middleware('auth');
+Route::resource('admin/forms', PostponeApplicationController::class)->middleware('auth');
+Route::resource('admin/years', \App\Http\Controllers\Admin\YearsController::class)->middleware('auth');
+
+
+
+// client controller
+Route::resource('client/user', UserController::class)->middleware('auth');
+Route::resource('client/form', PostponeApplicationController::class)->middleware('auth');
