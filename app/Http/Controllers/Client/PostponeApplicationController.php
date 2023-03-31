@@ -17,12 +17,76 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class PostponeApplicationController extends Controller
 {
+    public function post_form(Request $request)
+    {
+        // xử lý validation
+        $validator = $request->validate([
+           'subject_id' => ['required'],
+            'teach_id' => ['required'],
+            'semester_id' => ['required'],
+            'year_id' => ['required'],
+            'reason' => ['required']
+        ]);
+
+        if (!$validator) {
+            return redirect()->back()->withErrors($validator);
+//            if($validator->errors()->has('subject_id'))
+//                Alert::error('Please fill in your subject!');
+//        return redirect()
+//            ->back()
+//            ->withErrors($validator);
+    }
+        // end w validation
+        $result = PostponeApplication::create($request->all());
+        if($result){
+            $id = Auth::id();
+            $user = User::find($id);
+            $usr = User::where('id','=', $request->teach_id)->get();
+            // $teach_email = User::where('id','=', $request->teach_id)->get('email');
+            $teach_id = $request->teach_id;
+            $teach = User::find($teach_id);
+            $teach_email = User::where('id', $teach_id)->pluck('email')->toArray();
+            // Mail::to($teach_email)->send(new ClientMail('NEW POSTPONE APPLICATION'));
+            Mail::send('mail.layout_mail', compact('teach'), function($message) use ($teach_email, $user) {
+                // $id = Auth::id();
+                // $user = User::find($id);
+                // $teach_email = User::where('id', $user->teach_id)->get();
+                // $message->attach('C:\laravel-master\laravel\public\uploads\image.png');
+                $message->to($teach_email, $user)->subject
+                ('A NEW POSTPONE APPLICATION');
+                //    link sẽ nằm trên đây
+                $message->from($user->email,$user->name);
+            });
+            echo "Email Sent with attachment. Check your inbox.";
+            $notification = array(
+                'message' => 'Post created successfully!',
+                'alert-type' => 'success'
+            );
+
+        }else{
+            Alert::warning('Sorry, something went wrong');
+        }
+        return redirect()->back()->with($notification);;
+    }
+
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        // sv chỉ được thấy đơn của mình
+        // Giảng viên chỉ được thấy dơn gởi cho mình
+        // unit chỉ được thấy đơn của major thuộc mìn
+        $id = Auth::user();
+        $user = User::find($id);
+        $user->name = $user[0]['name'];
+        $app = PostponeApplication::where('user_id',$user->id);
+        $context = [
+            'user' => $user,
+            'app' => $app,
+        ];
+        return view('admin.manage_forms.index', $context);
     }
 
     /**
@@ -55,8 +119,9 @@ class PostponeApplicationController extends Controller
             $subject_list[] = Subject::find($subject_ids_list[$i]);
         }
         $subjects = Subject::all();
-        $teach = User::select('id', 'name', 'email')->where('role_id','3')->get();
         $years = Year::all();
+        // Lấy danh sách giảng viên có cùng chuyên ngành với sinh viên
+        $teach = User::select('id', 'name', 'email')->where('role_id','4')->where('major_id',$user->major_id)->get();
         $context = [
             'user' => $user,
             'users' => $users,
@@ -66,7 +131,7 @@ class PostponeApplicationController extends Controller
             'id' => $id,
             'subject_list' => $subject_list,
         ];
-        return view('client.postpone_app.create', $context);
+        return view('client.postpone_app.create',$context);
     }
 
     /**
@@ -74,6 +139,7 @@ class PostponeApplicationController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $result = PostponeApplication::create($request->all());
         if($result){
             $id = Auth::id();

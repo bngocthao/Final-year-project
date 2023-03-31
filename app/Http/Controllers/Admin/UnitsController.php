@@ -98,12 +98,17 @@ class UnitsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $update = Unit::find($id)->update($request->all());
-        if($update){
-            Alert::success('Successfully updated');
-        }else{
-            Alert::warning('Sorry, something went wrong');
+        $unit = Unit::find($id);
+        if(\auth()->user()->can('update', $unit)) {
+            $update = Unit::find($id)->update($request->all());
+            if ($update) {
+                Alert::success('Successfully updated');
+            } else {
+                Alert::warning('Sorry, something went wrong');
+            }
+            return redirect()->to('admin/units');
         }
+        Alert::warning('Sorry, you don not have enough permission');
         return redirect()->to('admin/units');
     }
 

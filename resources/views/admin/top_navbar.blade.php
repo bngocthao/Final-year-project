@@ -45,6 +45,7 @@
                 <a class="dropdown-item" href="#">Profile</a>
                 <a class="dropdown-item" href="#">Sign out</a>
               </li>
+            </ul>
               {{-- <li>
                 <div class="row">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
@@ -60,6 +61,7 @@
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
           </li> --}}
         </ul>
+
       </div>
     </nav>
     </header>

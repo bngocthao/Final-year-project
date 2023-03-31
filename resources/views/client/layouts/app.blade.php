@@ -15,11 +15,11 @@
 <body>
     <div id="app">
       <main>
-  
+
 
         @yield('content')
 
-  
+
     </main>
   </body>
   @include('client.footer')

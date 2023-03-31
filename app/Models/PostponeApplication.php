@@ -40,6 +40,11 @@ class PostponeApplication extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id', 'id');
+    }
+
     public function teach()
     {
         return $this->belongsTo(User::class, 'teach_id', 'id');

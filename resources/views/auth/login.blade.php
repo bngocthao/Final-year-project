@@ -14,12 +14,22 @@
       <!-- /.login-logo -->
       <div class="login-box-body">
         {{-- <p class="login-box-msg">Sign in to start your session</p> --}}
-    
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
-
-          <div class="form-group has-feedback">
-            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"" placeholder="Email" required autocomplete="email" autofocus>
+            {{--Customize notification--}}
+            @if ($message = Session::get('error'))
+                <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+                </div>
+            @endif
+            @if($errors->any())
+                {!! implode('', $errors->all('<div class="name" style="color: red;">:message</div>')) !!} <br>
+            @endif
+            {{--end of Customize notification--}}
+            <div class="form-group has-feedback">
+            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required autocomplete="email" autofocus>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             @error('email')
             <span class="invalid-feedback" role="alert">
@@ -58,7 +68,7 @@
             <!-- /.col -->
           </div>
         </form>
-    
+
         {{-- <div class="social-auth-links text-center">
           <p>- OR -</p>
           <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
@@ -67,10 +77,10 @@
             Google+</a>
         </div> --}}
         <!-- /.social-auth-links -->
-    
+
         {{-- <a href="#">I forgot my password</a><br> --}}
         <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
-    
+
       </div>
       <!-- /.login-box-body -->
     </div>

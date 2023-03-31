@@ -32,10 +32,6 @@ class PostponeApplicationsController extends Controller
             $user = User::find($id);
             $user->name = $user[0]['name'];
             $app = PostponeApplication::all();
-            $aws =  DB::table('postpone_applications')
-                ->leftJoin('subjects', 'postpone_applications.subject_id', '=', 'subjects.id')
-                ->get();
-            dd($aws);
             $context = [
                     'user' => $user,
                     'app' => $app,

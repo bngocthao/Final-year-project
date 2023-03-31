@@ -1,166 +1,55 @@
-@extends('client.layouts.app')
-@section('content')
+<!doctype html>
+<html lang="en">
+<head>
+{{--    Home này là landing page đó--}}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/x-icon" href={{asset('client/landing-page/assets/favicon.ico')}} />
+    <title>Index</title>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href={{asset("client/landing-page/css/styles.css")}} rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
 
-    <!--====== PRELOADER PART START ======-->
-
-    <div class="preloader">
-        <div class="loader">
-            <div class="ytp-spinner">
-                <div class="ytp-spinner-container">
-                    <div class="ytp-spinner-rotator">
-                        <div class="ytp-spinner-left">
-                            <div class="ytp-spinner-circle"></div>
-                        </div>
-                        <div class="ytp-spinner-right">
-                            <div class="ytp-spinner-circle"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+{{--        <a class="navbar-brand" href="#page-top"><img src="assets/img/navbar-logo.svg" alt="..." /></a>--}}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+{{--                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>--}}
+{{--                <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>--}}
+{{--                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>--}}
+                <li class="nav-item"><a class="nav-link" style="color: snow; font-family: 'Roboto Slab';" href="#team">Login</a></li>
+{{--                <li class="nav-item"><a class="btn btn-primary btn-xl text-uppercase" href="#services">Login</a></li>--}}
+            </ul>
         </div>
     </div>
+</nav>
+<!-- Masthead-->
+<header class="masthead ">
+    <div class="container">
+        <div class="masthead-subheading" style="color: black">Welcome To Our Website!</div>
+        <div class="masthead-heading text-uppercase" style="color: black"><strong style="font-family: 'Roboto Slab'; color: snow;">This Is</strong> A Postpone Application</div>
+        <a class="btn btn-outline-dark btn-xl text-uppercase" style="color: snow; font-family: 'Roboto Slab'"  href="#services">CREATE NEW FORM</a>
+    </div>
+</header>
 
-    <!--====== PRELOADER PART ENDS ======-->
-    
-    <!--====== NAVBAR TWO PART START ======-->
-
-    <section class="navbar-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg">
-                       
-                        {{-- <a class="navbar-brand" href="#">
-                            <img src="{{asset('client/assets/images/logo.svg')}}" alt="Logo">
-                        </a> --}}
-                        
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTwo" aria-controls="navbarTwo" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                            <span class="toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse sub-menu-bar" id="navbarTwo">
-                            <ul class="navbar-nav m-auto">
-                                <li class="nav-item active"><a class="page-scroll" href="#home">Home</a></li>
-                                <li class="nav-item"><a class="page-scroll" href="{{route('login')}}">Login</a></li>
-                                {{-- <li class="nav-item"><a class="page-scroll" href="#portfolio">Register</a></li> --}}
-                                {{-- <li class="nav-item"><a class="page-scroll" href="#pricing">Pricing</a></li>
-                                <li class="nav-item"><a class="page-scroll" href="#about">About</a></li>
-                                <li class="nav-item"><a class="page-scroll" href="#team">Team</a></li>
-                                <li class="nav-item"><a class="page-scroll" href="#contact">Contact</a></li> --}}
-                            </ul>
-                        </div>
-                        
-                        {{-- <div class="navbar-btn d-none d-sm-inline-block">
-                            <ul>
-                                <li><a class="solid" href="#">Login</a></li>
-                            </ul>
-                        </div> --}}
-                    </nav> <!-- navbar -->
-                </div>
-            </div> <!-- row -->
-        </div> <!-- container -->
-    </section>
-
-    <!--====== NAVBAR TWO PART ENDS ======-->
-        <!--====== SLIDER PART START ======-->
-
-        <section id="home" class="slider_area">
-            <div id="carouselThree" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselThree" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselThree" data-slide-to="1"></li>
-                    <li data-target="#carouselThree" data-slide-to="2"></li>
-                </ol>
-    
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="slider-content">
-                                        <h1 class="title">ONLINE POSTPONE IS NOW AVAILABLE</h1>
-                                        {{-- <p class="text">We blend insights and strategy to create digital products for forward-thinking organisations.</p> --}}
-                                        <ul class="slider-btn rounded-buttons">
-                                            <li><a class="main-btn rounded-one" href="{{route('login')}}">GET STARTED</a></li>
-                                            {{-- <li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li> --}}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div> <!-- row -->
-                        </div> <!-- container -->
-                        <div class="slider-image-box d-none d-lg-flex align-items-end">
-                            <div class="slider-image">
-                                <img src="{{asset('client/assets/images/slider/3.png')}}" alt="Hero">
-                            </div> <!-- slider-imgae -->
-                        </div> <!-- slider-imgae box -->
-                    </div> <!-- carousel-item -->
-    
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="slider-content">
-                                        <h1 class="title">CREATE A FORM</h1>
-                                        {{-- <p class="text">We blend insights and strategy to create digital products for forward-thinking organisations.</p> --}}
-                                        <ul class="slider-btn rounded-buttons">
-                                            <li><a class="main-btn rounded-one" href="{{route('login')}}">GET STARTED</a></li>
-                                            {{-- <li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li> --}}
-                                        </ul>
-                                    </div> <!-- slider-content -->
-                                </div>
-                            </div> <!-- row -->
-                        </div> <!-- container -->
-                        <div class="slider-image-box d-none d-lg-flex align-items-end">
-                            <div class="slider-image">
-                                <img src="{{asset('client/assets/images/slider/1.png')}}" alt="Hero">
-                            </div> <!-- slider-imgae -->
-                        </div> <!-- slider-imgae box -->
-                    </div> <!-- carousel-item -->
-    
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="slider-content">
-                                        <h1 class="title">WE'LL HANLE IT FAST</h1>
-                                        {{-- <p class="text">We blend insights and strategy to create digital products for forward-thinking organisations.</p> --}}
-                                        <ul class="slider-btn rounded-buttons">
-                                            <li><a class="main-btn rounded-one" href="{{route('login')}}">GET STARTED</a></li>
-                                            {{-- <li><a class="main-btn rounded-two" href="#">DOWNLOAD</a></li> --}}
-                                        </ul>
-                                    </div> <!-- slider-content -->
-                                </div>
-                            </div> <!-- row -->
-                        </div> <!-- container -->
-                        <div class="slider-image-box d-none d-lg-flex align-items-end">
-                            <div class="slider-image">
-                                <img src="{{asset('client/assets/images/slider/2.png')}}" alt="Hero">
-                            </div> <!-- slider-imgae -->
-                        </div> <!-- slider-imgae box -->
-                    </div> <!-- carousel-item -->
-                </div>
-    
-                <a class="carousel-control-prev" href="#carouselThree" role="button" data-slide="prev">
-                    <i class="lni lni-arrow-left"></i>
-                </a>
-                <a class="carousel-control-next" href="#carouselThree" role="button" data-slide="next">
-                    <i class="lni lni-arrow-right"></i>
-                </a>
-            </div>
-        </section>
-    
-        <!--====== SLIDER PART ENDS ======-->
-        
-
-
-<script>
-    var top = ($('.content-nav').offset() || { "top": NaN }).top;
-if (isNaN(top)) {
-    alert("something is wrong, no top");
-} else {
-    alert(top);
-}
-</script>
-@endsection
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+</body>
+</html>

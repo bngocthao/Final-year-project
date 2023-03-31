@@ -72,7 +72,6 @@ return new class extends Migration
         // bảng đơn xin vắng
         Schema::create('postpone_applications', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('subject_id');
             $table->unsignedBigInteger('major_id');

@@ -24,6 +24,8 @@
                     <th>Professor</th>
                     <th>Result</th>
                     <th>Point</th>
+                    <th>Semester</th>
+                    <th>Year</th>
                     <th class="tabledit-toolbar-column" style="text-align: center;">Tools</th>
                 </tr>
                 </thead>
@@ -32,10 +34,12 @@
                 @foreach($app as $u)
                     <tr>
                         <td style="width:10px;">{{ $u->id}}</td>
-                        <td>{{ $u->users->subject_id ?? "None" }}</td>
+                        <td>{{ $u->subject->name ?? "None" }}</td>
                         <td>{{ $u->teach->name}}</td>
                         <td>{!! $u->result ?? "None" !!}</td>
                         <td>{{$u->point}}</td>
+                        <td>{{$u->semesters->name}}</td>
+                        <td>{{$u->years->name}}</td>
                         <td class="tabledit-toolbar-column" style="text-align: center;">
                             <a href="{{route('postponse_apps.edit', $u->id)}}">
                                 <form action="{{ route('postponse_apps.edit',  $u->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
