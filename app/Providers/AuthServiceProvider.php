@@ -28,26 +28,26 @@ class AuthServiceProvider extends ServiceProvider
 
         /* define a admin user role */
         Gate::define('isAdmin', function($user) {
-            return $user->role == '1';
+            return $user->role_id == '1';
         });
 
         /* Phòng đào tạo */
-        Gate::define('isTrainDepManager', function($user) {
-            return $user->role == '2';
+        Gate::define('isHQ', function($user) {
+            return $user->role_id == '2';
         });
 
         /* Hiệu trưởng/ trưởng khoa */
         Gate::define('isManager', function($user) {
-            return $user->role == '3';
+            return $user->role_id == '3';
         });
 
         /* eGiảng viên */
         Gate::define('isProfessor', function($user) {
-            return $user->role == '4';
+            return $user->role_id == '4';
         });
 
         Gate::define('isStudent', function($user) {
-            return $user->role == '5';
+            return $user->role_id == '5';
         });
     }
 }

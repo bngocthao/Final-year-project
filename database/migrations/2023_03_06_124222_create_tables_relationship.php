@@ -34,11 +34,11 @@ return new class extends Migration
         });
 
 
-        Schema::table('comments', function (Blueprint $table)
-        {
-            $table->foreign('postpone_application_id')->references('id')->on('postpone_applications');
-            $table->foreign('user_id')->references('id')->on('users');
-        });
+//        Schema::table('comments', function (Blueprint $table)
+//        {
+//            $table->foreign('postpone_application_id')->references('id')->on('postpone_applications');
+//            $table->foreign('user_id')->references('id')->on('users');
+//        });
 
         Schema::table('postpone_applications', function (Blueprint $table)
         {

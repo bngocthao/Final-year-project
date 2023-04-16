@@ -11,9 +11,14 @@
 
     <link rel="stylesheet" href="{{asset('client/login/css/style.css')}}">
 
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
 </head>
 {{--<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">--}}
-<body class="img js-fullheight" style="background-color: deepskyblue">
+{{--<body class="img js-fullheight" style="background-color: #B6E2D3 !important;  font-family: Roboto Slab; color:#fffDD0;">--}}
+<body class="img js-fullheight" style="background-color: #F2845c !important;  font-family: Roboto Slab; color:#fffDD0;">
 
 <section class="ftco-section">
     <div class="container">
@@ -24,19 +29,12 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
-                    <h3 class="mb-4 text-center"> Login
-                        @if (session('error'))
-                            <div class="alert alert-dismissible alert-danger">
-                                <ul>
-                                    <li>{{session('error')}}</li>
-                                </ul>
-                            </div>
-                        @endif
+                    <h3 class="mb-4 text-center" style="font-family: 'Roboto Slab'; !Important"> Login <br>
                     </h3>
                     <form action="{{route('user.postLogin')}}" class="signin-form" method="POST">
                         @csrf
                         <div class="form-group">
-                            <input type="text" class="form-control" name="email" placeholder="Email" required>
+                            <input class="form-control" type="email" name="email" placeholder="Email" required>
                         </div>
                         <div class="form-group">
                             <input id="password-field" type="password" class="form-control" name="password" placeholder="Password" required>
@@ -68,6 +66,44 @@
 <script src="{{asset('client/login/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('client/login/js/main.js')}}"></script>
 
+{{--toastr--}}
+<script>
+    @if(Session::has('message'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.success("{{ session('message') }}");
+    @endif
+
+        @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.error("{{ session('error') }}");
+    @endif
+
+        @if(Session::has('info'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.info("{{ session('info') }}");
+    @endif
+
+        @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.warning("{{ session('warning') }}");
+    @endif
+</script>
 </body>
 </html>
 

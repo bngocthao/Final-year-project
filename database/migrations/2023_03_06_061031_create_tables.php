@@ -79,13 +79,17 @@ return new class extends Migration
             $table->unsignedBigInteger('semester_id');
             $table->unsignedBigInteger('year_id');
             $table->string('reason');
-            $table->unsignedBigInteger('confirmation_id')->nullable();
+//            $table->unsignedBigInteger('confirmation_id')->nullable();
             $table->unsignedBigInteger('teach_id');
             $table->string('teach_status')->nullable();
             $table->integer('teach_description')->nullable();
-            $table->unsignedBigInteger('comment_id')->nullable();
-            $table->integer('result');
-            $table->string('point');
+//            $table->unsignedBigInteger('comment_id')->nullable();
+            $table->string('proof')->nullable();
+            $table->integer('result')->nullable();
+            $table->string('unit_2_status')->nullable();
+            $table->integer('unit_2_description')->nullable();
+            $table->string('unit_1_status')->nullable();
+            $table->integer('unit_1_description')->nullable();
             $table->timestamps();
         });
 
@@ -101,15 +105,15 @@ return new class extends Migration
             // });
 
             // Bảng ý kiến của các đơn vị
-            Schema::create('comments', function (Blueprint $table) {
-                $table->id();
-                $table->unsignedBigInteger('user_id');
-                $table->string('name');
-                $table->unsignedBigInteger('postpone_application_id');
-                $table->integer('status');
-                $table->string('description');
-                $table->timestamps();
-            });
+//            Schema::create('comments', function (Blueprint $table) {
+//                $table->id();
+//                $table->unsignedBigInteger('user_id');
+//                $table->string('name');
+//                $table->unsignedBigInteger('postpone_application_id');
+//                $table->integer('status');
+//                $table->string('description');
+//                $table->timestamps();
+//            });
 
 }
 

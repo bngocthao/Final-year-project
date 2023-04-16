@@ -41,14 +41,15 @@ class HomeController extends Controller
         if (Auth::check()) {
             $id = Auth::id();
             $user = User::find($id);
-            $app = PostponeApplication::where('user_id',$user->id);
-            $teach = User::where('user_role', '4');
+            $app = PostponeApplication::where('user_id',$user->id)->get(); // cai nay no loi day, no dang tra ve het data trong PostApp khi user_id = id, con cai role dau thi k thay
             $context = [
                 'user' => $user,
                 'app' => $app,
             ];
             return view('client.index', $context);
-        }else return view('client/account/login');
+        }else {
+            return view('client/account/login');
+        } // Cau truc if else khong dung quu tac, cap dau {} dau. Gia su sau nay co case 10 cai if, mà viet kieu nay nay thi loi biet cai case nao ma sua, dua len server cung chet quep
     }
 
 }

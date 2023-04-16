@@ -25,7 +25,8 @@ class PostponeApplication extends Model
         'teach_description',
         'comment_id',
         'result',
-        'point'
+        'point',
+        'proof'
     ];
 
     // Một đơn xin vắng có nhiều ý kiến

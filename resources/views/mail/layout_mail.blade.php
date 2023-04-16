@@ -7,75 +7,29 @@
     <meta name="format-detection" content="date=no">
     <meta name="format-detection" content="telephone=no">
     <style type="text/CSS"></style>
-    <style @import url('https://dopplerhealth.com/fonts/BasierCircle/basiercircle-regular-webfont.woff2');></style>
+{{--    <style @import url('https://dopplerhealth.com/fonts/BasierCircle/basiercircle-regular-webfont.woff2');></style>--}}
+    {{--bootstrap--}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <title></title>
-    <!--[if mso]>
-    <style>
-        table {border-collapse:collapse;border-spacing:0;border:none;margin:0;}
-        div, td {padding:0;}
-        div {margin:0 !important;}
-    </style>
-    <noscript>
-        <xml>
-            <o:OfficeDocumentSettings>
-                <o:PixelsPerInch>96</o:PixelsPerInch>
-            </o:OfficeDocumentSettings>
-        </xml>
-    </noscript>
-    <![endif]-->
-    <style>
-        table,
-        td,
-        div,
-        h1,
-        p {
-            font-family: 'Basier Circle', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-        }
-        @media screen and (max-width: 530px) {
-            .unsub {
-                display: block;
-                padding: 8px;
-                margin-top: 14px;
-                border-radius: 6px;
-                background-color: #FFEADA;
-                text-decoration: none !important;
-                font-weight: bold;
-            }
-            .button {
-                min-height: 42px;
-                line-height: 42px;
-            }
-            .col-lge {
-                max-width: 100% !important;
-            }
-        }
-        @media screen and (min-width: 531px) {
-            .col-sml {
-                max-width: 27% !important;
-            }
-            .col-lge {
-                max-width: 73% !important;
-            }
-        }
-    </style>
 </head>
 
-<body style="margin:0;padding:0;word-spacing:normal;background-color:#FDF8F4;">
-    <p style="margin:0;">Dear mr/mrs {{$teach->name}},</p>
-    <p>You have just received an postponse application.</p>
-    <p style="text-align: center;margin: 2.5em auto;">
-    <a class="button" href="#" style="background: #3baade;
-        text-decoration: none;
-        padding: 1em 1.5em;
-        border-radius: 48px;
-        mso-padding-alt:0;">
-        <!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%;mso-text-raise:20pt">&nbsp;</i><![endif]-->
-        <span style="mso-text-raise:10pt;font-weight:bold;"><a link="/admin/postponse_apps/"> Application management</a></span>
-        <!--[if mso]><i style="letter-spacing: 25px;mso-font-width:-100%">&nbsp;</i><![endif]-->
-    </a>
-    </p>
-    <p>Best regard,</p>
+<div class="card mx-auto" style="width: 30rem;">
+    <div class="card-body">
+        <h5 class="card-title">Good day mr/mrs {{$teach->name}}</h5>
+        <p class="card-text">You have a new postpone message</p>
+        <div class="card mx-auto" style="width: 10rem;">
+            <div class="card-body">
+                <p><a href="http://127.0.0.1:8000/admin/postponse_apps" style="color: #04AA6D;">Link</a></p>
+            </div>
+        </div>
+    </div>
 </div>
-</body>
 
+
+{{--boostrap--}}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
 </html>

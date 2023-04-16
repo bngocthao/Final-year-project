@@ -58,4 +58,6 @@ Route::get('/user/login',[\App\Http\Controllers\OtherController::class,'getLogin
 Route::post('/user/login/process',[\App\Http\Controllers\OtherController::class,'login'])->name('user.postLogin');
 Route::get('/user/logout',[\App\Http\Controllers\OtherController::class,'logout'])->name('user.getLogout');
 
-//
+// test mail
+Route::get('/mymailform',[PostponeApplicationController::class,'check_mail'])->name('mymailform');
+

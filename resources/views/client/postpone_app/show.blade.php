@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title Page-->
-    <title>Postpone App/ Create</title>
+    <title>Postpone App/ Show</title>
 
     <!-- Icons font CSS-->
 
@@ -39,76 +39,51 @@
             </div>
             <div class="card-body">
                 <form action="{{route('client.post_form')}}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method('POST')
-                    <input value="{{$user->id}}" hidden="hidden" name="user_id">
-                    <input value="{{$user->major_id}}" hidden="hidden" name="major_id">
 
                     <div class="form-row">
-                        <div class="name">
-                            Student name(<svg xmlns="http://www.w3.org/2000/svg" color="red" width="8" height="8" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
-                                <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
-                            </svg>)</div>
+                        <div class="name">Student name</div>
                         <div class="value">
                             <div class="input-group">
-                                <input required class="input--style-5" type="text" name="name" value="{{$user->name}}">
+                                <input required class="input--style-5" type="text" name="name" value="{{$user->name}}" disabled="disabled">
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Subject(<svg xmlns="http://www.w3.org/2000/svg" color="red" width="8" height="8" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
-                                <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
-                            </svg>)</div>
+                            Subject</div>
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search">
-                                    <select name="subject_id">
-                                        <option disabled="disabled" selected="selected">Choose option</option>
-                                        @foreach($subject_list as $i)
-                                            <option value="{{$i->id}}">{{$i->name}}</option>
-                                        @endforeach
+                                    <select name="subject_id" disabled="disabled">
+                                            <option>{{$app->subject->name}}</option>
                                     </select>
                                     <div class="select-dropdown"></div>
                                 </div>
-                                @error('subject_id')
-                                <div class="alert alert-danger"><nav style="color:red">Subject can't be empty</nav></div>
-                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Group(<svg xmlns="http://www.w3.org/2000/svg" color="red" width="8" height="8" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
-                                <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
-                            </svg>)</div>
+                            Group</div>
                         <div class="value">
                             <div class="input-group">
-                                <input required class="input--style-5" type="text" name="group">
+                                <input required class="input--style-5" type="text" name="group" value="{{$app->group}}" disabled="disabled">
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Professor(<svg xmlns="http://www.w3.org/2000/svg" color="red" width="8" height="8" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
-                                <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
-                            </svg>)</div>
+                            Professor</div>
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search select2-selection__arrow">
 
-                                    <select name="teach_id">
-                                        <option disabled="disabled" selected="selected" >Choose option </option>
-                                        @foreach($teach as $i)
-                                            <option value="{{$i->id}}">{{$i->name}}</option>
-                                        @endforeach
+                                    <select name="teach_id" disabled="disabled">
+                                            <option>{{ $app->teach->name }}</option>
                                     </select>
                                     <div class="select-dropdown"></div>
                                 </div>
                             </div>
-                            @error('teach_id')
-                            <div class="alert alert-danger"><nav style="color:red">Professor name can't be empty</nav></div>
-                            @enderror
                         </div>
                     </div>
                     <div class="form-row">
@@ -119,18 +94,12 @@
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search">
-                                    <select required name="semester_id">
-                                        <option disabled="disabled" selected="selected" >Choose option </option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">Summer</option>
+                                    <select required name="semester_id" disabled="disabled">
+                                        <option>{{$app->semesters->name}}</option>
                                     </select>
                                     <div class="select-dropdown"></div>
                                 </div>
                             </div>
-                            @error('semester_id')
-                                <div class="alert alert-danger"><nav style="color:red">Semester can't be empty</nav></div>
-                            @enderror
                         </div>
                     </div>
                     <div class="form-row">
@@ -141,18 +110,12 @@
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search">
-                                    <select name="year_id">
-                                        <option disabled="disabled" selected="selected">Choose option</option>
-                                        @foreach($years as $i)
-                                            <option value="{{$i->id}}">{{$i->name}}</option>
-                                        @endforeach
+                                    <select name="year_id" disabled="disabled">
+                                        <option>{{ $app->years->name }}</option>
                                     </select>
                                     <div class="select-dropdown"></div>
                                 </div>
                             </div>
-                            @error('year_id')
-                                <div class="alert alert-danger"><nav style="color:red">Year can't be empty</nav></div>
-                            @enderror
                         </div>
                     </div>
                     <div class="form-row">
@@ -162,23 +125,31 @@
                             </svg>)</div>
                         <div class="value">
                             <div class="input-group">
-                                <textarea class="input--style-5" id="editor" type="text" name="reason"></textarea>
+                                <textarea class="input--style-5" id="editor" type="text" name="reason" disabled="disabled">{{$app->reason}}</textarea>
                             </div>
-                            @error('reason')
-                            <div class="alert alert-danger"><nav style="color:red">Reason can't be empty</nav></div>
-                            @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="name">Proof</div>
                         <div class="value">
                             <div class="input-group">
-                                <input class="input--style-5" type="file" name="proof" id="customFile" />
+                                <input type="text" hidden="" id="file_link" value="{{asset($app->proof)}}">
+
+                                <input class="input--style-5" type="file" id="proof" name="proof" value="{{asset($app->proof)}}" disabled="disabled" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">
+                            Result</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input required class="input--style-5" type="text" name="group" value="{{$app->result ?? "Waiting"}}" disabled="disabled">
                             </div>
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn--radius-2 btn--blue" style="color: rebeccapurple;font-family: 'Roboto Slab'" type="submit">SUBMIT</button>
+                        <a href="javascript:history.back()" class="btn btn--radius-2 btn--blue" role="button" style="color: rebeccapurple; text-decoration: none;">Back</a>
                     </div>
                 </form>
             </div>
@@ -207,6 +178,30 @@
         .catch( error => {
             console.error( error );
         } );
+</script>
+// Hiển thị tên file trong boostrap input
+<script>
+    // Get a reference to our file input
+    // const fileInput = document.querySelector('input[type="file"]');
+    const fileInput = document.getElementById("proof");
+    const link = document.getElementById("file_link").value;
+
+    // Create a new File object
+    const myFile = new File(['file_link'],link, {
+        type: 'file',
+        lastModified: new Date(),
+
+    });
+
+    // console.log(myFile);
+
+    // console.log(myFile);
+
+    // Now let's create a DataTransfer to get a FileList
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(myFile);
+    fileInput.files = dataTransfer.files;
+
 </script>
 <script>
     @if(Session::has('message'))

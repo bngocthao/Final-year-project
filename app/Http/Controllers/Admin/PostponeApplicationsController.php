@@ -127,7 +127,7 @@ class PostponeApplicationsController extends Controller
             'years' => $years,
             'teach_list' => $teach_list,
         ];
-        return view('admin.manage_forms.edit');
+        return view('admin.manage_forms.edit', $context);
     }
 
     /**
@@ -135,7 +135,15 @@ class PostponeApplicationsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $update = PostponeApplication::find($id)->update($request->all());
+        if($update){
+            Alert::success('Successfully updated');
+        }
+        else{
+            Alert::error('Sorry, something went wrong');
+        }
+//        return redirect()->route('home');
+        return redirect()->back();
     }
 
     /**

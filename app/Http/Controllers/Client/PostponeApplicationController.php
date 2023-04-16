@@ -14,9 +14,17 @@ use App\Models\User;
 use App\Models\Year;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Middleware\Authorize;
 
 class PostponeApplicationController extends Controller
 {
+    // check mail blade
+    public function check_mail(){
+        return view('mail.layout_mail');
+    }
+
+    //send form
     public function post_form(Request $request)
     {
         // xử lý validation
@@ -30,23 +38,37 @@ class PostponeApplicationController extends Controller
 
         if (!$validator) {
             return redirect()->back()->withErrors($validator);
-//            if($validator->errors()->has('subject_id'))
-//                Alert::error('Please fill in your subject!');
-//        return redirect()
-//            ->back()
-//            ->withErrors($validator);
-    }
-        // end w validation
-        $result = PostponeApplication::create($request->all());
+        }
+
+        $file = $request->file('proof');
+        // cần phải có getClientOriginalName ?
+        $name = $request->subject_id.time().$file->getClientOriginalName();
+        // chuyển file vào thư mục public đã đc mặc định ở config
+        $file->move('client/proof', $name);
+        // lưu vòa db dưới tên đường dẫn
+        $request->proof = "client/proof/".$name;
+        $result = PostponeApplication::create([
+            'user_id' => $request->user_id,
+            'major_id' => $request->major_id,
+            'name' => $request->name,
+            'subject_id' => $request->subject_id,
+            'group' => $request->group,
+            'teach_id' => $request->teach_id,
+            'semester_id' => $request->semester_id,
+            'year_id' => $request->year_id,
+            'reason' => $request->reason,
+            'proof' => $request->proof
+        ]);
+
+        // gởi mail
         if($result){
             $id = Auth::id();
             $user = User::find($id);
             $usr = User::where('id','=', $request->teach_id)->get();
-            // $teach_email = User::where('id','=', $request->teach_id)->get('email');
             $teach_id = $request->teach_id;
             $teach = User::find($teach_id);
             $teach_email = User::where('id', $teach_id)->pluck('email')->toArray();
-            // Mail::to($teach_email)->send(new ClientMail('NEW POSTPONE APPLICATION'));
+            // gởi qua view layout_mail kèm data của teach
             Mail::send('mail.layout_mail', compact('teach'), function($message) use ($teach_email, $user) {
                 // $id = Auth::id();
                 // $user = User::find($id);
@@ -57,16 +79,19 @@ class PostponeApplicationController extends Controller
                 //    link sẽ nằm trên đây
                 $message->from($user->email,$user->name);
             });
-            echo "Email Sent with attachment. Check your inbox.";
+            echo "Email Sent. Check your inbox.";
             $notification = array(
-                'message' => 'Post created successfully!',
+                'message' => 'Application successfully sent!',
                 'alert-type' => 'success'
             );
 
         }else{
-            Alert::warning('Sorry, something went wrong');
+            $notification = array(
+                'message' => 'Sorry, something went wrong!',
+                'alert-type' => 'error'
+            );
         }
-        return redirect()->back()->with($notification);;
+        return redirect()->back()->with($notification);
     }
 
 
@@ -75,18 +100,7 @@ class PostponeApplicationController extends Controller
      */
     public function index()
     {
-        // sv chỉ được thấy đơn của mình
-        // Giảng viên chỉ được thấy dơn gởi cho mình
-        // unit chỉ được thấy đơn của major thuộc mìn
-        $id = Auth::user();
-        $user = User::find($id);
-        $user->name = $user[0]['name'];
-        $app = PostponeApplication::where('user_id',$user->id);
-        $context = [
-            'user' => $user,
-            'app' => $app,
-        ];
-        return view('admin.manage_forms.index', $context);
+
     }
 
     /**
@@ -94,6 +108,8 @@ class PostponeApplicationController extends Controller
      */
     public function create()
     {
+        // chỉ dành cho sv
+        $this->authorize('isStudent');
         // $lastsem = date('Y', strtotime('-1 year')).'-'.date("Y");
         // $thissem = date("Y").'-'.date('Y', strtotime('+1 year'));
         $id = Auth::id();
@@ -172,7 +188,18 @@ class PostponeApplicationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $app = PostponeApplication::find($id);
+        $id = Auth::id();
+        $user = User::find($id);
+//        $proof = Storage::get($app->proof);
+//        $proof = public_path($app->proof);
+//        $app->proof = Storage::get($proof);
+//        dd($app->proof);
+        $context = [
+            'app' => $app,
+            'user' => $user,
+        ];
+        return view('client.postpone_app.show', $context);
     }
 
     /**
@@ -180,7 +207,16 @@ class PostponeApplicationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $app = PostponeApplication::find($id);
+        $id = Auth::user();
+        $subjects = Subject::all();
+        $semesters = Semester::all();
+        $years = Year::all();
+        $teach_list = User::select('id', 'name', 'email')->where('role_id','3')->get();
+        $context = [
+            'apply' => $app,
+        ];
+        return view('client.postpone_app.edit', $context);
     }
 
     /**
@@ -188,7 +224,11 @@ class PostponeApplicationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $app = PostponeApplication::find($id)->update($request->all());
+        if($app){
+            return redirect()->back()->with('message', 'application have been updated');
+        }else
+            return redirect()->back()->with('error', 'Something when wrong');
     }
 
     /**
@@ -206,4 +246,6 @@ class PostponeApplicationController extends Controller
 //        return redirect()->route('home');
         return redirect()->back();
     }
+
+
 }

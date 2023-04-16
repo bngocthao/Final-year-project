@@ -93,10 +93,10 @@
                 <td style="text-align: center">{{$u->semesters->name}}</td>
                 <td style="text-align: center">{{$u->years->name}}</td>
                 <td class="tabledit-toolbar-column" style="text-align: center;">
-                    <a href="{{route('form.show', $u->id)}}" style="color: black">
-                        <button class="btn btn-success btn"><i class="fa-solid fa-eye fa-beat"></i></button></a>
-
-                    @can('isProfessor')
+                    @can('isStudent')
+                        <a href="{{route('form.show', $u->id)}}" style="color: black">
+                            <button class="btn btn-success btn"><i class="fa-solid fa-eye fa-beat"></i></button></a>
+                    @endcan
                     <a href="{{route('form.edit', $u->id)}}">
                         <form action="{{ route('form.edit',  $u->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
                             @csrf
@@ -105,7 +105,6 @@
                                 <i class="fa-solid fa-pencil"></i>
                             </button>
                         </form></a>
-                        @endcan
                 </td>
             </tr>
         @endforeach

@@ -33,7 +33,7 @@
 {{--                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>--}}
 {{--                <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>--}}
 {{--                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>--}}
-                <li class="nav-item"><a class="nav-link" style="color: snow; font-family: 'Roboto Slab';" href="#team">Login</a></li>
+                <li class="nav-item"><a class="nav-link" style="color: snow; font-family: 'Roboto Slab';" href="{{route('user.getLogin')}}">Login</a></li>
 {{--                <li class="nav-item"><a class="btn btn-primary btn-xl text-uppercase" href="#services">Login</a></li>--}}
             </ul>
         </div>
@@ -44,7 +44,7 @@
     <div class="container">
         <div class="masthead-subheading" style="color: black">Welcome To Our Website!</div>
         <div class="masthead-heading text-uppercase" style="color: black"><strong style="font-family: 'Roboto Slab'; color: snow;">This Is</strong> A Postpone Application</div>
-        <a class="btn btn-outline-dark btn-xl text-uppercase" style="color: snow; font-family: 'Roboto Slab'"  href="#services">CREATE NEW FORM</a>
+        <a class="btn btn-outline-dark btn-xl text-uppercase" style="color: snow; font-family: 'Roboto Slab'"  href="{{route('user.getLogin')}}">CREATE NEW FORM</a>
     </div>
 </header>
 
