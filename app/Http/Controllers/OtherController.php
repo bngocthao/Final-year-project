@@ -18,7 +18,11 @@ class OtherController extends Controller
 
     public function login(Request $request)
     {
-        $checkLogin = Auth::attempt(['email'=>$request->email,'password'=>$request->password]);
+
+//        $checkLogin = Auth::attempt(['email'=>$request->email,'password'=>$request->password]);
+        $loginEmail = User::find($request->email);
+        $loginPassword = $loginEmail['password'];
+        dd(password_verify($loginPassword, $request->password));
         if(!$checkLogin){
             return redirect()->back()->with('error','Wrong username or password');
         }

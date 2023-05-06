@@ -54,8 +54,13 @@ Route::middleware(['client.auth'])->prefix('client')->group(function(){
 });
 
 // Roue đang nhap cho user
-Route::get('/user/login',[\App\Http\Controllers\OtherController::class,'getLogin'])->name('user.getLogin');
+//Route::get('/user/login',[\App\Http\Controllers\OtherController::class,'getLogin'])->name('user.getLogin');
+//Route::post('/user/login/process',[\App\Http\Controllers\OtherController::class,'login'])->name('user.postLogin');
+//Route::get('/user/logout',[\App\Http\Controllers\OtherController::class,'logout'])->name('user.getLogout');
+Route::get('/user/login',[\App\Http\Controllers\Client\ClientAuth::class,'index'])->name('user.getLogin');
+Route::get('/user/register',[\App\Http\Controllers\Client\ClientAuth::class,'registration'])->name('user.getRegister');
 Route::post('/user/login/process',[\App\Http\Controllers\OtherController::class,'login'])->name('user.postLogin');
+Route::post('/user/register/process',[\App\Http\Controllers\Client\ClientAuth::class,'register'])->name('user.register');
 Route::get('/user/logout',[\App\Http\Controllers\OtherController::class,'logout'])->name('user.getLogout');
 
 // test mail

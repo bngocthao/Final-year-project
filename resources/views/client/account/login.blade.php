@@ -18,7 +18,7 @@
 </head>
 {{--<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">--}}
 {{--<body class="img js-fullheight" style="background-color: #B6E2D3 !important;  font-family: Roboto Slab; color:#fffDD0;">--}}
-<body class="img js-fullheight" style="background-color: #F2845c !important;  font-family: Roboto Slab; color:#fffDD0;">
+<body class="img js-fullheight" style="background-color: #F2845c !important;  font-family: Roboto Slab; ">
 
 <section class="ftco-section">
     <div class="container">
@@ -51,7 +51,7 @@
                                 </label>
                             </div>
                             <div class="w-50 text-md-right">
-                                <a href="#" style="color: #fff">Create Account</a>
+                                <a href="{{ route('user.getRegister') }}" style="color: #fff">Create Account</a>
                             </div>
                         </div>
                     </form>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Login</title>
+    <title>Register</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,9 +11,13 @@
 
     <link rel="stylesheet" href="{{asset('client/login/css/style.css')}}">
 
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
 </head>
 {{--<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">--}}
-<body class="img js-fullheight" style="background-color: deepskyblue">
+<body class="img js-fullheight" style="background-color: #F2845c !important;  font-family: Roboto Slab; ">
 
 <section class="ftco-section">
     <div class="container">
@@ -26,16 +30,14 @@
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
                     <h3 class="mb-4 text-center">Create an account</h3>
-                    <form action="#" class="signin-form">
+                    <form action="{{route('user.register')}}" class="signin-form" method="POST">
+                        @csrf
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Username" required>
+                            {{--Validation có đúng mail trường hay không--}}
+                            <input type="text" class="form-control" name="email" placeholder="Username" required>
                         </div>
                         <div class="form-group">
-                            <input id="password-field" type="password" class="form-control" placeholder="Password" required>
-                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+                            <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
                         </div>
                         <div class="form-group d-md-flex">
                             <div class="w-50">
@@ -45,7 +47,7 @@
                                 </label>
                             </div>
                             <div class="w-50 text-md-right">
-                                <a href="#" style="color: #fff">Login</a>
+                                <a href="{{route('user.getLogin')}}" style="color: #fff">Login</a>
                             </div>
                         </div>
                     </form>
@@ -59,7 +61,44 @@
 <script src="{{asset('client/login/js/popper.js')}}"></script>
 <script src="{{asset('client/login/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('client/login/js/main.js')}}"></script>
+{{--toastr--}}
+<script>
+    @if(Session::has('message'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.success("{{ session('message') }}");
+    @endif
 
+        @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.error("{{ session('error') }}");
+    @endif
+
+        @if(Session::has('info'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.info("{{ session('info') }}");
+    @endif
+
+        @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.warning("{{ session('warning') }}");
+    @endif
+</script>
 </body>
 </html>
 
