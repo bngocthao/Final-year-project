@@ -18,7 +18,6 @@
 </head>
 {{--<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">--}}
 <body class="img js-fullheight" style="background-color: #F2845c !important;  font-family: Roboto Slab; ">
-
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
@@ -29,25 +28,25 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <div class="login-wrap p-0">
-                    <h3 class="mb-4 text-center">Create an account</h3>
+                    <h3 class="mb-4 text-center">Tạo tài khoản</h3>
                     <form action="{{route('user.register')}}" class="signin-form" method="POST">
                         @csrf
                         <div class="form-group">
                             {{--Validation có đúng mail trường hay không--}}
-                            <input type="text" class="form-control" name="email" placeholder="Username" required>
+                            <input type="text" class="form-control" name="email" placeholder="Email" required>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                            <button type="submit" class="form-control btn btn-primary submit px-3">Đăng ký</button>
                         </div>
                         <div class="form-group d-md-flex">
                             <div class="w-50">
-                                <label class="checkbox-wrap checkbox-primary">Remember Me
+                                <label class="checkbox-wrap checkbox-primary">Ghi nhớ
                                     <input type="checkbox" checked>
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
                             <div class="w-50 text-md-right">
-                                <a href="{{route('user.getLogin')}}" style="color: #fff">Login</a>
+                                <a href="{{route('user.getLogin')}}" style="color: #fff">Đăng nhập</a>
                             </div>
                         </div>
                     </form>
@@ -55,6 +54,11 @@
             </div>
         </div>
     </div>
+{{--    @if ($errors->any())--}}
+{{--        <script>--}}
+{{--            toastr.error($errors=>all());--}}
+{{--        </script>--}}
+{{--    @endif--}}
 </section>
 
 <script src="{{asset('client/login/js/jquery.min.js')}}"></script>

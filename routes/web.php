@@ -26,9 +26,8 @@ Route::get('/', function () {
     return view('client.home');
 });
 
-Auth::routes(['register'=>true]);
+Auth::routes(['register'=>false]);
 
-// Trước mắt cho admin.home là home chung
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth','admin.auth']);
 
 // admin controller
@@ -47,17 +46,17 @@ Route::middleware(['auth','admin.auth'])->prefix('admin')->group(function () {
 
 // client controller
 Route::middleware(['client.auth'])->prefix('client')->group(function(){
-    Route::get('/index', [App\Http\Controllers\HomeController::class, 'client_index'])->name('client.index');
+//    Route::get('/index', [App\Http\Controllers\HomeController::class, 'client_index'])->name('client.index');
     Route::resource('/', UserController::class);
     Route::resource('/form', PostponeApplicationController::class);
-    Route::post('/form/post',[ PostponeApplicationController::class, 'post_form'])->name('client.post_form');
+    Route::post('/form/post',[PostponeApplicationController::class, 'post_form'])->name('client.post_form');
 });
 
 // Roue đang nhap cho user
 //Route::get('/user/login',[\App\Http\Controllers\OtherController::class,'getLogin'])->name('user.getLogin');
 //Route::post('/user/login/process',[\App\Http\Controllers\OtherController::class,'login'])->name('user.postLogin');
 //Route::get('/user/logout',[\App\Http\Controllers\OtherController::class,'logout'])->name('user.getLogout');
-Route::get('/user/login',[\App\Http\Controllers\Client\ClientAuth::class,'index'])->name('user.getLogin');
+Route::get('/user/login',[\App\Http\Controllers\OtherController::class,'getLogin'])->name('user.getLogin');
 Route::get('/user/register',[\App\Http\Controllers\Client\ClientAuth::class,'registration'])->name('user.getRegister');
 Route::post('/user/login/process',[\App\Http\Controllers\OtherController::class,'login'])->name('user.postLogin');
 Route::post('/user/register/process',[\App\Http\Controllers\Client\ClientAuth::class,'register'])->name('user.register');
@@ -65,4 +64,8 @@ Route::get('/user/logout',[\App\Http\Controllers\OtherController::class,'logout'
 
 // test mail
 Route::get('/mymailform',[PostponeApplicationController::class,'check_mail'])->name('mymailform');
+// test landing page
+Route::get('/land', function () {
+    return view('client.landing_page');
+});
 

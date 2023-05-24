@@ -58,14 +58,14 @@ class SubjectsController extends Controller
         try {
             $result = Subject::create($request->all());
             if($result){
-                Alert::success('Successfully created');
+                Alert::success('Môn học đã được tạo');
             }else{
-                Alert::warning('Sorry, something went wrong');
+                Alert::warning('Có lỗi xảy ra khi tạo môn học');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Dupplicate subject code!');
+                Alert::error('Error', 'Trùng tên môn hoc hoặc mã môn học!');
                 return redirect()->back();
             }
         }
@@ -104,9 +104,9 @@ class SubjectsController extends Controller
     {
         $update = Subject::find($id)->update($request->all());
         if($update){
-            Alert::success('Successfully updated');
+            Alert::success('Cập nhật thành công');
         }else{
-            Alert::warning('Sorry, something went wrong');
+            Alert::warning('Xảy ra lỗi khi cập nhật');
         }
         return redirect()->to('admin/subjects');
     }
@@ -118,10 +118,10 @@ class SubjectsController extends Controller
     {
         $delete = Subject::find($id)->delete();
         if($delete){
-            Alert::success('Successfully deleted');
+            Alert::success('Xóa thành công');
         }
         else{
-            Alert::error('Sorry, something went wrong');
+            Alert::error('Xảy ra lỗi khi xóa');
         }
 //        return redirect()->route('home');
         return redirect()->back();

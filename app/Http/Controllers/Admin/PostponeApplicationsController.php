@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Semester;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
 use App\Models\Major;
@@ -24,14 +25,14 @@ class PostponeApplicationsController extends Controller
      */
     public function index()
     {
-        // Phân quyèn trong index ?
+        // first: get all the application
+        $app = PostponeApplication::all();
         // sv chỉ được thấy đơn của mình
         // Giảng viên chỉ được thấy dơn gởi cho mình
         // unit chỉ được thấy đơn của major thuộc mìn
             $id = Auth::user();
             $user = User::find($id);
             $user->name = $user[0]['name'];
-            $app = PostponeApplication::all();
             $context = [
                     'user' => $user,
                     'app' => $app,
@@ -87,7 +88,7 @@ class PostponeApplicationsController extends Controller
                 // $teach_email = User::where('id', $user->teach_id)->get();
                 // $message->attach('C:\laravel-master\laravel\public\uploads\image.png');
                 $message->to($teach_email, $user)->subject
-                   ('A NEW POSTPONE APPLICATION');
+                   ('Thông báo về đơn xin điểm i');
                 //    link sẽ nằm trên đây
                 $message->from($user->email,$user->name);
              });
@@ -118,14 +119,15 @@ class PostponeApplicationsController extends Controller
         $subjects = Subject::all();
         $semesters = Semester::all();
         $years = Year::all();
-        $teach_list = User::select('id', 'name', 'email')->where('role_id','3')->get();
+
+//        $teach_list = User::select('id', 'name', 'email')->where('role_id','3')->get();
         $context = [
             'apply' => $appli,
             'user' => $user,
             'subjects' => $subjects,
             'semesters' => $semesters,
             'years' => $years,
-            'teach_list' => $teach_list,
+//            'teach_list' => $teach_list,
         ];
         return view('admin.manage_forms.edit', $context);
     }
@@ -137,10 +139,10 @@ class PostponeApplicationsController extends Controller
     {
         $update = PostponeApplication::find($id)->update($request->all());
         if($update){
-            Alert::success('Successfully updated');
+            Alert::success('Cập nhật thành công');
         }
         else{
-            Alert::error('Sorry, something went wrong');
+            Alert::error('Xảy ra lỗi khi cập nhật!');
         }
 //        return redirect()->route('home');
         return redirect()->back();
@@ -153,10 +155,10 @@ class PostponeApplicationsController extends Controller
     {
         $delete = PostponeApplication::find($id)->delete();
         if($delete){
-            Alert::success('Successfully deleted');
+            Alert::success('Xóa thành công');
         }
         else{
-            Alert::error('Sorry, something went wrong');
+            Alert::error('Xảy ra lỗi khi xóa!');
         }
 //        return redirect()->route('home');
         return redirect()->back();

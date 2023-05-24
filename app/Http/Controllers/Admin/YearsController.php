@@ -48,9 +48,9 @@ class YearsController extends Controller
     {
         $result = Year::create($request->all());
         if($result){
-            Alert::success('Successfully created');
+            Alert::success('Tạo thành công');
         }else{
-            Alert::warning('Sorry, something went wrong');
+            Alert::warning('Lỗi xảy ra khi tạo');
         }
 
         return redirect()->to('admin/years');
@@ -87,9 +87,9 @@ class YearsController extends Controller
     {
         $update = Year::find($id)->update($request->all());
         if($update){
-            Alert::success('Successfully updated');
+            Alert::success('Cập nhật thành công');
         }else{
-            Alert::warning('Sorry, something went wrong');
+            Alert::warning('Lỗi xảy ra khi cập nhật');
         }
         return redirect()->to('admin/years');
     }
@@ -101,10 +101,10 @@ class YearsController extends Controller
     {
         $delete = Year::find($id)->delete();
         if($delete){
-            Alert::success('Successfully deleted');
+            Alert::success('Xóa thành công');
         }
         else{
-            Alert::error('Sorry, something went wrong');
+            Alert::error('Lỗi xảy ra khi xóa');
         }
 //        return redirect()->route('home');
         return redirect()->back();

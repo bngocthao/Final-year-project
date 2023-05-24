@@ -9,14 +9,14 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-            <h3>150</h3>
+            <h3>{{$total_app}}</h3>
 
-            <p>New Orders</p>
+            <p>Tổng đơn</p>
             </div>
             <div class="icon">
             <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('postponse_apps.index')}}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
         </div>
         <!-- ./col -->
@@ -24,14 +24,15 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{$waiting_app}}</h3>
+{{--                <sup style="font-size: 20px">%</sup></h3>--}}
 
-            <p>Bounce Rate</p>
+            <p>Đang chờ xử lý</p>
             </div>
             <div class="icon">
             <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('postponse_apps.index')}}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
         </div>
         <!-- ./col -->
@@ -39,14 +40,14 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
             <div class="inner">
-            <h3>44</h3>
+            <h3>{{$accepted_app}}</h3>
 
-            <p>User Registrations</p>
+            <p>Đã chấp nhận</p>
             </div>
             <div class="icon">
             <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('postponse_apps.index')}}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
         </div>
         <!-- ./col -->
@@ -54,20 +55,61 @@
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-            <h3>65</h3>
+            <h3>{{$denine_app}}</h3>
 
-            <p>Unique Visitors</p>
+            <p>Đã từ chối</p>
             </div>
             <div class="icon">
             <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{route('postponse_apps.index')}}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
         </div>
         <!-- ./col -->
     </div>
 
 </section>
+{{--<div class="container">--}}
+{{--    <div class="row">--}}
+{{--        <div class="col-md-3">--}}
+{{--            <div class="form-group">--}}
+{{--                <div class="card">--}}
+{{--                    <div class="card-header">--}}
+{{--                        <div class="card-title">--}}
+{{--                            asdasdsad--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        aAAAA--}}
+{{--                    </div>--}}
+{{--                    <div class="card-footer">--}}
+{{--                        Fotter Card--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+{{--        <div class="col-md-3">--}}
+{{--            <div class="form-group">--}}
+{{--                Cột 2--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+{{--        <div class="col-md-3">--}}
+{{--            <div class="form-group">--}}
+{{--                Cột 3--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+{{--        <div class="col-md-3">--}}
+{{--            <div class="form-group">--}}
+{{--                Cột 4--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+{{--    </div>--}}
+
+{{--</div>--}}
 <!-- /.content -->
 
 @endsection

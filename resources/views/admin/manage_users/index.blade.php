@@ -8,7 +8,7 @@
         {{-- <h3 class="box-title">User List</h3> --}}
         <p class="pull-left">
           <a href="{{route('users.create')}}" style="margin-left: 50px" class="btn btn-success waves-effect waves-light form-control pull-right" style="float: none;margin: 5px;">
-            New User</a>
+            TẠO NGƯỜI DÙNG</a>
         </p>
       </div>
 
@@ -17,11 +17,11 @@
         <table id="example1" class="table table-bordered table-striped">
           <thead>
           <tr>
-            <th>UID</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Major</th>
-            <th class="tabledit-toolbar-column" style="text-align: center;">Tools</th>
+            <th>ID</th>
+            <th>Tên</th>
+{{--            <th>Role</th>--}}
+            <th>Chuyên ngành</th>
+            <th class="tabledit-toolbar-column" style="text-align: center;">Công cụ</th>
           </tr>
           </thead>
           <tbody>
@@ -30,8 +30,8 @@
               <tr>
                 <td>{{$i->user_code}}</td>
                 <td>{{$i->name}}</td>
-                <td>{{$i->roles->name ?? "None"}}</td>
-                <td>{!! $i->majors->name ?? "None" !!}</td>
+{{--                <td>{{$i->roles->name ?? "None"}}</td>--}}
+                <td>{!! $i->majors->name ?? "Trống" !!}</td>
                   <td class="tabledit-toolbar-column" style="text-align: center;">
                       <a href="{{route('users.edit', $i->id)}}">
                           <form action="{{ route('users.edit',  $i->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
@@ -43,7 +43,7 @@
                                   </svg>
                               </button>
                           </form></a>
-                      <a href="{{route("users.destroy",$i->id)}}"  onclick="return confirm('Are you sure you want to delete?')">
+                      <a href="{{route("users.destroy",$i->id)}}"  onclick="return confirm('Bạn có muốn xóa ?')">
                           <form action="{{route("users.destroy",$i->id)}}" method="post" class="tabledit-edit-button btn btn primary waves-effect waves-light float-left">
                               @csrf
                               @method('DELETE')

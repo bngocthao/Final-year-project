@@ -21,6 +21,6 @@
 
 
     </main>
-  </body>
+    </div></body>
   @include('client.footer')
   </html>

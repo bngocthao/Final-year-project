@@ -23,7 +23,6 @@ class User extends Athenticatable
         'password',
         'user_code',
         'major_id',
-        'role_id',
         'permission'
     ];
 
@@ -71,7 +70,7 @@ class User extends Athenticatable
     public function roles()
     {
         // return $this->belongsTo(VaiTro::class, 'ma_vai_tro', 'id');
-        return $this->belongsTo(Role::class,'role_id','id');
+        return $this->belongsToMany(Role::class,'user_role','user_id','role_id');
     }
 
     // Người dùng có nhiều ý kiến

@@ -16,11 +16,11 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MANAGEMENT SIDE</li>
+        <li class="header">TRANG QUẢN LÝ</li>
         <li class="treeview">
           <a href="{{route('users.index')}}">
             {{-- <i class="fa fa-dashboard"></i> --}}
-            <span>User And Role</span>
+            <span>Người dùng và vai trò</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -28,66 +28,66 @@
           <ul class="treeview-menu">
             <li>
               <a href="{{route('users.index')}}">
-                  <span class="pcoded-mtext">User List</span>
+                  <span class="pcoded-mtext">Danh sách người dùng</span>
               </a>
                 <a href="{{route('roles.index')}}">
-                    <span class="pcoded-mtext">Role List</span>
+                    <span class="pcoded-mtext">Danh sách vai trò</span>
                 </a>
           </li>
           </ul>
         </li>
+{{--        <li class="treeview">--}}
+{{--          <a href="#">--}}
+{{--            <span>Form Mangement</span>--}}
+{{--            <span class="pull-right-container">--}}
+{{--              <i class="fa fa-angle-left pull-right"></i>--}}
+{{--            </span>--}}
+{{--            --}}{{-- Cái này có thể dùng để hiển thị số lượng đơn xin điểm chưa được xử lý --}}
+{{--            --}}{{-- <span class="pull-right-container">--}}
+{{--              <span class="label label-primary pull-right">4</span>--}}
+{{--            </span> --}}
+{{--          </a>--}}
+{{--          <ul class="treeview-menu">--}}
+{{--            <li><a href="{{route('postponse_apps.index')}}">--}}
+{{--              <span class="pcoded-mtext">Form List</span></a>--}}
+{{--            </li>--}}
+{{--          </ul>--}}
+{{--        </li>--}}
+
         <li class="treeview">
           <a href="#">
-            <span>Form Mangement</span>
+            <span>Quản lý đơn vị</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-            {{-- Cái này có thể dùng để hiển thị số lượng đơn xin điểm chưa được xử lý --}}
-            {{-- <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span> --}}
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{route('postponse_apps.index')}}">
-              <span class="pcoded-mtext">Form List</span></a>
-            </li>
+            <li><a href="{{route('units.index')}}"><i class="fa fa-circle-o"></i>Danh sách đơn vị</a></li>
           </ul>
         </li>
 
         <li class="treeview">
           <a href="#">
-            <span>Unit Management</span>
+            <span>Chuyên ngành và môn học</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{route('units.index')}}"><i class="fa fa-circle-o"></i>Unit List</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#">
-            <span>Major And Subject</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{route('majors.index')}}"><i class="fa fa-circle-o"></i>Major List</a></li>
-            <li><a href="{{route('subjects.index')}}"><i class="fa fa-circle-o"></i>Subject List</a></li>
+            <li><a href="{{route('majors.index')}}"><i class="fa fa-circle-o"></i>Danh sách chuyên ngành</a></li>
+            <li><a href="{{route('subjects.index')}}"><i class="fa fa-circle-o"></i>Danh sách môn học</a></li>
           </ul>
         </li>
 
           <li class="treeview">
               <a href="#">
-                  <span>Year Management</span>
+                  <span>Năm học</span>
                   <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
               </a>
               <ul class="treeview-menu">
-                  <li><a href="{{route('years.index')}}"><i class="fa fa-circle-o"></i>Year List</a></li>
+                  <li><a href="{{route('years.index')}}"><i class="fa fa-circle-o"></i>Danh sách năm học</a></li>
               </ul>
           </li>
       </ul>

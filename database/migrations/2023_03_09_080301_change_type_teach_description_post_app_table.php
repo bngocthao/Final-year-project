@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('postpone_applications', function (Blueprint $table) {
             $table->string('teach_description')->change();
+            $table->string('teach_description')->nullable();
         });
     }
 

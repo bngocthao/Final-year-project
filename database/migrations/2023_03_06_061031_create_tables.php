@@ -81,15 +81,16 @@ return new class extends Migration
             $table->string('reason');
 //            $table->unsignedBigInteger('confirmation_id')->nullable();
             $table->unsignedBigInteger('teach_id');
-            $table->string('teach_status')->nullable();
-            $table->integer('teach_description')->nullable();
+            $table->integer('teach_status')->nullable();
+            $table->string('teach_description')->nullable();
 //            $table->unsignedBigInteger('comment_id')->nullable();
             $table->string('proof')->nullable();
-            $table->integer('result')->nullable();
-            $table->string('unit_2_status')->nullable();
-            $table->integer('unit_2_description')->nullable();
-            $table->string('unit_1_status')->nullable();
-            $table->integer('unit_1_description')->nullable();
+            $table->string('result')->nullable();
+            $table->integer('unit_2_status')->nullable();
+            $table->string('unit_2_description')->nullable();
+            $table->integer('unit_1_status')->nullable();
+            $table->string('unit_1_description')->nullable();
+            $table->timestamp('i_result_date')->nullable();
             $table->timestamps();
         });
 

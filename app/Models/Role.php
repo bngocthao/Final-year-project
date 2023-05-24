@@ -11,7 +11,7 @@ class Role extends Model
 
     protected $table = 'roles';
 
-    // self referrence 
+    // self referrence
     protected $fillable = [
         'name',
     ];
@@ -19,6 +19,6 @@ class Role extends Model
     // Vai trò có nhiều người dùng
     public function roles()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class, 'user_role', 'role_id', 'user_id');
     }
 }

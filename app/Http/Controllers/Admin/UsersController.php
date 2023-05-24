@@ -24,6 +24,7 @@ class UsersController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $users = User::all();
+        // truy xuất qua user_role để lấy role
         $context = [
             'users' => $users,
             'user' => $user,
@@ -56,6 +57,12 @@ class UsersController extends Controller
         try {
             $request->password = Hash::make($request->password);
             $result = User::create($request->all());
+            // lấy id user mới nhất vừa thêm
+            $ids= User::find($result->id);
+            // lấy danh sách các vai trò cần thêm
+            $rolesList = $request->role_id;
+            // Thêm các vai trò cho user
+            $ids->roles()->attach($rolesList);
 //            $result = User::create([
 //                'user_code' => $request->user_code,
 //                'name' => $request->name,
@@ -66,14 +73,14 @@ class UsersController extends Controller
 ////                'permission' => $request->permission,
 //            ]);
             if($result){
-                Alert::success('Successfully created');
+                Alert::success('Tạo tài khoản thành công');
             }else{
-                Alert::warning('Sorry, something went wrong');
+                Alert::warning('Đã có lỗi xảy ra khi tạo tài khoản');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Dupplicate usercode!');
+                Alert::error('Error', 'Mã người dùng bị trùng!');
                 return redirect()->back();
             }
         }
@@ -99,13 +106,16 @@ class UsersController extends Controller
         $majors = Major::all();
         $units = Unit::all();
         $roles = Role::all();
+        // get role list of user has $id in UserRole table
+        $role_list = $e_user->roles;
         $context = [
             'user' => $user,
             'majors' => $majors,
             // 'dv_nd' => $dv_nd,
             'units' => $units,
             'roles' => $roles,
-            'e_user' => $e_user
+            'e_user' => $e_user,
+            'user_roles' => $role_list
         ];
         return view ('admin.manage_users.edit', $context);
     }
@@ -116,10 +126,13 @@ class UsersController extends Controller
     public function update(Request $request, string $id)
     {
         $update = User::find($id)->update($request->all());
+        $user = User::find($id);
+        $user->roles()->detach();
+        $user->roles()->attach($request->role_id);
         if($update){
-            Alert::success('Successfully updated');
+            Alert::success('Cập nhật thành công');
         }else{
-            Alert::warning('Sorry, something went wrong');
+            Alert::warning('Lỗi xảy ra khi cập nhật');
         }
         return redirect()->to('admin/users');
     }
@@ -129,12 +142,14 @@ class UsersController extends Controller
      */
     public function destroy(string $id)
     {
+        $user = User::find($id);
+        $user->roles()->detach();
         $delete = User::find($id)->delete();
         if($delete){
-            Alert::success('Successfully deleted');
+            Alert::success('Xóa thành công');
         }
         else{
-            Alert::error('Sorry, something went wrong');
+            Alert::error('Lỗi xảy ra khi xóa');
         }
 //        return redirect()->route('home');
         return redirect()->back();

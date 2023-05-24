@@ -23,11 +23,11 @@ class ClientAuth extends Controller
 
     function register(Request $request){
         //validate
-        $request->validate([
-            'email' => 'unique',
-        ],[
-            'email.unique' => 'Account already exist'
-        ]);
+        $emailValidate =  User::where('email', $request->email)->get();
+        if ($emailValidate){
+            return redirect()->back()->with('error','Tài khoản đã tồn tại!');
+        }
+
         //rand & băm pwd, check đúng email trường k, tạo tài khoản thành công->gửi mail
         if (str_contains($request->email, 'student.ctu.edu.vn')) {
             $randomString = Str::random(8);
@@ -43,18 +43,18 @@ class ClientAuth extends Controller
             ]);
             if ($result){
                 $MailData = [
-                    'title' => 'Here is yours password',
-                    'body' => 'Do not share it with anybody.',
+                    'title' => 'Đây là mật khẩu của bạn',
+                    'body' => 'Đừng chia sẽ nó với ai khác.',
                     'password' => $randomString
                 ];
 
                 Mail::to($request->email)->send(new passwordNotify($MailData));
 
-                return redirect()->route('user.getLogin')->with('message','Account have been create, please check yours email');
+                return redirect()->route('user.getLogin')->with('message','Tài khoản đã được tạo, hãy kiểm tra email của bạn');
             }else {
-                return redirect()->back()->with('error','Sorry, something went wrong');
+                return redirect()->back()->with('error','Xin lỗi, đã có lỗi phát sinh');
             }
         }
-            return redirect()->back()->with('error','Insufficient email');
+            return redirect()->back()->with('error','Email không hợp lệ, hãy sử dụng email của trường!');
     }
 }

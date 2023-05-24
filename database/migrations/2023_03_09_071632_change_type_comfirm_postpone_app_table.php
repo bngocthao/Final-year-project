@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('postpone_applications', function (Blueprint $table) {
-            $table->string('confirmation_id')->change();
-        });
+//        Schema::table('postpone_applications', function (Blueprint $table) {
+//            $table->string('confirmation_id')->change();
+//        });
 
         // Schema::table('postpone_applications', function (Blueprint $table) {
         //     $table->renameColumn('confirmation_id', 'confirmation');

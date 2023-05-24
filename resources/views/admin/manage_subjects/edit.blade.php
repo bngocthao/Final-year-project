@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <title>Subject Edit</title>
+    <title>Snooze/Chỉnh sửa học phần</title>
 
     <!-- Content Wrapper. Contains page content -->
 
@@ -32,7 +32,7 @@
                         <i class="icofont icofont-spinner-alt-5"></i>
                     </div>
                 </div>
-                <h4 class="sub-title">EDIT SUBJECT</h4>
+                <h4 class="sub-title">CHỈNH SỬA HỌC PHẦN</h4>
                 <div class=" box box-info">
                     <div class="box-body">
                         <form action="{{route('subjects.update', $subject)}}" method="POST" enctype="multipart/form-data">
@@ -40,29 +40,29 @@
                             @method('PUT')
                             {{-- <input hidden name="ma_nguoi_dung" > --}}
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Subject code</label>
+                                <label class="col-sm-2 col-form-label">Mã học phần</label>
                                 <div class="col-sm-10">
                                     <input required name="subject_code" type="text" class="form-control" style="font-weight: bold" value="{{$subject->id}}">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Name</label>
+                                <label class="col-sm-2 col-form-label">Tên học phần</label>
                                 <div class="col-sm-10">
                                     <textarea id="editor" required type="text" class="form-control" name="name" value="{{$subject->name}}">{{$subject->name}}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Credit</label>
+                                <label class="col-sm-2 col-form-label">Số tín chỉ</label>
                                 <div class="col-sm-10">
                                     <input required name="credit" type="text" class="form-control" style="font-weight: bold" value="{{$subject->credit}}">
                                 </div>
                             </div>
 
                             <div class="form-group pull-right">
-                                <button type="submit" class="btn btn-success float-right btn-round">Update</button>
-                                <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/subjects'">Return</button>
+                                <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
+                                <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/subjects'">Quay lại</button>
                             </div>
                         </form>
                     </div>

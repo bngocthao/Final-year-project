@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title Page-->
-    <title>Postpone App/ Show</title>
+    <title>Snooze/ Hiển thị</title>
 
     <!-- Icons font CSS-->
 
@@ -35,13 +35,13 @@
     <div class="wrapper wrapper--w790">
         <div class="card card-5">
             <div class="card-heading" style="color: silver !important;  ">
-                <h2 class="title" >Create Form</h2>
+                <h2 class="title" >Tạo đơn</h2>
             </div>
             <div class="card-body">
                 <form action="{{route('client.post_form')}}" method="post" enctype="multipart/form-data">
 
                     <div class="form-row">
-                        <div class="name">Student name</div>
+                        <div class="name">Họ tên sinh viên</div>
                         <div class="value">
                             <div class="input-group">
                                 <input required class="input--style-5" type="text" name="name" value="{{$user->name}}" disabled="disabled">
@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Subject</div>
+                            Môn học</div>
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Group</div>
+                            Nhóm</div>
                         <div class="value">
                             <div class="input-group">
                                 <input required class="input--style-5" type="text" name="group" value="{{$app->group}}" disabled="disabled">
@@ -73,11 +73,19 @@
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Professor</div>
+                            Học phần</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input class="input--style-5" type="text" name="group" value="{{$sub[0]['name']}}" disabled="disabled">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">
+                            Giảng viên</div>
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search select2-selection__arrow">
-
                                     <select name="teach_id" disabled="disabled">
                                             <option>{{ $app->teach->name }}</option>
                                     </select>
@@ -88,9 +96,7 @@
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Semester(<svg xmlns="http://www.w3.org/2000/svg" color="red" width="8" height="8" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
-                                <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
-                            </svg>)</div>
+                            Học kì</div>
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search">
@@ -104,9 +110,7 @@
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Years(<svg xmlns="http://www.w3.org/2000/svg" color="red" width="8" height="8" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
-                                <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
-                            </svg>)</div>
+                            Năm học</div>
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search">
@@ -120,17 +124,15 @@
                     </div>
                     <div class="form-row">
                         <div class="name">
-                            Reason(<svg xmlns="http://www.w3.org/2000/svg" color="red" width="8" height="8" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
-                                <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1z"/>
-                            </svg>)</div>
+                            Lý do</div>
                         <div class="value">
                             <div class="input-group">
-                                <textarea class="input--style-5" id="editor" type="text" name="reason" disabled="disabled">{{$app->reason}}</textarea>
+                                <input required class="input--style-5" type="text" name="reason" value="{{ strip_tags($app->reason) }}" disabled="disabled">
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="name">Proof</div>
+                        <div class="name">Lý do (bổ sung)</div>
                         <div class="value">
                             <div class="input-group">
                                 <input type="text" hidden="" id="file_link" value="{{asset($app->proof)}}">
@@ -140,16 +142,85 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="name">
-                            Result</div>
+                        <div class="name">Quyết định của giảng viên</div>
                         <div class="value">
                             <div class="input-group">
-                                <input required class="input--style-5" type="text" name="group" value="{{$app->result ?? "Waiting"}}" disabled="disabled">
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select disabled>
+                                        <option @if($app->teach_status == '1') selected @endif value="1">Chấp nhận</option>
+                                        <option @if($app->teach_status == '0') selected @endif  value="0">Không chấp nhận</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">Ý kiến giảng viên</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input disabled class="input--style-5" type="text" value="{{ strip_tags($app->teach_description) }}"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">
+                            Quyết định của trưởng khoa/ hiệu trưởng</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <div class="rs-select2 js-select-simple select--no-search select2-selection__arrow">
+                                    <select id="unit_2_status" disabled>
+                                        <option @if($app->unit_2_status == '1') selected @endif value="1">Chấp nhận</option>
+                                        <option @if($app->unit_2_status == '0') selected @endif  value="0">Không chấp nhận</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">
+                            Ý kiến của trưởng khoa/ hiệu trưởng</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input class="input--style-5" type="text" disabled="disabled" value="{!! strip_tags($app->unit_2_description) !!}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">Quyết định phòng đào tạo</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select required id="unit_1_status" name="unit_1_status" disabled>
+                                        <option @if($app->unit_1_status == '') selected @endif >Đang chờ</option>
+                                        <option @if($app->unit_1_status == '1') selected @endif value="1">Chấp nhận</option>
+                                        <option @if($app->unit_1_status == '0') selected @endif  value="0">Không chấp nhận</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">Ý kiến của phòng đào tạo</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input disabled class="input--style-5" type="text" value="{{strip_tags($app->unit_1_description)}}"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="name">
+                            Kết quả</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input required class="input--style-5" type="text" name="group" value="{{$app->result ?? "Đang chờ"}}" disabled="disabled">
                             </div>
                         </div>
                     </div>
                     <div>
-                        <a href="javascript:history.back()" class="btn btn--radius-2 btn--blue" role="button" style="color: rebeccapurple; text-decoration: none;">Back</a>
+                        <a href="javascript:history.back()" class="btn btn--radius-2 btn--blue" role="button" style="color: rebeccapurple; text-decoration: none;">Trở lại</a>
                     </div>
                 </form>
             </div>
@@ -170,16 +241,17 @@
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 <script>
-    ClassicEditor
-        .create( document.querySelector( '#editor' ) )
-        .then( editor => {
-            console.log( editor );
-        } )
-        .catch( error => {
-            console.error( error );
-        } );
+    // $('.input--style-5').ckeditorGet().setReadOnly();
+    // ClassicEditor
+    //     .create( document.querySelector( '#editor' ) )
+    //     .then( editor => {
+    //         console.log( editor );
+    //     } )
+    //     .catch( error => {
+    //         console.error( error );
+    //     } );
 </script>
-// Hiển thị tên file trong boostrap input
+{{--// Hiển thị tên file trong boostrap input--}}
 <script>
     // Get a reference to our file input
     // const fileInput = document.querySelector('input[type="file"]');

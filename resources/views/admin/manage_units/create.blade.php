@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <title>Unit Create</title>
+    <title>Snooze/Tạo đơn vị</title>
 
     <!-- Content Wrapper. Contains page content -->
 
@@ -31,7 +31,7 @@
                     <i class="icofont icofont-spinner-alt-5"></i>
                 </div>
             </div>
-            <h4 class="sub-title">NEW UNIT</h4>
+            <h4 class="sub-title">TẠO ĐƠN VỊ</h4>
             <div class=" box box-info">
                 <div class="box-body">
                     <form action="{{route('units.store')}}" method="POST" enctype="multipart/form-data">
@@ -39,24 +39,24 @@
                         @method('POST')
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Name(<span style="color: red;">*</span>)</label>
+                            <label class="col-sm-2 col-form-label">Tên đơn vị(<span style="color: red;">*</span>)</label>
                             <div class="col-sm-10">
                                 <input required type="text" class="form-control" name="name" >
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">level(<span style="color: red;">*</span>)</label>
+                            <label class="col-sm-2 col-form-label">cấp(<span style="color: red;">*</span>)</label>
                             <div class="col-sm-10">
                                 <input required name="level" type="text" class="form-control" style="font-weight: bold" >
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Head of unit</label>
+                            <label class="col-sm-2 col-form-label">Trưởng khoa/ hiệu trưởng</label>
                             <div class="col-sm-10">
                                 <select name="head_of_unit_id" class="form-control">
-                                            <option value="">None</option>
+                                            <option value="">Trống</option>
                                     @foreach ($users as $item)
                                             <option value="{{$item->id}}">{!!$item->name?? 'Trống' !!}</option>
                                     @endforeach
@@ -65,8 +65,8 @@
                         </div>
 
                         <div class="form-group pull-right">
-                            <button type="submit" class="btn btn-success float-right btn-round">Create</button>
-                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/units'">Return</button>
+                            <button type="submit" class="btn btn-success float-right btn-round">Tạo mới</button>
+                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/units'">Quay lại</button>
                         </div>
                     </form>
                 </div>

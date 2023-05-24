@@ -51,7 +51,7 @@
                             </svg>)</div>
                         <div class="value">
                             <div class="input-group">
-                                <input required class="input--style-5" type="text" name="name" value="{{$user->name}}">
+                                <input disabled class="input--style-5" type="text" value="{{$user->name}}">
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,8 @@
                                     <select name="teach_id">
                                         <option disabled="disabled" selected="selected" >Choose option </option>
                                         @foreach($teach as $i)
-                                            <option value="{{$i->id}}">{{$i->name}}</option>
+                                        {{--a collection of collection of obj--}}
+                                            <option value="{{$i[0]->id}}">{{$i[0]->name}}</option>
                                         @endforeach
                                     </select>
                                     <div class="select-dropdown"></div>
@@ -178,7 +179,8 @@
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn--radius-2 btn--blue" style="color: rebeccapurple;font-family: 'Roboto Slab'" type="submit">SUBMIT</button>
+                        <a href="javascript:history.back()" class="btn btn--radius-2 btn--blue" role="button" style="color: rebeccapurple; text-decoration: none;">Back</a>
+                        <button class="btn btn--radius-2 btn--blue pull-right" style="color: rebeccapurple;font-family: 'Roboto Slab'" type="submit">SUBMIT</button>
                     </div>
                 </form>
             </div>

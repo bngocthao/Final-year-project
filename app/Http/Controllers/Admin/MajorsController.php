@@ -63,7 +63,6 @@ class MajorsController extends Controller
         try {
             $result = Major::create($request->all());
             // Lay id moi nhat vua them
-//        $ids = $result->id;
             $ids = Major::find($result->id);
             // Lay danh sach cac mon hoc can them
             $subjectList = $request->subject_id;
@@ -71,14 +70,14 @@ class MajorsController extends Controller
             $ids->subjects()->attach($subjectList);
 
             if($result){
-                Alert::success('Successfully created');
+                Alert::success('Chuyên ngành đã được tạo');
             }else{
-                Alert::warning('Sorry, something went wrong');
+                Alert::warning('Xảy ra lỗi khi tạo chuyên ngành!');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Dupplicate major code or name');
+                Alert::error('Error', 'Mã hoặc tên chuyên ngành đã bị trùng');
                 return redirect()->back();
             }
         }
@@ -105,15 +104,9 @@ class MajorsController extends Controller
         $units = Unit::all();
         // lấy subject list
         $subject_ids = major_subject::where('major_id',$id)->get();
-
         // lấy obj ds các subject id
-//        $subject_list = major_subject::where('major_id',$id)->get();
         // với mỗi phần tử trong mảng chứa obj, lấy tên và id của subject
-//        foreach ($subject_ids as $id){
-//            dd($subject_ids[$id]['subject_id']);
-//        }
         $length = sizeof($subject_ids);
-//        $subject_list =  $subject_ids[0]['subject_id'];
         $subject_ids_list = array();
         for( $i = 0; $i < $length; $i++){
             $subject_ids_list[] = $subject_ids[$i]['subject_id'];
@@ -125,7 +118,6 @@ class MajorsController extends Controller
             $subject_list[] = Subject::find($subject_ids_list[$i]);
         }
         $full_subject = Subject::all();
-//        dd($full_subject[2]['id']);
         $content = [
             'major' => $major,
             'units' => $units,
@@ -143,7 +135,7 @@ class MajorsController extends Controller
     {
         // update record
         if($request->subject_id == null){
-            Alert::error('Error','subject can not be empty');
+            Alert::error('Error','Môn học không được trống');
             return redirect()->back();
         }
         $length = sizeof($request->subject_id);
@@ -152,10 +144,10 @@ class MajorsController extends Controller
         $major->subjects()->sync($request->subject_id);
         $update = Major::find($id)->update($request->all());
         if($update){
-            Alert::success('Successfully updated');
+            Alert::success('Cập nhật chuyên ngành thành công');
         }
         else{
-            Alert::error('Sorry, something went wrong');
+            Alert::error('Xảy ra lỗi khi cập nhật');
         }
         return redirect()->to('admin/majors');
     }
@@ -168,10 +160,10 @@ class MajorsController extends Controller
 //        Alert::question('Do you really want to delete?','yes','no');
         $delete = Major::find($id)->delete();
          if($delete){
-             Alert::success('Successfully deleted');
+             Alert::success('Xóa thành công');
          }
          else{
-             Alert::error('Sorry, something went wrong');
+             Alert::error('Xảy ra lỗi khi xóa!');
          }
 //        return redirect()->route('home');
         return redirect()->back();

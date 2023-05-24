@@ -6,7 +6,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="icon" type="image/x-icon" href={{asset('client/landing-page/assets/favicon.ico')}} />
-    <title>Postpone App/ Index</title>
+    <title>Snooze/ Trang chủ</title>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
     {{--    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />--}}
@@ -16,7 +16,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href={{asset("client/landing-page/css/styles.css")}} rel="stylesheet" />
@@ -29,7 +28,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light navbar-shrink fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand " href="{{route('client.index')}}" style="color: black !important; font-family: Roboto Slab ;!important">Postpone App</a>
+        <a class="navbar-brand " href="#" style="color: black !important; font-family: Roboto Slab ;!important">Snooze</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars ms-1"></i>
@@ -37,11 +36,11 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 @can('isStudent')
-                    <li class="nav-item"><a class="nav-link " style="color: black !important;  font-family: Roboto Slab;" href="{{route('form.create')}}">Create new form</a></li>
+                    <li class="nav-item"><a class="nav-link " style="color: black !important;  font-family: Roboto Slab;" href="{{route('form.create')}}">Tạo đơn mới</a></li>
                 @endcan
                 {{--                trang chủ sẽ là form list--}}
                 {{--                <li class="nav-item"><a class="nav-link" href="#portfolio">Form list</a></li>--}}
-                <li class="nav-item"> <a class="nav-link" style="color: black !important;  font-family: Roboto Slab" href="{{route('user.getLogout')}}">Sign out</a></li>
+                <li class="nav-item"> <a class="nav-link" style="color: black !important;  font-family: Roboto Slab" href="{{route('user.getLogout')}}">Đăng xuất</a></li>
 
                 {{--                <li class="nav-item dropdown">--}}
                 {{--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">--}}
@@ -75,28 +74,35 @@
         <thead>
         <tr>
             <th style="width:10px; !important; text-align: center;!important">#</th>
-            <th style="text-align: center;">Subject</th>
-            <th style="text-align: center">Professor</th>
-            <th style="text-align: center">Result</th>
-            <th style="text-align: center">Semester</th>
-            <th style="text-align: center">Year</th>
-            <th style="text-align: center">Tool</th>
+            <th style="text-align: center;">Môn học</th>
+            <th style="text-align: center">Giảng viên</th>
+            <th style="text-align: center">Kết quả</th>
+            @can('isStudent')
+            <th style="text-align: center">Ý kiến của giảng viên</th>
+            @endcan
+            <th style="text-align: center">Học kỳ</th>
+            <th style="text-align: center">Năm học</th>
+            @cannot('isStudent')
+            <th style="text-align: center">Công cụ</th>
+            @endcannot
         </tr>
         </thead>
         <tbody>
         @foreach($app as $u)
             <tr>
                 <td style="width:10px;">{{ $u->id}}</td>
-                <td style="text-align: center">{{ $u->subject->name ?? "None" }}</td>
+                <td style="text-align: center">{{ $u->subject->name ?? "Trống" }}</td>
                 <td style="text-align: center">{{ $u->teach->name}}</td>
-                <td style="text-align: center">{!! $u->result ?? "None" !!}</td>
+                <td style="text-align: center">{!! $u->result ?? "Chưa có kết quả" !!}</td>
+                @can('isStudent')
+                <td style="text-align: center">{!! $u->teach_description ?? "Trống" !!}</td>
+                @endcan
                 <td style="text-align: center">{{$u->semesters->name}}</td>
                 <td style="text-align: center">{{$u->years->name}}</td>
+                @cannot('isStudent')
                 <td class="tabledit-toolbar-column" style="text-align: center;">
                     <a href="{{route('form.show', $u->id)}}" style="color: black">
-                        <button class="btn btn-success btn"><i class="fa-solid fa-eye fa-beat"></i></button></a>
-
-                    @can('isProfessor')
+                    <button class="btn btn-success btn"><i class="fa-solid fa-eye fa-beat"></i></button></a>
                     <a href="{{route('form.edit', $u->id)}}">
                         <form action="{{ route('form.edit',  $u->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
                             @csrf
@@ -105,10 +111,36 @@
                                 <i class="fa-solid fa-pencil"></i>
                             </button>
                         </form></a>
-                        @endcan
+                </td>
+                @endcannot
+            </tr>
+        @endforeach
+        @can('isMan&Pro')
+        @foreach($app1 as $u)
+            <tr>
+                <td style="width:10px;">{{ $u->id}}</td>
+                <td style="text-align: center">{{ $u->subject->name ?? "None" }}</td>
+                <td style="text-align: center">{{ $u->teach->name}}</td>
+                <td style="text-align: center">{!! $u->result ?? "None" !!}</td>
+                <td style="text-align: center">{{$u->semesters->name}}</td>
+                <td style="text-align: center">{{$u->years->name}}</td>
+                <td class="tabledit-toolbar-column" style="text-align: center;">
+                    <a href="{{route('form.show', $u->id)}}" style="color: black; text-decoration: none;">
+                        <button class="btn btn-success btn"><i class="fa-solid fa-eye fa-beat"></i></button>
+                    </a>
+                    <a href="{{route('form.edit', $u->id)}}">
+                        <form action="{{ route('form.edit',  $u->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
+                            @csrf
+                            @method('GET')
+                            <button class="btn btn-primary btn" type="submit" id="del-confirm">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                        </form>
+                    </a>
                 </td>
             </tr>
         @endforeach
+        @endcan
         </tbody>
         {{--    <tfoot>--}}
         {{--    <tr>--}}
@@ -124,31 +156,7 @@
 </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-{{--<script src="{{asset('client/login/js/jquery.min.js')}}"></script>--}}
-{{--<script src="{{asset('client/login/js/popper.js')}}"></script>--}}
-{{--<script src="{{asset('client/login/js/bootstrap.min.js')}}"></script>--}}
-{{-- toastr js --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-<script>
-    if(typeof jQuery!=='undefined'){
-        console.log('jQuery Loaded');
-    }
-    else{
-        console.log('not loaded yet');
-    }
-</script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable();
-    });
-</script>
-{{--//toastr--}}
+{{--toastr--}}
 <script>
     @if(Session::has('message'))
         toastr.options =
@@ -185,6 +193,23 @@
         }
     toastr.warning("{{ session('warning') }}");
     @endif
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+{{--<script src="{{asset('client/login/js/jquery.min.js')}}"></script>--}}
+{{--<script src="{{asset('client/login/js/popper.js')}}"></script>--}}
+{{--<script src="{{asset('client/login/js/bootstrap.min.js')}}"></script>--}}
+{{-- toastr js --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
 </script>
 </body>
 </html>

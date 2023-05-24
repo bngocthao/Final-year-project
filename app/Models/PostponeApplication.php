@@ -23,10 +23,15 @@ class PostponeApplication extends Model
         'teach_id',
         'teach_status',
         'teach_description',
+        'unit_2_status',
+        'unit_2_description',
+        'unit_1_status',
+        'unit_1_description',
         'comment_id',
         'result',
         'point',
-        'proof'
+        'proof',
+        'i_result_date',
     ];
 
     // Một đơn xin vắng có nhiều ý kiến

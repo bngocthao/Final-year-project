@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role;
+use App\Models\UserRole;
 use Closure;
+//use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +19,13 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check() || Auth::user()->role_id != '1') {
-            Auth::logout();
-            Alert::error('Error', 'Unsuitable username or password!');
-            return redirect()->route('login')->with('Error', 'Unsuitable username or password!');;
-        }else
+        // check ng dùng đã đn chưa
+        $val_role = UserRole::find(Auth::user()->id);
+        if (Auth::check() && $val_role['role_id'] == '1') {
             return $next($request);
+        }else
+            Alert::error('Error', 'Tài khoản hoặc mật khẩu không đúng!');
+            Auth::logout();
+            return redirect()->route('login')->with('Error', 'Tài khoản hoặc mật khẩu không đúng!');
     }
 }

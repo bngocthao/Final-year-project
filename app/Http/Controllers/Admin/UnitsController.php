@@ -56,14 +56,14 @@ class UnitsController extends Controller
         try {
             $result = Unit::create($request->all());
             if($result){
-                Alert::success('Successfully created');
+                Alert::success('Tạo thành công');
             }else{
-                Alert::warning('Sorry, something went wrong');
+                Alert::warning('Xảy ra lỗi khi tạo!');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Dupplicate unit name!');
+                Alert::error('Error', 'Tên đơn vị không được trùng!');
                 return redirect()->back();
             }
         }
@@ -99,16 +99,16 @@ class UnitsController extends Controller
     public function update(Request $request, string $id)
     {
         $unit = Unit::find($id);
-        if(\auth()->user()->can('update', $unit)) {
+        if(auth()->user()->can('update', $unit)) {
             $update = Unit::find($id)->update($request->all());
             if ($update) {
-                Alert::success('Successfully updated');
+                Alert::success('Cập nhật thành công');
             } else {
-                Alert::warning('Sorry, something went wrong');
+                Alert::warning('Lỗi khi cập nhật');
             }
             return redirect()->to('admin/units');
         }
-        Alert::warning('Sorry, you don not have enough permission');
+        Alert::warning('Bạn không được quyền sử dụng chức năng này');
         return redirect()->to('admin/units');
     }
 
@@ -119,10 +119,10 @@ class UnitsController extends Controller
     {
         $delete = Unit::find($id)->delete();
         if($delete){
-            Alert::success('Successfully deleted');
+            Alert::success('Xóa thành công');
         }
         else{
-            Alert::error('Sorry, something went wrong');
+            Alert::error('Lỗi xảy ra khi xóa');
         }
 //        return redirect()->route('home');
         return redirect()->to('admin/units');

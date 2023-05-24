@@ -19,11 +19,11 @@ class ClientAuthenticate
     public function handle(Request $request, Closure $next): Response
     {
         //
-        if (!Auth::check() || Auth::user()->role_id == '1') {
-            Auth::logout();
-            Alert::error('Error', 'Unsuitable username or password!');
-            return redirect()->route('user.getLogin')->with('Error', 'Unsuitable username or password!');;
-        }else
+//        if (!Auth::check()) {
+//            Auth::logout();
+//            Alert::error('Error', 'Unsuitable username or password!');
+//            return redirect()->route('user.getLogin')->with('Error', 'Unsuitable username or password!');;
+//        }else
             return $next($request);
     }
 }

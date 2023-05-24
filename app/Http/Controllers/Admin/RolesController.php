@@ -47,14 +47,14 @@ class RolesController extends Controller
         try {
             $result = Role::create($request->all());
             if($result){
-                Alert::success('Successfully created');
+                Alert::success('Vai trò đã được tạo');
             }else{
-                Alert::warning('Sorry, something went wrong');
+                Alert::warning('Có lỗi xảy ra khi tạo vai trò');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Dupplicate username or usercode!');
+                Alert::error('Error', 'Trùng tên người dùng hoặc mã người dùng!');
                 return redirect()->back();
             }
         }
@@ -80,7 +80,7 @@ class RolesController extends Controller
             'user' => $user,
             'role' => $role
         ];
-        return view('manage_roles.edit');
+        return view('admin.manage_roles.edit', $context);
     }
 
     /**
@@ -90,9 +90,9 @@ class RolesController extends Controller
     {
         $update = Role::find($id)->update($request->all());
         if($update){
-            Alert::success('Successfully updated');
+            Alert::success('Đã cập nhật vai trò');
         }else{
-            Alert::warning('Sorry, something went wrong');
+            Alert::warning('Xảy ra lỗi khi cập nhật');
         }
         return redirect()->to('admin/roles');
     }
@@ -104,10 +104,10 @@ class RolesController extends Controller
     {
         $delete = Role::find($id)->delete();
         if($delete){
-            Alert::success('Successfully deleted');
+            Alert::success('Xóa thành công');
         }
         else{
-            Alert::error('Sorry, something went wrong');
+            Alert::error('Xảy ra lỗi khi xóa');
         }
 //        return redirect()->route('home');
         return redirect()->back();

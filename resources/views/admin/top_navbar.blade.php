@@ -3,9 +3,9 @@
     <!-- Logo -->
     <a href="{{route('home')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>P</b>A</span>
+      <span class="logo-mini"><b>S</b>Z</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>POSTPONE</b>APP</span>
+      <span class="logo-lg"><b>S</b>NOOZE</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -21,7 +21,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               {{-- Chỗ này là tên người dùng nè --}}
               {{-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> --}}
-              <span class="hidden-xs">{{$user->name ?? 'None'}}</span>
+              <span class="hidden-xs">{{$user->name ?? 'Trống'}}</span>
             </a>
             <ul class="dropdown-menu">
 
@@ -42,27 +42,12 @@
               </li> --}}
               <!-- Menu Footer-->
               <li>
-                <a class="dropdown-item" href="#">Profile</a>
-                <a class="dropdown-item" href="#">Sign out</a>
+                <a class="dropdown-item" href="#">{{$user->name ?? 'Trống'}}</a>
+                <a class="dropdown-item" href="#">Đăng xuất</a>
               </li>
             </ul>
-              {{-- <li>
-                <div class="row">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                </div>
-                <div class="row">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                </div>
-              </li>
-            </ul>
-          </li> --}}
-          <!-- Control Sidebar Toggle Button -->
-          {{-- <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li> --}}
         </ul>
 
       </div>
     </nav>
     </header>
-

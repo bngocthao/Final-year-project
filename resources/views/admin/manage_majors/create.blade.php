@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<title>Major Create</title>
+<title>Snooze/Tạo chuyên ngành</title>
 
   <!-- Content Wrapper. Contains page content -->
 
@@ -30,7 +30,7 @@
                     <i class="icofont icofont-spinner-alt-5"></i>
                 </div>
             </div>
-        <h4 class="sub-title">NEW MAJOR</h4>
+        <h4 class="sub-title">TẠO CHUYÊN NGÀNH</h4>
         <div class=" box box-info">
             <div class="box-body">
                 <form action="{{route('majors.store')}}" method="POST" enctype="multipart/form-data">
@@ -38,21 +38,21 @@
                     @method('POST')
                     {{-- <input hidden name="ma_nguoi_dung" > --}}
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Major code(<span style="color: red;">*</span>)</label>
+                        <label class="col-sm-2 col-form-label">Mã chuyên ngành(<span style="color: red;">*</span>)</label>
                         <div class="col-sm-10">
                             <input required name="major_code" type="text" class="form-control" style="font-weight: bold" value="5{{$major_code}}">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name(<span style="color: red;">*</span>)</label>
+                        <label class="col-sm-2 col-form-label">Tên chuyên ngành(<span style="color: red;">*</span>)</label>
                         <div class="col-sm-10">
                             <input required type="text"  class="form-control" name="name" >
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Belong to unit(<span style="color: red;">*</span>)</label>
+                        <label class="col-sm-2 col-form-label">Thuộc đơn vị(<span style="color: red;">*</span>)</label>
                         <div class="col-sm-10">
                         <select name="unit_id" class="form-control">
                             @foreach ($units as $item)
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Subject</label>
+                        <label class="col-sm-2 col-form-label">Học phần</label>
                         <div class="col-sm-10">
                             <select class="form-control select2 select2-hidden-accessible"
                                     name = 'subject_id[]'
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="form-group pull-right">
-                        <button type="submit" class="btn btn-success float-right btn-round">Create</button>
+                        <button type="submit" class="btn btn-success float-right btn-round">Tạo mới</button>
                         <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>
                     </div>
                 </form>

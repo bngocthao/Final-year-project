@@ -2,7 +2,7 @@
 @section('content')
   <!-- Content Wrapper. Contains page content -->
 
-  <title>Role Index</title>
+  <title>Snooze/Quản lý vai trò</title>
 
 
     <div class="box" style="align-items: stretch">
@@ -10,7 +10,7 @@
         {{-- <h3 class="box-title">User List</h3> --}}
         <p class="pull-left">
           <a href="{{route('roles.create')}}" style="margin-left: 50px" class="btn btn-success waves-effect waves-light form-control pull-right" style="float: none;margin: 5px;">
-            New Role</a>
+            Tạo vai trò</a>
         </p>
       </div>
 
@@ -20,8 +20,8 @@
           <thead>
           <tr>
             <th style="width:10px; !important">#</th>
-            <th>Name</th>
-            <th class="tabledit-toolbar-column" style="text-align: center;">Tools</th>
+            <th>Tên</th>
+            <th class="tabledit-toolbar-column" style="text-align: center;">Công cụ</th>
           </tr>
           </thead>
           <tbody>
@@ -41,7 +41,7 @@
                                 </svg>
                             </button>
                         </form></a>
-                    <a href="{{route("roles.destroy",$u->id)}}"  onclick="return confirm('Are you sure you want to delete?')">
+                    <a href="{{route("roles.destroy",$u->id)}}"  onclick="return confirm('Bạn có muốn xóa ?')">
                         <form action="{{route("roles.destroy",$u->id)}}" method="post" class="tabledit-edit-button btn btn primary waves-effect waves-light float-left">
                             @csrf
                             @method('DELETE')
