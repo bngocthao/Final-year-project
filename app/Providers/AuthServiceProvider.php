@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Unit;
+use App\Models\User;
 use App\Models\UserRole;
 use App\Policies\UnitPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -17,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
-        Unit::class => UnitPolicy::class,
+//        Unit::class => UnitPolicy::class,
     ];
 
     /**
@@ -41,8 +42,9 @@ class AuthServiceProvider extends ServiceProvider
             return in_array(1,$roles_id);
         });
 
-        /* Phòng đào tạo */
-        Gate::define('isHQ', function($user) {
+        /* Hiệu trưởng */
+        /* Trưởng khoa */
+        Gate::define('isHeadmaster', function($user) {
             // gate define has tested and return true
             $uid = $user->id;
             $role_id = UserRole::where('user_id', $uid)->get();
@@ -51,11 +53,12 @@ class AuthServiceProvider extends ServiceProvider
             for($i = 0; $i < sizeof($role_id); $i++){
                 $roles_id[] = $role_id[$i]->role_id;
             }
-            return in_array(2,$roles_id);
+            return in_array(2, $roles_id);
         });
 
-        /* Hiệu trưởng/ trưởng khoa */
-        Gate::define('isManager', function($user) {
+        /* Trưởng khoa */
+        /* Trưởng bộ môn */
+        Gate::define('isDean', function($user) {
             // gate define has tested and return true
             $uid = $user->id;
             $role_id = UserRole::where('user_id', $uid)->get();
@@ -63,26 +66,11 @@ class AuthServiceProvider extends ServiceProvider
             // access to collection to get value inside each obj
             for($i = 0; $i < sizeof($role_id); $i++){
                 $roles_id[] = $role_id[$i]->role_id;
-            }
-            if (in_array(4, $roles_id)){
-                return false;
             }
             return in_array(3, $roles_id);
         });
 
-        Gate::define('isMan&Pro', function($user) {
-            // gate define has tested and return true
-            $uid = $user->id;
-            $role_id = UserRole::where('user_id', $uid)->get();
-            $roles_id = array();
-            // access to collection to get value inside each obj
-            for($i = 0; $i < sizeof($role_id); $i++){
-                $roles_id[] = $role_id[$i]->role_id;
-            }
-            return array_intersect(array(3,4), $roles_id);
-        });
-
-        /* eGiảng viên */
+        /* Giảng viên */
         Gate::define('isProfessor', function($user) {
             // gate define has tested and return true
             $uid = $user->id;
@@ -92,15 +80,11 @@ class AuthServiceProvider extends ServiceProvider
             for($i = 0; $i < sizeof($role_id); $i++){
                 $roles_id[] = $role_id[$i]->role_id;
             }
-            if (in_array(3, $roles_id)){
-                return false;
-            }
+//            if (in_array(3, $roles_id)){
+//                return false;
+//            }
             return in_array(4,$roles_id);
         });
-
-//        Gate::define('has-any-role', function ($user, $roles) {
-//            return $user->roles()->whereIn('name', $roles)->exists();
-//        });
 
         Gate::define('isStudent', function($user) {
             // gate define has tested and return true

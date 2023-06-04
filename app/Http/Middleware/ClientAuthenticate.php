@@ -24,6 +24,12 @@ class ClientAuthenticate
 //            Alert::error('Error', 'Unsuitable username or password!');
 //            return redirect()->route('user.getLogin')->with('Error', 'Unsuitable username or password!');;
 //        }else
+
+        if (!Auth::check())
+        {
+            return redirect()->route('user.getLogin');
+        }
+//        if(Auth::user()->roles->)
             return $next($request);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <title>Application Edit</title>
+    <title>Snooze/Cập nhật đơn</title>
 
     <!-- Content Wrapper. Contains page content -->
 
@@ -30,7 +30,7 @@
                     <i class="icofont icofont-spinner-alt-5"></i>
                 </div>
             </div>
-            <h4 class="sub-title">UPDATE APPLICATION</h4>
+            <h4 class="sub-title">CẬP NHẬT ĐƠN</h4>
             <div class=" box box-info">
                 <div class="box-body">
                     <form action="{{route('postponse_apps.update', $apply, $apply->id)}}" method="POST" enctype="multipart/form-data">
@@ -38,9 +38,9 @@
                         @method('PUT')
                         {{-- <input hidden name="ma_nguoi_dung" > --}}
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Student name</label>
+                            <label class="col-sm-2 col-form-label">Họ tên sinh viên</label>
                             <div class="col-sm-10">
-                                <input required name="name" type="text" class="form-control" style="font-weight: bold" value="{{$apply->name}}">
+                                <input disabled type="text" class="form-control" style="font-weight: bold" value="{{$apply->users->name}}">
                             </div>
                         </div>
 
@@ -52,40 +52,35 @@
 {{--                        </div>--}}
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Subject</label>
+                            <label class="col-sm-2 col-form-label">Học phần</label>
                             <div class="col-sm-10">
-                                <select name="subject_id" class="form-control">
+                                <select disabled name="subject_id" class="form-control">
                                     {{-- <option value="9999">Trống</option> --}}
                                     @foreach ($subjects as $item)
-                                        <option value="{{$item->id}}" @if($apply->suject_id == $item->id) selected @endif>{{$item->name?? 'Trống'}}</option>
+                                        <option value="{{$item->id}}" @if($apply->suject_id == $item->id) selected @endif>{{strip_tags($item->name)?? 'Trống'}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Group</label>
+                            <label class="col-sm-2 col-form-label">Nhóm</label>
                             <div class="col-sm-10">
-                                <input required type="text" class="form-control" name="group" value="{{$apply->group}}">
+                                <input disabled type="text" class="form-control" name="group" value="{{$apply->group}}">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Semester</label>
+                            <label class="col-sm-2 col-form-label">Học kì</label>
                             <div class="col-sm-10">
-                                <select name="subject_id" class="form-control">
-                                    {{-- <option value="9999">Trống</option> --}}
-                                    @foreach ($subjects as $item)
-                                        <option value="{{$item->id}}" @if($apply->suject_id == $item->id) selected @endif>{{$item->name?? 'Trống'}}</option>
-                                    @endforeach
-                                </select>
+                                <input disabled type="text" class="form-control" value="{{$apply->semester_id}}">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">year</label>
+                            <label class="col-sm-2 col-form-label">Năm học</label>
                             <div class="col-sm-10">
-                                <select name="subject_id" class="form-control">
+                                <select disabled name="subject_id" class="form-control">
                                     {{-- <option value="9999">Trống</option> --}}
                                     @foreach ($years as $item)
                                         <option value="{{$item->id}}" @if($apply->year_id == $item->id) selected @endif>{{$item->name?? 'Trống'}}</option>
@@ -95,100 +90,110 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Reason</label>
+                            <label class="col-sm-2 col-form-label">Lý do</label>
                             <div class="col-sm-10">
-                                <textarea required type="text" id="editor" class="form-control" name="reason" >{{$apply->reason}}</textarea>
+                                <input disabled type="text" class="form-control" name="reason" value="{{strip_tags($apply->reason)}}"></input>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Professor</label>
+                            <label class="col-sm-2 col-form-label">Giảng viên</label>
                             <div class="col-sm-10">
-                                <textarea required type="text" class="form-control" name="teach_id" value="{{$apply->users->name}}">{{$apply->users->name}}</textarea>
+                                <input disabled type="text" class="form-control" name="teach_id" value="{{$apply->users->name}}"></input>
                             </div>
                         </div>
 
+                        @can('isProfessor')
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Professor approve</label>
+                            <label class="col-sm-2 col-form-label">Quyết định giảng viên</label>
                             <div class="col-sm-10">
                                 <select name="teach_status" class="form-control">
-                                     <option value="">Not decided</option>
-                                     <option value="1" @if($apply->teach_status == '1') selected @endif>Agree</option>
-                                    <option value="2" @if($apply->teach_status == '2') selected @endif>Reject</option>
+                                     <option value="" disabled>Đang chờ...</option>
+                                     <option value="1" @if($apply->teach_status == '1') selected @endif>Đồng ý</option>
+                                    <option value="2" @if($apply->teach_status == '0') selected @endif>Không đồng ý</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Ý kiến giảng viên</label>
+                            <div class="col-sm-10">
+                                <textarea id="editor2" type="text" class="form-control ck-editor__editable_inline" name="teach_description">{{$apply->teach_description}}</textarea>
+                            </div>
+                        </div>
+                        @endcan
+
+                        @can('isDean')
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Quyết định phó khoa</label>
+                            <div class="col-sm-10">
+                                <select name="dean_status" class="form-control">
+                                    <option value="" disabled>Đang chờ...</option>
+                                    <option value="1" @if($apply->dean_status == '1') selected @endif>Đồng ý</option>
+                                    <option value="2" @if($apply->dean_status == '0') selected @endif>Từ chối</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Ý kiến phó khoa</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control ck-editor__editable_inline" name="dean_description">{{$apply->dean_description}}</textarea>
+                            </div>
+                        </div>
+                        @endcan
+
+                        @can('isHeadmaster')
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Quyết định trưởng khoa</label>
+                            <div class="col-sm-10">
+                                <select name="headmaster_status" class="form-control">
+                                    <option value="">Đang chờ...</option>
+                                    <option value="1" @if($apply->headmaster_status == '1') selected @endif>Đồng ý</option>
+                                    <option value="2" @if($apply->headmaster_status == '0') selected @endif>Từ chối</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Professor opinion</label>
+                            <label class="col-sm-2 col-form-label">Ý kiến trưởng khoa</label>
                             <div class="col-sm-10">
-                                <textarea required id="editor2" type="text" class="form-control" name="teach_description" value="{{$apply->teach_description}}">{{$apply->teach_description}}</textarea>
+                                <textarea type="text" id="editor3" class="form-control ck-editor__editable_inline" name="headmaster_description">{{$apply->headmaster_description}}</textarea>
                             </div>
                         </div>
+                        @endcan
 
+                        @can('isProfessor')
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Major manager approve</label>
+                            <label class="col-sm-2 col-form-label">Kết quả</label>
                             <div class="col-sm-10">
-                                <select name="unit_2_status" class="form-control">
-                                    <option value="">Not decided</option>
-                                    <option value="1" @if($apply->unit_2_status == '1') selected @endif>Agree</option>
-                                    <option value="2" @if($apply->unit_2_status == '2') selected @endif>Reject</option>
+                                <select name="result" class="form-control"
+                                @if($apply->dean_status == null || $apply->headmaster_status == null) disabled @endif
+                                        @if($apply->teach_status == '0' || $apply->dean_status == '0'
+                                            || $apply->headmaster_status == '0') disabled @endif>
+                                    <option value="">Đang chờ...</option>
+                                    <option value="1" @if($apply->result == '1') selected @endif>Đồng ý</option>
+                                    <option value="0" @if($apply->result == '0') selected @endif
+                                            @if($apply->teach_status == '0' || $apply->dean_status == '0' || $apply->headmaster_status == '0')
+                                        selected @endif>Từ chối</option>
                                 </select>
                             </div>
                         </div>
+                        @endcan
 
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Major manager opinion</label>
-                            <div class="col-sm-10">
-                                <textarea required type="text" class="form-control" name="unit_2_description" value="{{$apply->unit_2_description}}">{{$apply->unit_2_description}}</textarea>
-                            </div>
-                        </div>
+{{--                        <div class="form-group row">--}}
+{{--                            <label class="col-sm-2 col-form-label">Proof</label>--}}
+{{--                            <div class="col-sm-10">--}}
+{{--                                <input type="text" hidden="" id="file_link" value="{{asset($apply->proof)}}">--}}
 
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Training department approve</label>
-                            <div class="col-sm-10">
-                                <select name="unit_1_status" class="form-control">
-                                    <option value="">Not decided</option>
-                                    <option value="1" @if($apply->unit_1_status == '1') selected @endif>Agree</option>
-                                    <option value="2" @if($apply->unit_1_status == '2') selected @endif>Reject</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Training department opinion</label>
-                            <div class="col-sm-10">
-                                <textarea required type="text" id="editor3" class="form-control" name="unit_1_description" value="{{$apply->unit_1_description}}">{{$apply->unit_1_description}}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Result</label>
-                            <div class="col-sm-10">
-                                <select name="result" class="form-control">
-                                    <option value="">Not decided</option>
-                                    <option value="1" @if($apply->result == '1') selected @endif>Agree</option>
-                                    <option value="2" @if($apply->result == '2') selected @endif>Reject</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Proof</label>
-                            <div class="col-sm-10">
-                                <input type="text" hidden="" id="file_link" value="{{asset($apply->proof)}}">
-
-                                <input class="input--style-5" type="file" id="proof" name="proof" value="{{asset($apply->proof)}}" />
-                                </div>
-                        </div>
-
-                        <input name="major_id" value="major_id" type="hidden">
+{{--                                <input class="input--style-5" type="file" id="proof" name="proof" value="{{asset($apply->proof)}}" />--}}
+{{--                                </div>--}}
+{{--                        </div>--}}
 
                         <div class="form-group pull-right">
-                            <button type="submit" class="btn btn-success float-right btn-round">Update</button>
-                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>
+                            <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
+{{--                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>--}}
                         </div>
+
+
                     </form>
                 </div>
             </div>
@@ -207,10 +212,6 @@
             lastModified: new Date(),
 
         });
-
-        // console.log(myFile);
-
-        // console.log(myFile);
 
         // Now let's create a DataTransfer to get a FileList
         const dataTransfer = new DataTransfer();
@@ -239,5 +240,20 @@
                 console.error( error );
             } );
     </script>
-    </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 200px;
+        }
+    </style>
+{{--    <script>--}}
+{{--        function sweetalert2(){--}}
+{{--            Swal({--}}
+{{--                title: 'Success',--}}
+{{--                text: 'Do you want to continue',--}}
+{{--                type: 'success',--}}
+{{--                confirmButtonText: 'Cool'--}}
+{{--            })--}}
+{{--        }--}}
+{{--    </script>--}}
+
 @endsection

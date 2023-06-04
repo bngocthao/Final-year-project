@@ -14,22 +14,32 @@ use mysql_xdevapi\Collection;
 use RealRashid\SweetAlert\Facades\Alert;
 use function GuzzleHttp\Promise\all;
 use function Webmozart\Assert\Tests\StaticAnalysis\length;
-
+use App\Services\RoleService;
 class MajorsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    protected $roleService;
+    public function __construct(RoleService $roleService)
+    {
+        //kb ng cái services luôn
+        $this->roleService = $roleService;
+    }
+
     public function index()
     {
+
         $id = Auth::id();
         $user = User::find($id);
         $users = User::all();
         $majors = Major::all();
+        $role =  $this->roleService->inden_role();
         $context = [
             'users' => $users,
             'majors' => $majors,
             'user' => $user,
+            'role' => $role,
         ];
         return view('admin.manage_majors.index',$context);
     }
@@ -39,8 +49,9 @@ class MajorsController extends Controller
      */
     public function create()
     {
-        $major_code = rand(0,999999);
         $id = Auth::id();
+        $role =  $this->roleService->inden_role();
+        $major_code = rand(0,999999);
         $user = User::find($id);
         $majors = Major::all();
         $units = Unit::all();
@@ -50,7 +61,8 @@ class MajorsController extends Controller
             'major_code' => $major_code,
             'majors' => $majors,
             'units' => $units,
-            'subjects' => $subjects
+            'subjects' => $subjects,
+            'role' => $role
         ];
         return view('admin.manage_majors.create', $context);
     }
@@ -70,15 +82,15 @@ class MajorsController extends Controller
             $ids->subjects()->attach($subjectList);
 
             if($result){
-                Alert::success('Chuyên ngành đã được tạo');
+                return redirect()->intended('/admin/majors')->with('success', 'Thêm mới thành công');
             }else{
-                Alert::warning('Xảy ra lỗi khi tạo chuyên ngành!');
+                return redirect()->intended('/admin/majors')->with('error', 'Thêm mới thất bại!');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Mã hoặc tên chuyên ngành đã bị trùng');
-                return redirect()->back();
+                return redirect()->intended('/admin/majors')->with('error', 'Mã hoặc tên ngành đã bị trùng');
+
             }
         }
 
@@ -118,12 +130,14 @@ class MajorsController extends Controller
             $subject_list[] = Subject::find($subject_ids_list[$i]);
         }
         $full_subject = Subject::all();
+        $role =  $this->roleService->inden_role();
         $content = [
             'major' => $major,
             'units' => $units,
             'subject_list' => $subject_list,
             'full_subject' => $full_subject,
-            'subject_ids_list' => $subject_ids_list
+            'subject_ids_list' => $subject_ids_list,
+            'role' => $role
         ];
         return view('admin.manage_majors.edit', $content);
     }
@@ -144,12 +158,12 @@ class MajorsController extends Controller
         $major->subjects()->sync($request->subject_id);
         $update = Major::find($id)->update($request->all());
         if($update){
-            Alert::success('Cập nhật chuyên ngành thành công');
+            return redirect()->intended('/admin/majors')->with('success', 'Cập nhật thành công');
         }
         else{
-            Alert::error('Xảy ra lỗi khi cập nhật');
+            return redirect()->intended('/admin/majors')->with('error', 'Cập nhật thất bại!');
         }
-        return redirect()->to('admin/majors');
+//        return redirect()->to('admin/majors');
     }
 
     /**
@@ -160,10 +174,10 @@ class MajorsController extends Controller
 //        Alert::question('Do you really want to delete?','yes','no');
         $delete = Major::find($id)->delete();
          if($delete){
-             Alert::success('Xóa thành công');
+             return redirect()->intended('/admin/majors')->with('alert', 'Xóa thành công');
          }
          else{
-             Alert::error('Xảy ra lỗi khi xóa!');
+             return redirect()->intended('/admin/majors')->with('error', 'Có lỗi xảy ra khi xóa');
          }
 //        return redirect()->route('home');
         return redirect()->back();

@@ -8,21 +8,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use App\Services\RoleService;
 class YearsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Inject the service into the controller.
+    protected $roleService;
+    public function __construct(RoleService $roleService)
+    {
+        //kb ng cái services luôn
+        $this->roleService = $roleService;
+    }
     public function index()
     {
+        $role =  $this->roleService->inden_role();
         $id = Auth::user();
         $user = User::find($id);
         $user->name = $user[0]['name'];
         $years = Year::all();
         $context = [
             'user' => $user,
-            'years' => $years
+            'years' => $years,
+            'role' => $role
         ];
         return view('admin.manage_years.index', $context);
     }
@@ -32,11 +38,13 @@ class YearsController extends Controller
      */
     public function create()
     {
+        $role =  $this->roleService->inden_role();
         $id = Auth::user();
         $user = User::find($id);
         $user->name = $user[0]['name'];
         $context = [
             'user' => $user,
+            'role' => $role
         ];
         return view('admin.manage_years.create', $context);
     }
@@ -48,9 +56,9 @@ class YearsController extends Controller
     {
         $result = Year::create($request->all());
         if($result){
-            Alert::success('Tạo thành công');
+            return redirect()->intended('/admin/years')->with('success', 'Tạo thành công');
         }else{
-            Alert::warning('Lỗi xảy ra khi tạo');
+            return redirect()->intended('/admin/years')->with('error', 'Có lỗi xảy ra khi tạo');
         }
 
         return redirect()->to('admin/years');
@@ -73,9 +81,11 @@ class YearsController extends Controller
         $id = Auth::user();
         $user = User::find($id);
         $user->name = $user[0]['name'];
+        $role =  $this->roleService->inden_role();
         $context = [
             'user' => $user,
-            'year' => $year
+            'year' => $year,
+            'role' => $role
         ];
         return view('admin.manage_years.edit', $context);
     }
@@ -87,9 +97,9 @@ class YearsController extends Controller
     {
         $update = Year::find($id)->update($request->all());
         if($update){
-            Alert::success('Cập nhật thành công');
+            return redirect()->intended('/admin/years')->with('success', 'Cập nhật thành công');
         }else{
-            Alert::warning('Lỗi xảy ra khi cập nhật');
+            return redirect()->intended('/admin/years')->with('error', 'Có lỗi xảy ra khi tạo');
         }
         return redirect()->to('admin/years');
     }
@@ -101,10 +111,10 @@ class YearsController extends Controller
     {
         $delete = Year::find($id)->delete();
         if($delete){
-            Alert::success('Xóa thành công');
+            return redirect()->intended('/admin/years')->with('alert', 'Xóa thành công');
         }
         else{
-            Alert::error('Lỗi xảy ra khi xóa');
+            return redirect()->intended('/admin/years')->with('error', 'Có lỗi xảy ra khi xóa');
         }
 //        return redirect()->route('home');
         return redirect()->back();

@@ -13,9 +13,9 @@
     {{--    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />--}}
 
     <!-- Toastr -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>--}}
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>--}}
+{{--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">--}}
 
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href={{asset("client/landing-page/css/styles.css")}} rel="stylesheet" />
@@ -157,43 +157,43 @@
 
 
 {{--toastr--}}
-<script>
-    @if(Session::has('message'))
-        toastr.options =
-        {
-            "closeButton" : true,
-            "progressBar" : true
-        }
-    toastr.success("{{ session('message') }}");
-    @endif
+{{--<script>--}}
+{{--    @if(Session::has('message'))--}}
+{{--        toastr.options =--}}
+{{--        {--}}
+{{--            "closeButton" : true,--}}
+{{--            "progressBar" : true--}}
+{{--        }--}}
+{{--    toastr.success("{{ session('message') }}");--}}
+{{--    @endif--}}
 
-        @if(Session::has('error'))
-        toastr.options =
-        {
-            "closeButton" : true,
-            "progressBar" : true
-        }
-    toastr.error("{{ session('error') }}");
-    @endif
+{{--        @if(Session::has('error'))--}}
+{{--        toastr.options =--}}
+{{--        {--}}
+{{--            "closeButton" : true,--}}
+{{--            "progressBar" : true--}}
+{{--        }--}}
+{{--    toastr.error("{{ session('error') }}");--}}
+{{--    @endif--}}
 
-        @if(Session::has('info'))
-        toastr.options =
-        {
-            "closeButton" : true,
-            "progressBar" : true
-        }
-    toastr.info("{{ session('info') }}");
-    @endif
+{{--        @if(Session::has('info'))--}}
+{{--        toastr.options =--}}
+{{--        {--}}
+{{--            "closeButton" : true,--}}
+{{--            "progressBar" : true--}}
+{{--        }--}}
+{{--    toastr.info("{{ session('info') }}");--}}
+{{--    @endif--}}
 
-        @if(Session::has('warning'))
-        toastr.options =
-        {
-            "closeButton" : true,
-            "progressBar" : true
-        }
-    toastr.warning("{{ session('warning') }}");
-    @endif
-</script>
+{{--        @if(Session::has('warning'))--}}
+{{--        toastr.options =--}}
+{{--        {--}}
+{{--            "closeButton" : true,--}}
+{{--            "progressBar" : true--}}
+{{--        }--}}
+{{--    toastr.warning("{{ session('warning') }}");--}}
+{{--    @endif--}}
+{{--</script>--}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

@@ -16,8 +16,8 @@
 
 <div class="card mx-auto" style="width: 30rem;">
     <div class="card-body">
-        <h5 class="card-title">Good day mr/mrs {{$teach->name}}</h5>
-        <p class="card-text">You have a new postpone message</p>
+        <h5 class="card-title">Thưa thầy/cô {{$teach->name}}</h5>
+        <p class="card-text">Thầy/cô hiện đang có một đơn xin hoãn thì mới</p>
         <div class="card mx-auto" style="width: 10rem;">
             <div class="card-body">
                 <p><a href="http://127.0.0.1:8000/admin/postponse_apps" style="color: #04AA6D;">Link</a></p>

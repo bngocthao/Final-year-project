@@ -11,16 +11,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use App\Services\RoleService;
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
+    // Inject the service into the controller.
+    protected $roleService;
+    public function __construct(RoleService $roleService)
+    {
+        //kb ng cái services luôn
+        $this->roleService = $roleService;
+    }
 
     public function index()
     {
+        $role =  $this->roleService->inden_role();
         $id = Auth::id();
         $user = User::find($id);
         $users = User::all();
@@ -28,6 +32,7 @@ class UsersController extends Controller
         $context = [
             'users' => $users,
             'user' => $user,
+            'role' => $role
         ];
         return view('admin.manage_users.index',$context);
     }
@@ -37,6 +42,7 @@ class UsersController extends Controller
      */
     public function create()
     {
+        $role =  $this->roleService->inden_role();
         $id = Auth::id();
         $user = User::find($id);
         $majors = Major::all();
@@ -45,6 +51,7 @@ class UsersController extends Controller
             'majors' => $majors,
             'roles' => $roles,
             'user' => $user,
+            'role' => $role
         ];
         return view('admin.manage_users.create', $context);
     }
@@ -73,15 +80,14 @@ class UsersController extends Controller
 ////                'permission' => $request->permission,
 //            ]);
             if($result){
-                Alert::success('Tạo tài khoản thành công');
+                return redirect()->intended('/admin/users')->with('success', 'Tạo thành công');
             }else{
-                Alert::warning('Đã có lỗi xảy ra khi tạo tài khoản');
+                return redirect()->intended('/admin/users')->with('error', 'Có lỗi xảy ra khi tạo');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Mã người dùng bị trùng!');
-                return redirect()->back();
+                return redirect()->intended('/admin/users')->with('error', 'Mã người dùng bị trùng');
             }
         }
         return redirect()->to('admin/users');
@@ -106,6 +112,7 @@ class UsersController extends Controller
         $majors = Major::all();
         $units = Unit::all();
         $roles = Role::all();
+        $role =  $this->roleService->inden_role();
         // get role list of user has $id in UserRole table
         $role_list = $e_user->roles;
         $context = [
@@ -115,7 +122,8 @@ class UsersController extends Controller
             'units' => $units,
             'roles' => $roles,
             'e_user' => $e_user,
-            'user_roles' => $role_list
+            'user_roles' => $role_list,
+            'role' => $role
         ];
         return view ('admin.manage_users.edit', $context);
     }
@@ -130,11 +138,10 @@ class UsersController extends Controller
         $user->roles()->detach();
         $user->roles()->attach($request->role_id);
         if($update){
-            Alert::success('Cập nhật thành công');
+            return redirect()->intended('/admin/users')->with('success', 'Cập nhật thành công');
         }else{
-            Alert::warning('Lỗi xảy ra khi cập nhật');
+            return redirect()->intended('/admin/users')->with('error', 'Có lỗi xảy ra khi cập nhật');
         }
-        return redirect()->to('admin/users');
     }
 
     /**
@@ -146,12 +153,10 @@ class UsersController extends Controller
         $user->roles()->detach();
         $delete = User::find($id)->delete();
         if($delete){
-            Alert::success('Xóa thành công');
+            return redirect()->intended('/admin/users')->with('alert', 'Xóa thành công');
         }
         else{
-            Alert::error('Lỗi xảy ra khi xóa');
+            return redirect()->intended('/admin/users')->with('error', 'Có lỗi xảy ra khi xóa');
         }
-//        return redirect()->route('home');
-        return redirect()->back();
     }
 }

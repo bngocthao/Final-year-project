@@ -8,14 +8,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use App\Services\RoleService;
 class UnitsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Inject the service into the controller.
+    protected $roleService;
+    public function __construct(RoleService $roleService)
+    {
+        //kb ng cái services luôn
+        $this->roleService = $roleService;
+    }
     public function index()
     {
+        $role =  $this->roleService->inden_role();
         $id = Auth::user();
         $user = User::find($id);
         $user->name = $user[0]['name'];
@@ -26,6 +31,7 @@ class UnitsController extends Controller
         $context = [
             'units' => $units,
             'user' => $user,
+            'role' => $role,
         ];
         return view('admin.manage_units.index', $context);
     }
@@ -35,6 +41,7 @@ class UnitsController extends Controller
      */
     public function create()
     {
+        $role =  $this->roleService->inden_role();
         $unit_code = rand(0,999999);
         $id = Auth::user();
         $user = User::find($id);
@@ -43,7 +50,8 @@ class UnitsController extends Controller
         $context = [
             'user' => $user,
             'users' => $users,
-            'unit_code' => $unit_code
+            'unit_code' => $unit_code,
+            'role' => $role
         ];
         return view('admin.manage_units.create', $context);
     }
@@ -56,15 +64,14 @@ class UnitsController extends Controller
         try {
             $result = Unit::create($request->all());
             if($result){
-                Alert::success('Tạo thành công');
+                return redirect()->intended('/admin/units')->with('success', 'Tạo thành công');
             }else{
-                Alert::warning('Xảy ra lỗi khi tạo!');
+                return redirect()->intended('/admin/units')->with('error', 'Có lỗi xảy ra khi tạo');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Tên đơn vị không được trùng!');
-                return redirect()->back();
+                return redirect()->intended('/admin/units')->with('alert', 'Tên đơn vị không được trùng');
             }
         }
 
@@ -86,9 +93,11 @@ class UnitsController extends Controller
     {
         $unit = Unit::find($id);
         $users = User::all();
+        $role =  $this->roleService->inden_role();
         $context = [
             'unit' => $unit,
             'users' => $users,
+            'role' => $role,
         ];
         return view('admin.manage_units.edit', $context);
     }
@@ -102,14 +111,12 @@ class UnitsController extends Controller
         if(auth()->user()->can('update', $unit)) {
             $update = Unit::find($id)->update($request->all());
             if ($update) {
-                Alert::success('Cập nhật thành công');
+                return redirect()->intended('/admin/units')->with('success', 'Cập nhật thành công');
             } else {
-                Alert::warning('Lỗi khi cập nhật');
+                return redirect()->intended('/admin/units')->with('error', 'Có lỗi xảy ra khi cập nhật');
             }
-            return redirect()->to('admin/units');
         }
-        Alert::warning('Bạn không được quyền sử dụng chức năng này');
-        return redirect()->to('admin/units');
+        return redirect()->to('/admin/units');
     }
 
     /**
@@ -119,12 +126,10 @@ class UnitsController extends Controller
     {
         $delete = Unit::find($id)->delete();
         if($delete){
-            Alert::success('Xóa thành công');
+            return redirect()->intended('/admin/units')->with('alert', 'Xoóa thành công');
         }
         else{
-            Alert::error('Lỗi xảy ra khi xóa');
+            return redirect()->intended('/admin/units')->with('error', 'Có lỗi xảy ra khi xóa');
         }
-//        return redirect()->route('home');
-        return redirect()->to('admin/units');
     }
 }

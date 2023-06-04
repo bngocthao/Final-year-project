@@ -34,14 +34,14 @@
             <h4 class="sub-title">CHỈNH SỬA VAI TRÒ</h4>
             <div class=" box box-info">
                 <div class="box-body">
-                    <form action="{{route('roles.update', $role->id)}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('roles.update', $e_role->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tên vai trò(<span style="color: red;">*</span>)</label>
                             <div class="col-sm-10">
-                                <input required type="text" class="form-control" name="name" value="{{$role->name}}">
+                                <input required type="text" class="form-control" name="name" value="{{$e_role->name}}">
                             </div>
                         </div>
 

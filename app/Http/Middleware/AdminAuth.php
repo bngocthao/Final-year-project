@@ -21,7 +21,7 @@ class AdminAuth
     {
         // check ng dùng đã đn chưa
         $val_role = UserRole::find(Auth::user()->id);
-        if (Auth::check() && $val_role['role_id'] == '1') {
+        if (Auth::check()) {
             return $next($request);
         }else
             Alert::error('Error', 'Tài khoản hoặc mật khẩu không đúng!');

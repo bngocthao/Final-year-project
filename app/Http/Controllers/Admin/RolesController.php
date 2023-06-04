@@ -8,20 +8,30 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use App\Services\RoleService;
 class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    // Inject the service into the controller.
+    protected $roleService;
+    public function __construct(RoleService $roleService)
+    {
+        //kb ng cái services luôn
+        $this->roleService = $roleService;
+    }
+
     public function index()
     {
         $id = Auth::id();
         $user = User::find($id);
         $roles = Role::all();
+        $role = $user->roles[0]['id'];
         $context = [
             'roles' => $roles,
             'user' => $user,
+            'role' => $role,
         ];
         return view('admin.manage_roles.index',$context);
     }
@@ -33,8 +43,10 @@ class RolesController extends Controller
     {
         $id = Auth::id();
         $user = User::find($id);
+        $role = $user->roles[0]['id'];
         $context = [
             'user' => $user,
+            'role' => $role,
         ];
         return view('admin.manage_roles.create', $context);
     }
@@ -47,15 +59,14 @@ class RolesController extends Controller
         try {
             $result = Role::create($request->all());
             if($result){
-                Alert::success('Vai trò đã được tạo');
+                return redirect()->intended('/admin/roles')->with('success', 'Tạo thành công');
             }else{
-                Alert::warning('Có lỗi xảy ra khi tạo vai trò');
+                return redirect()->intended('/admin/roles')->with('error', 'Có lỗi xảy ra khi tạo');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Trùng tên người dùng hoặc mã người dùng!');
-                return redirect()->back();
+                return redirect()->intended('/admin/roles')->with('error', 'Trùng tên hoặc mã vai trò');
             }
         }
         return redirect()->to('admin/roles');
@@ -75,10 +86,12 @@ class RolesController extends Controller
     {
         $a_id = Auth::id();
         $user = User::find($a_id);
-        $role = Role::find($id);
+        $e_role = Role::find($id);
+        $role =  $this->roleService->inden_role();
         $context = [
             'user' => $user,
-            'role' => $role
+            'role' => $role,
+            'e_role' => $e_role,
         ];
         return view('admin.manage_roles.edit', $context);
     }
@@ -90,11 +103,10 @@ class RolesController extends Controller
     {
         $update = Role::find($id)->update($request->all());
         if($update){
-            Alert::success('Đã cập nhật vai trò');
+            return redirect()->intended('/admin/roles')->with('success', 'Cập nhật thành công');
         }else{
-            Alert::warning('Xảy ra lỗi khi cập nhật');
+            return redirect()->intended('/admin/roles')->with('error', 'Xảy ra lỗi khi cập nhật');
         }
-        return redirect()->to('admin/roles');
     }
 
     /**
@@ -104,12 +116,12 @@ class RolesController extends Controller
     {
         $delete = Role::find($id)->delete();
         if($delete){
-            Alert::success('Xóa thành công');
+            return redirect()->intended('/admin/roles')->with('success', 'Xóa thành công');
+
         }
         else{
-            Alert::error('Xảy ra lỗi khi xóa');
+            return redirect()->intended('/admin/roles')->with('error', 'Xảy ra lỗi khi xóa');
+
         }
-//        return redirect()->route('home');
-        return redirect()->back();
     }
 }

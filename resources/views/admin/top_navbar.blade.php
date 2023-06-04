@@ -19,7 +19,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              {{-- Chỗ này là tên người dùng nè --}}
+              {{-- Chỗ này là tên người dùng  --}}
               {{-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> --}}
               <span class="hidden-xs">{{$user->name ?? 'Trống'}}</span>
             </a>
@@ -42,8 +42,9 @@
               </li> --}}
               <!-- Menu Footer-->
               <li>
-                <a class="dropdown-item" href="#">{{$user->name ?? 'Trống'}}</a>
-                <a class="dropdown-item" href="#">Đăng xuất</a>
+                    <a class="dropdown-item" href="#">{{$user->name ?? 'Trống'}}</a>
+                    <form action="{{ route('logout') }}" method="post">@csrf</form>
+                    <a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a>
               </li>
             </ul>
         </ul>

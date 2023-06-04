@@ -10,15 +10,20 @@ use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Services\RoleService;
 
 class SubjectsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Inject the service into the controller.
+    protected $roleService;
+    public function __construct(RoleService $roleService)
+    {
+        //kb ng cái services luôn
+        $this->roleService = $roleService;
+    }
     public function index()
     {
+        $role =  $this->roleService->inden_role();
         $users = User::all();
         $id = Auth::user();
         $user = User::find($id);
@@ -30,6 +35,7 @@ class SubjectsController extends Controller
             'majors' => $majors,
             'subjects' => $subjects,
             'users' => $users,
+            'role' => $role
         ];
         return view('admin.manage_subjects.index', $context);
     }
@@ -39,6 +45,7 @@ class SubjectsController extends Controller
      */
     public function create()
     {
+        $role =  $this->roleService->inden_role();
         $id = Auth::user();
         $user = User::find($id);
         $majors = Major::all();
@@ -46,6 +53,7 @@ class SubjectsController extends Controller
         $context = [
             'majors' => $majors,
             'user' => $user,
+            'role' => $role
         ];
         return view('admin.manage_subjects.create', $context);
     }
@@ -58,15 +66,14 @@ class SubjectsController extends Controller
         try {
             $result = Subject::create($request->all());
             if($result){
-                Alert::success('Môn học đã được tạo');
+                return redirect()->intended('/admin/subjects')->with('success', 'Tạo thành công');
             }else{
-                Alert::warning('Có lỗi xảy ra khi tạo môn học');
+                return redirect()->intended('/admin/subjects')->with('error', 'Có lỗi xảy ra khi tạo');
             }
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode == '1062'){
-                Alert::error('Error', 'Trùng tên môn hoc hoặc mã môn học!');
-                return redirect()->back();
+                return redirect()->intended('/admin/subjects')->with('error', 'Trùng tên hoặc mã học phần');
             }
         }
 
@@ -90,9 +97,11 @@ class SubjectsController extends Controller
         $id = Auth::user();
         $user = User::find($id);
         $user->name = $user[0]['name'];
+        $role =  $this->roleService->inden_role();
         $context = [
             'subject' => $subject,
-            'user' => $user
+            'user' => $user,
+            'role' => $role
         ];
         return view('admin.manage_subjects.edit', $context);
     }
@@ -104,11 +113,10 @@ class SubjectsController extends Controller
     {
         $update = Subject::find($id)->update($request->all());
         if($update){
-            Alert::success('Cập nhật thành công');
+            return redirect()->intended('/admin/subjects')->with('success', 'Cập nhật thành công');
         }else{
-            Alert::warning('Xảy ra lỗi khi cập nhật');
+            return redirect()->intended('/admin/subjects')->with('error', 'Xảy ra lỗi khi cập nhật');
         }
-        return redirect()->to('admin/subjects');
     }
 
     /**
@@ -118,12 +126,10 @@ class SubjectsController extends Controller
     {
         $delete = Subject::find($id)->delete();
         if($delete){
-            Alert::success('Xóa thành công');
+            return redirect()->intended('/admin/subjects')->with('alert', 'Xóa thành công');
         }
         else{
-            Alert::error('Xảy ra lỗi khi xóa');
+            return redirect()->intended('/admin/subjects')->with('error', 'Xảy ra lỗi khi xóa');
         }
-//        return redirect()->route('home');
-        return redirect()->back();
     }
 }

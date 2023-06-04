@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\MajorsController;
 use App\Http\Controllers\Admin\PostponeApplicationsController;
 use App\Http\Controllers\Admin\SubjectsController;
 use App\Http\Controllers\Admin\UnitsController;
+use App\Http\Controllers\OtherController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\UsersController;
@@ -28,7 +29,11 @@ Route::get('/', function () {
 
 Auth::routes(['register'=>false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth','admin.auth']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('logout', function () {
+    Auth::logout();
+    return redirect('/user/login');
+});
 
 // admin controller
 Route::middleware(['auth','admin.auth'])->prefix('admin')->group(function () {
@@ -45,7 +50,7 @@ Route::middleware(['auth','admin.auth'])->prefix('admin')->group(function () {
 
 
 // client controller
-Route::middleware(['client.auth'])->prefix('client')->group(function(){
+Route::middleware(['client.auth'])->prefix('user')->group(function(){
 //    Route::get('/index', [App\Http\Controllers\HomeController::class, 'client_index'])->name('client.index');
     Route::resource('/', UserController::class);
     Route::resource('/form', PostponeApplicationController::class);
@@ -58,9 +63,11 @@ Route::middleware(['client.auth'])->prefix('client')->group(function(){
 //Route::get('/user/logout',[\App\Http\Controllers\OtherController::class,'logout'])->name('user.getLogout');
 Route::get('/user/login',[\App\Http\Controllers\OtherController::class,'getLogin'])->name('user.getLogin');
 Route::get('/user/register',[\App\Http\Controllers\Client\ClientAuth::class,'registration'])->name('user.getRegister');
-Route::post('/user/login/process',[\App\Http\Controllers\OtherController::class,'login'])->name('user.postLogin');
+Route::post('/user/index',[\App\Http\Controllers\OtherController::class,'login'])->name('user.postLogin');
 Route::post('/user/register/process',[\App\Http\Controllers\Client\ClientAuth::class,'register'])->name('user.register');
 Route::get('/user/logout',[\App\Http\Controllers\OtherController::class,'logout'])->name('user.getLogout');
+
+Route::get('/index-user',[OtherController::class,'index_user'])->name('user.index_user');
 
 // test mail
 Route::get('/mymailform',[PostponeApplicationController::class,'check_mail'])->name('mymailform');

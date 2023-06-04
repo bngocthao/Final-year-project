@@ -1,6 +1,7 @@
   <!-- sweetalert2 -->
-{{--  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>--}}
-{{--  @include('sweetalert::alert')--}}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+  @include('sweetalert::alert')
   <!-- Select2 -->
   <link rel="stylesheet" href="{{asset('admin/bower_components/select2/dist/css/select2.min.css')}}">
   <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
@@ -31,44 +32,44 @@
   <link rel="stylesheet" href="{{asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 
   <!-- toastr -->
-  <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+{{--  <link rel="stylesheet" type="text/css"--}}
+{{--        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">--}}
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-  <script>
-      @if(Session::has('message'))
-          toastr.options =
-          {
-              "closeButton" : true,
-              "progressBar" : true
-          }
-      toastr.success("{{ session('message') }}");
-      @endif
+{{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>--}}
+{{--  <script>--}}
+{{--      @if(Session::has('message'))--}}
+{{--          toastr.options =--}}
+{{--          {--}}
+{{--              "closeButton" : true,--}}
+{{--              "progressBar" : true--}}
+{{--          }--}}
+{{--      toastr.success("{{ session('message') }}");--}}
+{{--      @endif--}}
 
-          @if(Session::has('error'))
-          toastr.options =
-          {
-              "closeButton" : true,
-              "progressBar" : true
-          }
-      toastr.error("{{ session('error') }}");
-      @endif
+{{--          @if(Session::has('error'))--}}
+{{--          toastr.options =--}}
+{{--          {--}}
+{{--              "closeButton" : true,--}}
+{{--              "progressBar" : true--}}
+{{--          }--}}
+{{--      toastr.error("{{ session('error') }}");--}}
+{{--      @endif--}}
 
-          @if(Session::has('info'))
-          toastr.options =
-          {
-              "closeButton" : true,
-              "progressBar" : true
-          }
-      toastr.info("{{ session('info') }}");
-      @endif
+{{--          @if(Session::has('info'))--}}
+{{--          toastr.options =--}}
+{{--          {--}}
+{{--              "closeButton" : true,--}}
+{{--              "progressBar" : true--}}
+{{--          }--}}
+{{--      toastr.info("{{ session('info') }}");--}}
+{{--      @endif--}}
 
-          @if(Session::has('warning'))
-          toastr.options =
-          {
-              "closeButton" : true,
-              "progressBar" : true
-          }
-      toastr.warning("{{ session('warning') }}");
-      @endif
-  </script>
+{{--          @if(Session::has('warning'))--}}
+{{--          toastr.options =--}}
+{{--          {--}}
+{{--              "closeButton" : true,--}}
+{{--              "progressBar" : true--}}
+{{--          }--}}
+{{--      toastr.warning("{{ session('warning') }}");--}}
+{{--      @endif--}}
+{{--  </script>--}}

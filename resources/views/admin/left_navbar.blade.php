@@ -16,7 +16,8 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">TRANG QUẢN LÝ</li>
+        <li class="header">TRANG QUẢN LÝ - @if($role == 1) ADMIN @elseif($role == 2) TRƯỞNG KHOA @elseif($role == 3) PHÓ KHOA @else GIẢNG VIÊN @endif</li>
+        @can('isAdmin')
         <li class="treeview">
           <a href="{{route('users.index')}}">
             {{-- <i class="fa fa-dashboard"></i> --}}
@@ -36,24 +37,27 @@
           </li>
           </ul>
         </li>
-{{--        <li class="treeview">--}}
-{{--          <a href="#">--}}
-{{--            <span>Form Mangement</span>--}}
-{{--            <span class="pull-right-container">--}}
-{{--              <i class="fa fa-angle-left pull-right"></i>--}}
-{{--            </span>--}}
-{{--            --}}{{-- Cái này có thể dùng để hiển thị số lượng đơn xin điểm chưa được xử lý --}}
-{{--            --}}{{-- <span class="pull-right-container">--}}
-{{--              <span class="label label-primary pull-right">4</span>--}}
-{{--            </span> --}}
-{{--          </a>--}}
-{{--          <ul class="treeview-menu">--}}
-{{--            <li><a href="{{route('postponse_apps.index')}}">--}}
-{{--              <span class="pcoded-mtext">Form List</span></a>--}}
-{{--            </li>--}}
-{{--          </ul>--}}
-{{--        </li>--}}
+        @endcan
 
+        <li class="treeview">
+          <a href="#">
+            <span>Đơn xin điểm i</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+{{--             Cái này có thể dùng để hiển thị số lượng đơn xin điểm chưa được xử lý--}}
+             <span class="pull-right-container">
+              <span class="label label-primary pull-right"></span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{route('postponse_apps.index')}}">
+              <span class="pcoded-mtext">Danh sách đơn</span></a>
+            </li>
+          </ul>
+        </li>
+
+        @can('isAdmin')
         <li class="treeview">
           <a href="#">
             <span>Quản lý đơn vị</span>
@@ -79,17 +83,18 @@
           </ul>
         </li>
 
-          <li class="treeview">
-              <a href="#">
-                  <span>Năm học</span>
-                  <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-              </a>
-              <ul class="treeview-menu">
-                  <li><a href="{{route('years.index')}}"><i class="fa fa-circle-o"></i>Danh sách năm học</a></li>
-              </ul>
-          </li>
+        <li class="treeview">
+          <a href="#">
+              <span>Năm học</span>
+              <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+          </a>
+          <ul class="treeview-menu">
+              <li><a href="{{route('years.index')}}"><i class="fa fa-circle-o"></i>Danh sách năm học</a></li>
+          </ul>
+      </li>
+        @endcan
       </ul>
     </section>
     <!-- /.sidebar -->

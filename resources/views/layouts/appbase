@@ -1,156 +1,109 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
+    <title>Đăng nhập</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('client/login/css/style.css')}}">
 
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+{{--<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">--}}
+{{--<body class="img js-fullheight" style="background-color: #B6E2D3 !important;  font-family: Roboto Slab; color:#fffDD0;">--}}
+<body class="img js-fullheight" style="background-color: #F2845c !important;  font-family: Roboto Slab; ">
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        {{-- Nếu route tồn tại login or reg or both thì nó sẽ hiển thị  --}}
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="login-wrap p-0">
+                    <h3 class="mb-4 text-center" style="font-family: 'Roboto Slab'; !Important"> Đăng nhập <br>
+                    </h3>
+                    <form action="{{route('user.postLogin')}}" class="signin-form" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <input class="form-control" type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input id="password-field" type="password" class="form-control" name="password" placeholder="Password" required>
+{{--                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>--}}
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="form-control btn btn-primary submit px-3">Đăng nhập</button>
+                        </div>
+                        <div class="form-group d-md-flex">
+                            <div class="w-50">
+                                <label class="checkbox-wrap checkbox-primary">Ghi nhớ
+                                    <input type="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a href="{{ route('user.getRegister') }}" style="color: #fff">Tạo tài khoản</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        </div>
     </div>
+</section>
+
+<script src="{{asset('client/login/js/jquery.min.js')}}"></script>
+<script src="{{asset('client/login/js/popper.js')}}"></script>
+<script src="{{asset('client/login/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('client/login/js/main.js')}}"></script>
+
+{{--toastr--}}
+<script>
+    @if(Session::has('message'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.success("{{ session('message') }}");
+    @endif
+
+        @if(Session::has('error'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.error("{{ session('error') }}");
+    @endif
+
+        @if(Session::has('info'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.info("{{ session('info') }}");
+    @endif
+
+        @if(Session::has('warning'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+    toastr.warning("{{ session('warning') }}");
+    @endif
+</script>
 </body>
 </html>
------------------------------
-Gửi mail
-$update = PostponeApplication::create($request->all());
-if($request->submit_num != 1)
-{
-    if($update){
 
-        $title = 'NEW POSTPONE APPLICATION';
-
-        // Lấy teacher id trong bảng request
-        $teach = $request->teach_id;
-        //
-        $get_email = User::where('id',$teach)->pluck('email')->toArray();
-
-        // Select tên user có role là giảng viên từ bảng user
-        $teach_name = User::where('id',$teach)->pluck('name')->toArray();
-
-        // Lấy id đơn mới nhất vừa gửi
-        $id_don_moi_nhat = $request->id_don;
-
-        // Địa chỉ truy cập duyệt đơn + id đơn sinh viên vừa submit
-        $url = route('edit.request',$id_don_moi_nhat);
-
-
-        // Compact link qua view email
-        $link = $url;
-
-
-        Mail::send('email.layout_admin',compact('link','title'), function ($email) use ($teach_name, $get_email) {
-            // Gui den email nao, ten cua chu so huu email do la ai
-            $email->subject('Có đơn mới');
-            $email->to($get_email,$teach_name);
-        });
-
-        Alert()->success('AAAAAAAAAAAAAAA');
-        }
-        else{
-            Alert()->error('Có lỗi xảy ra');
-        }
-    } else{
-
-        $add = PostponeApplication::create($request->all());
-
-        if($add){
-            Alert()->success('Đơn đã được gửi');
-        }
-        else{
-            Alert()->error('Có lỗi xảy ra');
-        }
-
-
-    $title = 'NEW POSTPONE APPLICATION';
-
-    // Lấy teacher id trong bảng request
-    $teach = $request->teach;
-    //
-    $get_email = User::where('id',$teach)->pluck('email')->toArray();
-
-    // Select tên user có role là giảng viên từ bảng user
-    $teach_name = User::where('id',$teach)->pluck('name')->toArray();
-
-    // Lấy id đơn mới nhất vừa gửi
-    $id_don_moi_nhat = $add->id;
-
-    // Địa chỉ truy cập duyệt đơn + id đơn sinh viên vừa submit
-    $url = route('edit.request',$id_don_moi_nhat);
-
-
-    // Compact link qua view email
-    $link = $url;
-    Mail::send('email.layout_admin',compact('link','title'), function ($email) use ($teach_name, $get_email) {
-        // Gui den email nao, ten cua chu so huu email do la ai
-        $email->subject('Có đơn mới');
-        $email->to($get_email,$teach_name);
-    });}

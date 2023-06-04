@@ -20,6 +20,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Access\Gate;
+use Illuminate\Routing\Redirector;
 class PostponeApplicationController extends Controller
 {
     // check mail blade
@@ -27,7 +28,7 @@ class PostponeApplicationController extends Controller
         return view('mail.layout_mail');
     }
 
-    //send form
+    //send form (*****************************)
     public function post_form(Request $request)
     {
         // xử lý validation
@@ -91,23 +92,24 @@ class PostponeApplicationController extends Controller
                 // $teach_email = User::where('id', $user->teach_id)->get();
                 // $message->attach('C:\laravel-master\laravel\public\uploads\image.png');
                 $message->to($teach_email, $user)->subject
-                ('A NEW POSTPONE APPLICATION');
+                ('Đơn xin hoãn thi mới');
                 //    link sẽ nằm trên đây
                 $message->from($user->email,$user->name);
             });
             echo "Email Sent. Check your inbox.";
             $notification = array(
-                'message' => 'Application successfully sent!',
+                'message' => 'Đơn đã được gửi hoàn tất!',
                 'alert-type' => 'success'
             );
 
         }else{
             $notification = array(
-                'message' => 'Sorry, something went wrong!',
+                'message' => 'Có lỗi xảy ra trong quá trình gửi đơn!',
                 'alert-type' => 'error'
             );
         }
-        return redirect()->back()->with($notification);
+        toastr()->success('Đơn đã được gửi');
+        return redirect()->route('index');
     }
 
 
@@ -124,6 +126,7 @@ class PostponeApplicationController extends Controller
      */
     public function create()
     {
+
         // chỉ dành cho sv
         $this->authorize('isStudent');
         // $lastsem = date('Y', strtotime('-1 year')).'-'.date("Y");
@@ -133,24 +136,7 @@ class PostponeApplicationController extends Controller
         $users = User::all();
         // Tìm chuyên ngành của sv
         $users_major = User::where('id', $id)->get('major_id');
-        // Lấy ra id của chuyên ngành dd($major[0]['id']);
-        $major = Major::find($users_major);
-        // Từ id chuyên ngành tìm danh sách id môn
-        $subject_ids = major_subject::where('major_id',$major[0]['id'])->get();
-        // với mỗi phần tử trong mảng chứa obj, lấy tên và id của subject
-        $length = sizeof($subject_ids);
-        $subject_ids_list = array();
-        for( $i = 0; $i < $length; $i++){
-            $subject_ids_list[] = $subject_ids[$i]['subject_id'];
-        }
-        // tìm pbj của môn học
-        $subject_list = array();
-        $length = sizeof($subject_ids_list);
-        for( $i = 0; $i < $length; $i++){
-            $subject_list[] = Subject::find($subject_ids_list[$i]);
-        }
         $subjects = Subject::all();
-        $years = Year::all();
         // professors list
         $profs_id_obj = UserRole::where('role_id', 4)->get('user_id');
         // get value professor id
@@ -163,14 +149,38 @@ class PostponeApplicationController extends Controller
         foreach ($profs_id as $p){
             $teach[] = User::where('id', $p)->get();
         }
+        // get month
+        $date = Carbon::now();
+        $month = $date->format('m');
+        $month = intval($month);
+        if($month >= 8 && $month <= 12){
+            $sem = 1;
+        }
+        // Học kỳ III bắt đầu từ giữa tháng 5 đến cuối tháng 6
+        elseif($month >= 1 && $month <= 5){
+            $sem = 2;
+        }else{
+            $sem = '3';
+        }
+        $all_years = Year::all();
+        $years = $date->format('y');
+        $years_avai = [];
+
+        foreach ($all_years as $y){
+            if(strpos($y->name, $years)){
+                $years_avai[] = $y;
+            }
+        }
+
         $context = [
             'user' => $user,
             'users' => $users,
             'subjects' => $subjects,
             'teach' => $teach,
-            'years' => $years,
+            'years' => $years_avai,
             'id' => $id,
-            'subject_list' => $subject_list,
+            'subject_list' => $subjects,
+            'sem' => $sem,
         ];
         return view('client.postpone_app.create',$context);
     }
@@ -180,6 +190,7 @@ class PostponeApplicationController extends Controller
      */
     public function store(Request $request)
     {
+        return redirect()->route('home');
         $result = PostponeApplication::create($request->all());
         if($result){
             $id = Auth::id();
@@ -196,7 +207,7 @@ class PostponeApplicationController extends Controller
                 // $teach_email = User::where('id', $user->teach_id)->get();
                 // $message->attach('C:\laravel-master\laravel\public\uploads\image.png');
                 $message->to($teach_email, $user)->subject
-                ('A NEW POSTPONE APPLICATION');
+                ('Đơn hoãn thi mới');
                 //    link sẽ nằm trên đây
                 $message->from($user->email,$user->name);
             });
@@ -205,7 +216,7 @@ class PostponeApplicationController extends Controller
         }else{
             Alert::warning('Có lỗi xảy ra, gửi thất bại');
         }
-        return redirect()->back();
+        return redirect()->route('home');
     }
     /**
      * Display the specified resource.
@@ -216,6 +227,7 @@ class PostponeApplicationController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $sub = Subject::where('id', $app->subject_id)->get('name');
+        $sub = $sub[0]['name'];
 //        $proof = Storage::get($app->proof);
 //        $proof = public_path($app->proof);
 //        $app->proof = Storage::get($proof);

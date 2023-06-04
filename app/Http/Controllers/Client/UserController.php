@@ -3,16 +3,36 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\PostponeApplication;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function getUpdateGrade($app)
+    {
+        // loop through each application
+        // find the one that oudate 1 year
+        // the date has to be >= the updated date += 1 day
+        // update data into F
+        foreach ($app as $a) {
+            $a->i_result_date = Carbon::parse($a->i_result_date);
+            $a->i_result_date = $a->i_result_date->addYear();
+            if (($a->i_result_date)->isPast() && ($a->result == 'i' || $a->result == 'I')){
+                $a->result = 'F';
+                $a->save();
+            }
+        }
+    }
+
     public function index()
     {
-        // đây là home của user
+        $id = Auth::id();
+        $app = PostponeApplication::where('user_id',$id)->get();
+        $this->getUpdateGrade($app);
+        return view('client.index', compact('app'));
     }
 
     /**

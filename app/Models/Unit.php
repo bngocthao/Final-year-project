@@ -25,6 +25,4 @@ class Unit extends Model
         return $this->hasMany(Major::class);
     }
 
-
-
 }

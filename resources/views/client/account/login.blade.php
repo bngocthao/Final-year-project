@@ -1,70 +1,58 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Đăng nhập</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đơn xin vắng</title>
+    <!-- Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="{{asset('client/login/css/style.css')}}">
 
     <!-- Toastr -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
 </head>
-{{--<body class="img js-fullheight" style="background-image: url(images/bg.jpg);">--}}
-{{--<body class="img js-fullheight" style="background-color: #B6E2D3 !important;  font-family: Roboto Slab; color:#fffDD0;">--}}
-<body class="img js-fullheight" style="background-color: #F2845c !important;  font-family: Roboto Slab; ">
-
-<section class="ftco-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 text-center mb-5">
-            </div>
+<body>
+<style>
+    .container-md{
+        top: 100px;max-width: 600px;padding-left: 5rem; padding-right: 5rem;
+    }
+</style>
+<div class="card container-md border py-3 my-3">
+    <br>
+    <form action="{{route('user.postLogin')}}" method="POST">
+        @csrf
+        <div class="mb-3" style="text-align: center;">
+            <h3 style='color: #258BCE' class="fw-bold">SNOOZE</h3>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="login-wrap p-0">
-                    <h3 class="mb-4 text-center" style="font-family: 'Roboto Slab'; !Important"> Đăng nhập <br>
-                    </h3>
-                    <form action="{{route('user.postLogin')}}" class="signin-form" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <input class="form-control" type="email" name="email" placeholder="Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input id="password-field" type="password" class="form-control" name="password" placeholder="Password" required>
-{{--                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>--}}
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="form-control btn btn-primary submit px-3">Đăng nhập</button>
-                        </div>
-                        <div class="form-group d-md-flex">
-                            <div class="w-50">
-                                <label class="checkbox-wrap checkbox-primary">Ghi nhớ
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="w-50 text-md-right">
-                                <a href="{{ route('user.getRegister') }}" style="color: #fff">Tạo tài khoản</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input class="form-control" type="email" name="email" placeholder="Email" required>
         </div>
-    </div>
-</section>
-
-<script src="{{asset('client/login/js/jquery.min.js')}}"></script>
-<script src="{{asset('client/login/js/popper.js')}}"></script>
-<script src="{{asset('client/login/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('client/login/js/main.js')}}"></script>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Mật khẩu</label>
+            <input id="password-field" type="password" class="form-control" name="password" placeholder="Password" required>
+        </div>
+        {{--        <div class="mb-3 form-check">--}}
+        {{--            <input type="checkbox" class="form-check-input" id="exampleCheck1">--}}
+        {{--            <label class="form-check-label" for="exampleCheck1">Check me out</label>--}}
+        {{--        </div>--}}
+        <div class="mb-3" style="text-align: right;>
+            <a href="{{ route('user.getRegister') }}">Tạo tài khoản</a>
+</div>
+<div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+</div>
+</form>
+<br>
+</div>
+</body>
+<!-- Boostrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 {{--toastr--}}
 <script>
@@ -104,6 +92,4 @@
     toastr.warning("{{ session('warning') }}");
     @endif
 </script>
-</body>
 </html>
-

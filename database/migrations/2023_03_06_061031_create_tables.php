@@ -86,10 +86,10 @@ return new class extends Migration
 //            $table->unsignedBigInteger('comment_id')->nullable();
             $table->string('proof')->nullable();
             $table->string('result')->nullable();
-            $table->integer('unit_2_status')->nullable();
-            $table->string('unit_2_description')->nullable();
-            $table->integer('unit_1_status')->nullable();
-            $table->string('unit_1_description')->nullable();
+            $table->integer('dean_status')->nullable();
+            $table->string('dean_description')->nullable();
+            $table->integer('headmaster_status')->nullable();
+            $table->string('headmaster_description')->nullable();
             $table->timestamp('i_result_date')->nullable();
             $table->timestamps();
         });
