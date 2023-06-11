@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <title>Edit Year</title>
+    <title>Chỉnh sửa năm học</title>
 
     <!-- Content Wrapper. Contains page content -->
 

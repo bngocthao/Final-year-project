@@ -2,31 +2,73 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
 
-    <title>Snooze/Index</title>
+    <title>Trang chủ</title>
 
 
     <div class="box" style="align-items: stretch">
-        <div class="box-header">
-            {{-- <h3 class="box-title">User List</h3> --}}
+{{--        <div class="box-header text-right">--}}
+{{--        <div class="box-header text-right">--}}
+{{--            <a role="button" href="{{route('user.getLogin')}}" class="btn" style="background-color:#3C8DBC;color: white;">Xuất file excel</a>--}}
+
+{{--            --}}{{-- <h3 class="box-title">User List</h3> --}}
 {{--            <p class="pull-left">--}}
 {{--                <a href="{{route('subjects.create')}}" style="margin-left: 50px" class="btn btn-success waves-effect waves-light form-control pull-right" style="float: none;margin: 5px;">--}}
 {{--                    New Subject</a>--}}
 {{--            </p>--}}
-        </div>
+{{--        </div>--}}
 
         <!-- /.box-header -->
         <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <form action="{{ route('filter_index', request()->query()) }}" method="get">
+                @csrf
+                <div class="flex my-2" style="text-align: right;">
+                    <b>Họ tên sinh viên: </b><input type="text" name="q" class="py-2 px-2 text-md border border-gray-200 rounded-l focus:outline-none" value="{{$search_param ?? ""}}" />
+                    <button type="submit" class="w-10 flex items-center justify-center border-t border-r border-b border-gray-200 rounded-r text-gray-100 bg-blue-500">
+                        <i class="fa fa-fw fa-search"></i>
+                    </button>
+                </div>
+            </form>
+            <table id="ex" class="table table-bordered table-striped">
+                <br>
                 <thead>
                 <tr>
-                    <th style="width:10px; !important">#</th>
-                    <th>Học phần</th>
-                    <th>Nhóm</th>
-                    <th>Giảng viên</th>
-                    <th>Kết quả</th>
-                    <th>Học kỳ</th>
-                    <th>Năm học</th>
-                    <th class="tabledit-toolbar-column" style="text-align: center;">Công cụ</th>
+                    <th col-index=1 style="width:10px; !important">
+                        <select class="table-filter" hidden>
+                            <option value="all"></option>
+                        </select>#</th>
+                    <th col-index=2 style="width:10px; !important">Sinh viên
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index=3 style="width:10px; !important">Học phần
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+{{--                    <th col-index=4>Nhóm--}}
+{{--                        <select class="table-filter" onchange="filter_rows()">--}}
+{{--                            <option value="all"></option>--}}
+{{--                        </select></th>--}}
+                    <th col-index=4>Kết quả
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index=5>Học kỳ
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index=6>Năm học
+                        <select class="table-filter" onchange="filter_rows()">
+                            <option value="all"></option>
+                        </select>
+                    </th>
+                    <th col-index=7 class="tabledit-toolbar-column" style="text-align: center;">Công cụ</th>
+                    @can('isProfessor')
+                    <th class="tabledit-toolbar-column" style="text-align: center">Cập nhật điểm</th>
+                    @endcan
                 </tr>
                 </thead>
                 <tbody>
@@ -34,10 +76,10 @@
                 @foreach($app as $u)
                     <tr>
                         <td style="width:10px;">{{ $u->id}}</td>
-                        <td>{{ strip_tags($u->subject->name) ?? "Trống" }}</td>
-                        <td>{{ $u->group}}</td>
-                        <td>{{ $u->teach->name}}</td>
-                        <td>@if($u->result == '1') Đồng ý @elseif($u->result == '0') Không đồng ý
+                        <td >{{ strip_tags($u->users->name) }}</td>
+                        <td>{{ strip_tags($u->subject->name)}}</td>
+{{--                        <td>{{ $u->group}}</td>--}}
+                        <td>@if($u->result == '1') Đồng ý @elseif($u->headmaster_status == '1') Đồng ý @elseif($u->headmaster_status == '0') Từ chối @elseif($u->result == '0') Không đồng ý
                             @else Đang chờ... @endif</td>
                         <td>{{$u->semesters->name}}</td>
                         <td>{{$u->years->name}}</td>
@@ -70,6 +112,39 @@
 {{--                                </form>--}}
 {{--                            </a>--}}
                         </td>
+                        @can('isProfessor')
+                        <td class="tabledit-toolbar-column" style="text-align: center; padding-top: 15px;">
+                            <a href="{{route('edit_mark', $u->id)}}" style="color: black">
+                                <button class="btn btn-md" style="background-color: #183153;color: white; font-size: 16px;">
+                                    <i class="fa fa-fw fa-gear"></i>
+                                </button>
+
+                                <!-- Button trigger modal -->
+{{--                                <button type="button" class="btn btn-primary btn-md" style="background-color: #183153;color: white; font-size: 16px;" data-toggle="modal" data-target="#myModal">--}}
+{{--                                    <i class="fa fa-fw fa-gear"></i>--}}
+{{--                                </button>--}}
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </td>
+                        @endcan
                     </tr>
                 @endforeach
 
@@ -95,9 +170,123 @@
     {{-- <script type="text/javascript" src={{asset("admin/files\assets\pages/edit-table\jquery.tabledit.js")}}></script>
     <script type="text/javascript" src={{asset("admin/files\assets\pages/edit-table/editable.js")}}></script> --}}
 
+    {{-- Filter table data--}}
+    <script type="text/javascript">
+        // window.onload = () => {
+        //     console.log(document.querySelector("#ex > tbody > tr:nth-child(1) > td:nth-child(2)").innerHTML);
+        // }
+        // Get unique values for the desired columns
+        // {2 : ["M", "F"], 3 : ["RnD", "Engineering", "Design"], 4 : [], 5 : []}
+        function getUniqueValuesFromColumn() {
+
+            var unique_col_values_dict = {}
+
+            allFilters = document.querySelectorAll(".table-filter")
+            allFilters.forEach((filter_i) => {
+                col_index = filter_i.parentElement.getAttribute("col-index");
+                // alert(col_index)
+                const rows = document.querySelectorAll("#ex > tbody > tr")
+
+                rows.forEach((row) => {
+                    cell_value = row.querySelector("td:nth-child("+col_index+")").innerHTML;
+                    // if the col index is already present in the dict
+                    if (col_index in unique_col_values_dict) {
+
+                        // if the cell value is already present in the array
+                        if (unique_col_values_dict[col_index].includes(cell_value)) {
+                            // alert(cell_value + " is already present in the array : " + unique_col_values_dict[col_index])
+
+                        } else {
+                            unique_col_values_dict[col_index].push(cell_value)
+                            // alert("Array after adding the cell value : " + unique_col_values_dict[col_index])
+
+                        }
+
+
+                    } else {
+                        unique_col_values_dict[col_index] = new Array(cell_value)
+                    }
+                });
+
+
+            });
+
+            // for(i in unique_col_values_dict) {
+            //     alert("Column index : " + i + " has Unique values : \n" + unique_col_values_dict[i]);
+            // }
+
+            updateSelectOptions(unique_col_values_dict)
+
+        };
+
+        // Add <option> tags to the desired columns based on the unique values
+
+        function updateSelectOptions(unique_col_values_dict) {
+            allFilters = document.querySelectorAll(".table-filter")
+
+            allFilters.forEach((filter_i) => {
+                col_index = filter_i.parentElement.getAttribute('col-index')
+
+                unique_col_values_dict[col_index].forEach((i) => {
+                    filter_i.innerHTML = filter_i.innerHTML + `\n<option value="${i}">${i}</option>`
+                });
+
+            });
+        };
+
+
+        // Create filter_rows() function
+
+        // filter_value_dict {2 : Value selected, 4:value, 5: value}
+
+        function filter_rows() {
+            allFilters = document.querySelectorAll(".table-filter")
+            var filter_value_dict = {}
+
+            allFilters.forEach((filter_i) => {
+                col_index = filter_i.parentElement.getAttribute('col-index')
+
+                value = filter_i.value
+                if (value != "all") {
+                    filter_value_dict[col_index] = value;
+                }
+            });
+
+            var col_cell_value_dict = {};
+
+            const rows = document.querySelectorAll("#ex tbody tr");
+            rows.forEach((row) => {
+                var display_row = true;
+
+                allFilters.forEach((filter_i) => {
+                    col_index = filter_i.parentElement.getAttribute('col-index')
+                    col_cell_value_dict[col_index] = row.querySelector("td:nth-child(" + col_index+ ")").innerHTML
+                })
+
+                for (var col_i in filter_value_dict) {
+                    filter_value = filter_value_dict[col_i]
+                    row_cell_value = col_cell_value_dict[col_i]
+
+                    if (row_cell_value.indexOf(filter_value) == -1 && filter_value != "all") {
+                        display_row = false;
+                        break;
+                    }
+                }
+                if (display_row == true) {
+                    row.style.display = "table-row"
+
+                } else {
+                    row.style.display = "none"
+
+                }
+            })
+
+        }
+        getUniqueValuesFromColumn();
+    </script>
+
     {{-- sweet alert Thông báo khi xóa bản ghi --}}
     <script type="text/javascript">
-
         $('.delete-confirm').on('click', function (e) {
             e.preventDefault();
             const url = $(this).attr('href');

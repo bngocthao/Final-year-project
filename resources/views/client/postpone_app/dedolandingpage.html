@@ -1,240 +1,209 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" type="image/x-icon" href={{asset('client/landing-page/assets/favicon.ico')}} />
+    <title>Snooze/ Trang chủ</title>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    {{--    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />--}}
+    {{--    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />--}}
 
-    <title>Snooze</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+    <!-- Toastr -->
+    {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>--}}
+    {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>--}}
+    {{--    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">--}}
 
-    <!-- Favicons -->
-    <link href="{{asset('client/landing/assets/img/favicon.png')}}" rel="icon">
-    <link href="{{asset('client/landing/assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-<!--    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">-->
-
-    <!-- Vendor CSS Files -->
-    <link href="{{asset('client/landing/assets/vendor/aos/aos.css')}}" rel="stylesheet">
-    <link href="{{asset('client/landing/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('client/landing/assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-    <link href="{{asset('client/landing/assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
-    <link href="{{asset('client/landing/assets/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-    <link href="{{asset('client/landing/assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="{{asset('client/landing/assets/css/style.css')}}" rel="stylesheet">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href={{asset("client/landing-page/css/styles.css")}} rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" crossorigin="anonymous">
 
 </head>
-
-<body>
-<style>
-    .body {
-        font-family: SansSerif, Arial, Calibri, Tahoma;
-    }
-    .card-header {
-        border-bottom-color: transparent;
-        box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
-        background-color: white;
-    }
-    .card-body {
-        border-top-color: transparent;
-        box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
-    }
-</style>
-<!-- ======= Header ======= -->
-<header id="header" class="fixed-top header-transparent">
-    <div class="container d-flex align-items-center justify-content-between">
-
-        <div class="logo">
-            <h1><a href="#">SNOOZE</a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-        </div>
-
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li><a class="getstarted scrollto" href="#features">Đăng nhập/ Đăng ký</a></li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
-
-    </div>
-</header><!-- End Header -->
-
-<!-- ======= Hero Section ======= -->
-<section id="hero" class="d-flex align-items-center">
-
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light navbar-shrink fixed-top" id="mainNav" >
     <div class="container">
-        <div class="row">
-            <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1" data-aos="fade-up">
-                <div>
-                    <h1>Chào mừng bạn đến với Snooze</h1>
-                    <h2>Snooze là nền tảng trực tuyến cho phép sinh viên xin hoãn lại kỳ thi một cách nhanh chóng và thuận tiện</h2>
-                    <nav id="navbar" class="navbar">
-                        <a class="getstarted scrollto" style="font-size: 2vw;" href="#features">Bắt đầu gửi đơn</a>
-                    </nav>
-                </div>
-            </div>
-            <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
-                <img src="{{asset('client/landing/assets/img/hero-img.png')}}" class="img-fluid" alt="">
-            </div>
+        <a class="navbar-brand " href="#" style="color: black !important; font-family: 'Times New Roman' ;!important">Snooze</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                @can('isStudent')
+                <li class="nav-item"><a class="nav-link " style="color: black !important;  font-family: Roboto Slab;" href="{{route('form.create')}}">Tạo đơn mới</a></li>
+                @endcan
+                {{--                trang chủ sẽ là form list--}}
+                {{--                <li class="nav-item"><a class="nav-link" href="#portfolio">Form list</a></li>--}}
+                <li class="nav-item"> <a class="nav-link" style="color: black !important;  font-family: Roboto Slab" href="{{route('user.getLogout')}}">Đăng xuất</a></li>
+
+                {{--                <li class="nav-item dropdown">--}}
+                {{--                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">--}}
+                    {{--                        {{$user->name}}--}}
+                    {{--                    </a>--}}
+                {{--                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">--}}
+                    {{--                        <li><a class="dropdown-item" href="#">Action</a></li>--}}
+                    {{--                        <li><a class="dropdown-item" href="#">Another action</a></li>--}}
+                    {{--                        <li><hr class="dropdown-divider"></li>--}}
+                    {{--                        <li><a class="dropdown-item" href="#">Something else here</a></li>--}}
+                    {{--                    </ul>--}}
+                {{--                </li>--}}
+            </ul>
         </div>
     </div>
+</nav>
 
-</section><!-- End Hero -->
+<br><br><br><br>
+<!-- Masthead-->
+<div class="container">
+    {{--    {{\Illuminate\Support\Facades\Auth::user()->name}} - {{\Illuminate\Support\Facades\Auth::user()->role_id}}--}}
+    {{--    {{\Illuminate\Support\Facades\Auth::user()->id}}--}}
+    @if(Session::has('message'))
+    <script>
+        $(function(){
+            toastr.info("{{ Session::get('message') }}");
+        })
+    </script>
+    @endif
+    <table id="example" class="table table-striped" style="width:100%; ">
+        <thead>
+        <tr>
+            <th style="width:10px; !important; text-align: center;!important">#</th>
+            <th style="text-align: center;">Môn học</th>
+            <th style="text-align: center">Giảng viên</th>
+            <th style="text-align: center">Kết quả</th>
+            <th style="text-align: center">Học kỳ</th>
+            <th style="text-align: center">Năm học</th>
+            @cannot('isStudent')
+            <th style="text-align: center">Công cụ</th>
+            @endcannot
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($app as $u)
+        <tr>
+            <td style="width:10px;">{{ $u->id}}</td>
+            <td style="text-align: center">{{ $u->subject->name ?? "Trống" }}</td>
+            <td style="text-align: center">{{ $u->teach->name}}</td>
+            <td style="text-align: center">{!! $u->result ?? "Chưa có kết quả" !!}</td>
+            <td style="text-align: center">{{$u->semesters->name}}</td>
+            <td style="text-align: center">{{$u->years->name}}</td>
+            @cannot('isStudent')
+            <td class="tabledit-toolbar-column" style="text-align: center;">
+                <a href="{{route('form.show', $u->id)}}" style="color: black">
+                    <button class="btn btn-success btn"><i class="fa-solid fa-eye fa-beat"></i></button></a>
+                <a href="{{route('form.edit', $u->id)}}">
+                    <form action="{{ route('form.edit',  $u->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
+                        @csrf
+                        @method('GET')
+                        <button class="btn btn-primary btn" type="submit" id="del-confirm">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+                    </form></a>
+            </td>
+            @endcannot
+        </tr>
+        @endforeach
+        @can('isMan&Pro')
+        @foreach($app1 as $u)
+        <tr>
+            <td style="width:10px;">{{ $u->id}}</td>
+            <td style="text-align: center">{{ $u->subject->name ?? "None" }}</td>
+            <td style="text-align: center">{{ $u->teach->name}}</td>
+            <td style="text-align: center">{!! $u->result ?? "None" !!}</td>
+            <td style="text-align: center">{{$u->semesters->name}}</td>
+            <td style="text-align: center">{{$u->years->name}}</td>
+            <td class="tabledit-toolbar-column" style="text-align: center;">
+                <a href="{{route('form.show', $u->id)}}" style="color: black; text-decoration: none;">
+                    <button class="btn btn-success btn"><i class="fa-solid fa-eye fa-beat"></i></button>
+                </a>
+                <a href="{{route('form.edit', $u->id)}}">
+                    <form action="{{ route('form.edit',  $u->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
+                        @csrf
+                        @method('GET')
+                        <button class="btn btn-primary btn" type="submit" id="del-confirm">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+                    </form>
+                </a>
+            </td>
+        </tr>
+        @endforeach
+        @endcan
+        </tbody>
+        {{--    <tfoot>--}}
+    {{--    <tr>--}}
+        {{--        <th>Name</th>--}}
+        {{--        <th>Position</th>--}}
+        {{--        <th>Office</th>--}}
+        {{--        <th>Age</th>--}}
+        {{--        <th>Start date</th>--}}
+        {{--        <th>Salary</th>--}}
+        {{--    </tr>--}}
+    {{--    </tfoot>--}}
+    </table>
+</div>
 
-<main id="main">
 
-    <!-- ======= Breadcrumbs Section ======= -->
-    {{--    <section class="breadcrumbs">--}}
-    {{--        <div class="container">--}}
+{{--toastr--}}
+{{--<script>--}}
+{{--    @if(Session::has('message'))--}}
+{{--        toastr.options =--}}
+{{--        {--}}
+    {{--            "closeButton" : true,--}}
+    {{--            "progressBar" : true--}}
+    {{--        }--}}
+{{--    toastr.success("{{ session('message') }}");--}}
+{{--    @endif--}}
 
-        {{--            <div class="d-flex justify-content-between align-items-center">--}}
-            {{--                <h2>Inner Page</h2>--}}
-            {{--                <ol>--}}
-                {{--                    <li><a href="index.html">Home</a></li>--}}
-                {{--                    <li>Inner Page</li>--}}
-                {{--                </ol>--}}
-            {{--            </div>--}}
+{{--        @if(Session::has('error'))--}}
+{{--        toastr.options =--}}
+{{--        {--}}
+    {{--            "closeButton" : true,--}}
+    {{--            "progressBar" : true--}}
+    {{--        }--}}
+{{--    toastr.error("{{ session('error') }}");--}}
+{{--    @endif--}}
 
-        {{--        </div>--}}
-    {{--    </section>--}}
-    <!-- End Breadcrumbs Section -->
+{{--        @if(Session::has('info'))--}}
+{{--        toastr.options =--}}
+{{--        {--}}
+    {{--            "closeButton" : true,--}}
+    {{--            "progressBar" : true--}}
+    {{--        }--}}
+{{--    toastr.info("{{ session('info') }}");--}}
+{{--    @endif--}}
 
-    {{--    <section class="inner-page">--}}
-    {{--        <div class="container">--}}
-        {{--            <p>--}}
-            {{--                Example inner page template--}}
-            {{--            </p>--}}
-        {{--        </div>--}}
-    {{--    </section>--}}
+{{--        @if(Session::has('warning'))--}}
+{{--        toastr.options =--}}
+{{--        {--}}
+    {{--            "closeButton" : true,--}}
+    {{--            "progressBar" : true--}}
+    {{--        }--}}
+{{--    toastr.warning("{{ session('warning') }}");--}}
+{{--    @endif--}}
+{{--</script>--}}
 
-    <!-- ======= App Features Section ======= -->
-    <section id="features" class="features">
-        <div class="container">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+{{--<script src="{{asset('client/login/js/jquery.min.js')}}"></script>--}}
+{{--<script src="{{asset('client/login/js/popper.js')}}"></script>--}}
+{{--<script src="{{asset('client/login/js/bootstrap.min.js')}}"></script>--}}
+{{-- toastr js --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
-            <div class="section-title card shadow p-3 mb-5 bg-white rounded">
-                <h2>Về Snooze</h2>
-                <p>
-                    Với một giao diện thân thiện người dùng, trang web cung cấp một giải pháp toàn diện để đáp ứng những thay đổi trong kế hoạch của bạn hoặc giải quyết các vấn đề khác mà có thể ảnh hưởng đến việc tham gia kỳ thi.
-                </p>
-            </div>
-
-            {{--            <div class="container">--}}
-            {{--                <div class="card shadow p-3 mb-5 bg-white rounded" >--}}
-                {{--                        <h2 class="card-title" style="color: #5777BA;"></h2>--}}
-                {{--                        <br>--}}
-                {{--                        <p class="card-text"></p>--}}
-                {{--                        <p class="card-text"></p>--}}
-                {{--                </div>--}}
-            {{--            </div>--}}
-
-        </div>
-    </section>
-    <!-- End App Features Section -->
-
-</main><!-- End #main -->
-
-<!-- ======= Footer ======= -->
-<footer id="footer">
-
-    <!--    <div class="footer-newsletter">-->
-    <!--        <div class="container">-->
-    <!--            <div class="row justify-content-center">-->
-    <!--                <div class="col-lg-6">-->
-    <!--                    <h4>Join Our Newsletter</h4>-->
-    <!--                    <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>-->
-    <!--                    <form action="" method="post">-->
-    <!--                        <input type="email" name="email"><input type="submit" value="Subscribe">-->
-    <!--                    </form>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-lg-6 col-md-6 footer-contact">
-                    <h3>Appland</h3>
-                    <p>
-                        A108 Adam Street <br>
-                        New York, NY 535022<br>
-                        United States <br><br>
-                        <strong>Phone:</strong> +1 5589 55488 55<br>
-                        <strong>Email:</strong> info@example.com<br>
-                    </p>
-                </div>
-
-                <div class="col-lg-6 col-md-6 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                    </ul>
-                </div>
-
-                <!--                <div class="col-lg-3 col-md-6 footer-links">-->
-                <!--                    <h4>Our Services</h4>-->
-                <!--                    <ul>-->
-                <!--                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>-->
-                <!--                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>-->
-                <!--                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>-->
-                <!--                        <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>-->
-                <!--                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>-->
-                <!--                    </ul>-->
-                <!--                </div>-->
-                <!---->
-                <!--                <div class="col-lg-3 col-md-6 footer-links">-->
-                <!--                    <h4>Our Social Networks</h4>-->
-                <!--                    <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>-->
-                <!--                    <div class="social-links mt-3">-->
-                <!--                        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>-->
-                <!--                        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>-->
-                <!--                        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>-->
-                <!--                        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>-->
-                <!--                        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
-            </div>
-        </div>
-    </div>
-
-    <div class="container py-4">
-        <div class="copyright">
-            &copy; Copyright <strong><span>Appland</span></strong>. All Rights Reserved
-        </div>
-        <div class="credits">
-            <!-- All the links in the footer should remain intact. -->
-            <!-- You can delete the links only if you purchased the pro version. -->
-            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-app-landing-page-template/ -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
-    </div>
-</footer><!-- End Footer -->
-
-{{--btn để trượt lên trên--}}
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-<!-- Vendor JS Files -->
-<script src="{{asset('client/landing/assets/vendor/aos/aos.js')}}"></script>
-<script src="{{asset('client/landing/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('client/landing/assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
-<script src="{{asset('client/landing/assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
-<script src="{{asset('client/landing/assets/vendor/php-email-form/validate.js')}}"></script>
-
-<!-- Template Main JS File -->
-<script src="{{asset('client/landing/assets/js/main.js')}}"></script>
-
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 </body>
-
 </html>

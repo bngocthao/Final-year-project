@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <title>Snooze/Tạo vai trò</title>
+    <title>Tạo vai trò</title>
 
     <!-- Content Wrapper. Contains page content -->
 

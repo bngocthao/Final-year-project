@@ -31,11 +31,16 @@
 
 </head>
 
-<body style="font-family: 'Roboto Slab'">
-<div class="page-wrapper bg-gra-01 p-t-45 p-b-50">
+<body style="font-family: 'Times New Roman'">
+<style>
+    .ck-editor__editable_inline {
+        min-height: 200px;
+    }
+</style>
+<div class="page-wrapper">
     <div class="wrapper wrapper--w790">
         <div class="card card-5">
-            <div class="card-heading" style="color: silver !important;  ">
+            <div class="card-heading" style="background-color: #5777BA !important;">
                 <h2 class="title" >Tạo đơn</h2>
             </div>
             <div class="card-body">
@@ -167,30 +172,31 @@
                             </svg>)</div>
                         <div class="value">
                             <div class="input-group">
-                                <textarea class="input--style-5" id="editor" type="text" name="reason"></textarea>
+                                <textarea class="input--style-5 ck-editor__editable_inline" id="editor" type="text" name="reason"></textarea>
                             </div>
                             @error('reason')
                             <div class="alert alert-danger"><nav style="color:red">Lý do không được để trống</nav></div>
                             @enderror
                         </div>
                     </div>
-{{--                    <div class="form-row">--}}
-{{--                        <div class="name">Proof</div>--}}
-{{--                        <div class="value">--}}
-{{--                            <div class="input-group">--}}
-{{--                                <input class="input--style-5" type="file" name="proof" id="customFile" />--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="form-row">
+                        <div class="name">Lý do (bổ sung)</div>
+                        <div class="value">
+                            <div class="input-group">
+                                <input class="input--style-5" type="file" name="proof" id="customFile" />
+                            </div>
+                        </div>
+                    </div>
                     <div>
-                        <a href="javascript:history.back()" class="btn btn--radius-2 btn--blue" role="button" style="color: rebeccapurple; text-decoration: none;">Trở lại</a>
-                        <button class="btn btn--radius-2 btn--blue pull-right" style="color: rebeccapurple;font-family: 'Roboto Slab'" type="submit">Gửi đơn</button>
+                        <a href="javascript:history.back()" class="btn btn--radius-2 btn--blue" role="button" style="background-color: #5777BA; text-decoration: none;">Trở lại</a>
+                        <button class="btn btn--radius-2 btn--blue pull-right" style="background-color: #5777BA" type="submit">Gửi đơn</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Jquery JS-->
 <script src="{{asset('client/form/vendor/jquery/jquery.min.js')}}"></script>

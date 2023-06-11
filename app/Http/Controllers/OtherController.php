@@ -185,5 +185,14 @@ class OtherController extends Controller
         return redirect()->route('user.getLogin');
     }
 
+    public function update_mark(Request $request, string $id)
+    {
+        dd($id);
+        $app = PostponeApplication::find($id)->update($request->all());
+        if($app){
+            return redirect()->back()->with('message', 'Đơn đã được cập nhật');
+        }else
+            return redirect()->back()->with('error', 'Có lỗi xảy ra, cập nhật thất bại');
+    }
 
 }

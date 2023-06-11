@@ -44,8 +44,11 @@ return new class extends Migration
         {
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('teach_id')->references('id')->on('users');
+            $table->foreign('headmaster_id')->references('id')->on('users');
             $table->foreign('semester_id')->references('id')->on('semesters');
             $table->foreign('year_id')->references('id')->on('years');
+            $table->foreign('marked_semester_id')->references('id')->on('semesters');
+            $table->foreign('marked_year_id')->references('id')->on('years');
         });
 
         Schema::table('major_subject', function (Blueprint $table)

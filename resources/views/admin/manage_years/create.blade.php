@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <title>Year Create</title>
+    <title>Tạo năm học</title>
 
     <!-- Content Wrapper. Contains page content -->
 

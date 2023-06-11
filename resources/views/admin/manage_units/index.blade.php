@@ -2,7 +2,7 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
 
-    <title>Snooze/Quản lý đơn vị</title>
+    <title>Quản lý đơn vị</title>
 
 
     <div class="box" style="align-items: stretch">

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Semester;
+use App\Models\Unit;
+use App\Models\UserRole;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Controller;
@@ -19,6 +21,7 @@ use App\Mail\Mail\ClientMail;
 use Illuminate\Support\Facades\DB;
 use App\Providers\AppServiceProvider;
 use App\Services\RoleService;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
 class PostponeApplicationsController extends Controller
 {
     // Inject the service into the controller.
@@ -41,16 +44,50 @@ class PostponeApplicationsController extends Controller
         foreach ($app as $a) {
             $a->i_result_date = \Illuminate\Support\Carbon::parse($a->i_result_date);
             $a->i_result_date = $a->i_result_date->addYear();
-            if (($a->i_result_date)->isPast() && ($a->result == '1')){
+            if (($a->i_result_date)->isPast() && ($a->mark == null)){
                 $a->result = 'F';
                 $a->save();
             }
         }
     }
+    public function filter_index(Request $request)
+    {
+        $id = Auth::id();
+        $user = Auth::user();
+        $role =  $this->roleService->inden_role();
+
+        $post_query = PostponeApplication::query();
+
+        $search_param = $request->query('q');
+
+//        $user_id = User::where('name', $search_param)->get();
+//
+//        if($search_param) {
+//            $post_query = PostponeApplication::search($user_id[0]['id']);
+//        }
+
+        $find_user_id = User::where('name', $search_param)->get();
+        // tìm đơn có user_id = user_id
+        if($search_param) {
+            $post_query = PostponeApplication::search($find_user_id[0]['id']);
+        }
+
+        $app = $post_query->orderBy('created_at','desc')->get();
+
+
+        $context = [
+            'user' => $user,
+            'app' => $app,
+            'role' => $role
+        ];
+
+
+        return view('admin.manage_forms.index', $context);
+    }
+
 
     public function index()
     {
-        // -- admin - head master - dean - professor --//
         $id = Auth::id();
         $user = Auth::user();
         $role =  $this->roleService->inden_role();
@@ -76,7 +113,7 @@ class PostponeApplicationsController extends Controller
             }
             // find those application that have the $teach_belong_to_same_unit and teach_status = 1
             $app = PostponeApplication::whereIn('teach_id', $teach_belong_to_same_unit)->
-            where('teach_status', '1')->where('dean_status', '1')->get();
+            where('teach_status', '1')->where('dean_status', '1')->orderBy('created_at','desc')->get();
             $this->getUpdateGrade($app);
             $context = [
                 'user' => $user,
@@ -106,7 +143,7 @@ class PostponeApplicationsController extends Controller
             }
             // find those application that have the $teach_belong_to_same_unit and teach_status = 1
             $app = PostponeApplication::whereIn('teach_id', $teach_belong_to_same_unit)
-                ->where('teach_status', '1')->get();
+                ->where('teach_status', '1')->orderBy('created_at','desc')->get();
             $this->getUpdateGrade($app);
             $context = [
                 'user' => $user,
@@ -115,7 +152,7 @@ class PostponeApplicationsController extends Controller
             ];
         }elseif ($role == '4'){
             // app return student sent for professor
-            $app = PostponeApplication::where('teach_id',$id)->get();
+            $app = PostponeApplication::where('teach_id',$id)->orderBy('created_at','desc')->get();
             // appl will contain those from the same major + have been approve by prof
 //            $app = PostponeApplication::where('major_id', $loginEmail->major_id)
 //                ->where('teach_id', '!=', $loginEmail->id)->where('teach_status', '1')->get();
@@ -129,7 +166,7 @@ class PostponeApplicationsController extends Controller
         }
         else {
             // first: get all the application
-            $app = PostponeApplication::all();
+            $app = PostponeApplication::all()->orderBy('created_at','desc');
             // sv chỉ được thấy đơn của mình
             // Giảng viên chỉ được thấy dơn gởi cho mình
             // unit chỉ được thấy đơn của major thuộc mìn
@@ -143,6 +180,11 @@ class PostponeApplicationsController extends Controller
             ];
             $this->getUpdateGrade($app);
         }
+        // -- get student name --//
+//        $users = User::query()
+//            ->when(request('search'), function ($query) {
+//                $query->where('');
+//            });
         return view('admin.manage_forms.index', $context);
     }
 
@@ -240,11 +282,70 @@ class PostponeApplicationsController extends Controller
         return view('admin.manage_forms.edit', $context);
     }
 
+    public function edit_mark(string $id)
+    {
+        $apply = PostponeApplication::find($id);
+        $id = Auth::id();
+        $user = User::find($id);
+        $sub = Subject::where('id', $apply->subject_id)->get('name');
+        $sub = $sub[0]['name'];
+        // get month
+        $date = Carbon::now();
+        $month = $date->format('m');
+        $month = intval($month);
+
+        if($month >= 8 && $month <= 12){
+            $sem = 1;
+        }
+        // Học kỳ III bắt đầu từ giữa tháng 5 đến cuối tháng 6
+        elseif($month >= 1 && $month <= 5){
+            $sem = 2;
+        }else{
+            $sem = '3';
+        }
+
+        $all_years = Year::all();
+        $years = $date->format('y');
+        $years_avai = [];
+
+        foreach ($all_years as $y){
+            if(strpos($y->name, $years)){
+                $years_avai[] = $y;
+            }
+        }
+
+        $major = Major::find($apply->major_id);
+        $unit_id = $major->unit_id;
+        $unit = Unit::find($unit_id);
+        $head_of_unit = User::where('id', $unit->head_of_unit_id)->get();
+        $head_of_unit_name = $head_of_unit[0]['name'];
+        $role = $this->roleService->inden_role();
+        $context = [
+            'apply' => $apply,
+            'user' => $user,
+            'sub' => $sub,
+            'marked_years' => $years_avai,
+            'marked_sem' => $sem,
+            'role' => $role,
+            'head_of_unit_name' => $head_of_unit_name,
+        ];
+        return view('admin.manage_forms.edit_mark', $context);
+    }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
+        if ($request->headmaster_status == '1'){
+            $app = PostponeApplication::find($id)->update(['result' => '1']);
+        }
+        // Save the date student have an i from professor
+        if($request->result == '1' || $request->headmaster_status == '1'){
+            $i_result_date = Carbon::today();
+            $date = PostponeApplication::find($id)
+                ->update(['i_result_date'=>$i_result_date]);
+        }
         $update = PostponeApplication::find($id)->update($request->all());
         if($update){
 //            Alert::success('Xóa thành công');

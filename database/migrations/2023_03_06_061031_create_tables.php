@@ -91,6 +91,11 @@ return new class extends Migration
             $table->integer('headmaster_status')->nullable();
             $table->string('headmaster_description')->nullable();
             $table->timestamp('i_result_date')->nullable();
+            $table->string('mark')->nullable();
+            $table->string('mark_reason')->nullable();
+            $table->unsignedBigInteger('headmaster_id')->nullable();
+            $table->unsignedBigInteger('marked_semester_id')->nullable();
+            $table->unsignedBigInteger('marked_year_id')->nullable();
             $table->timestamps();
         });
 

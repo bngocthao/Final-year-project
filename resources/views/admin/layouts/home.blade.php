@@ -14,7 +14,7 @@
             <p>Tổng đơn</p>
             </div>
             <div class="icon">
-            <i class="ion ion-bag"></i>
+            <i class="fa fa-fw fa-plus"></i>
             </div>
             <a href="{{route('postponse_apps.index')}}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -30,7 +30,7 @@
             <p>Đang chờ xử lý</p>
             </div>
             <div class="icon">
-            <i class="ion ion-stats-bars"></i>
+            <i class="fa fa-fw fa-circle-o-notch"></i>
             </div>
             <a href="{{route('postponse_apps.index')}}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -45,7 +45,7 @@
             <p>Đã chấp nhận</p>
             </div>
             <div class="icon">
-            <i class="ion ion-person-add"></i>
+            <i class="fa fa-fw fa-check-square-o"></i>
             </div>
             <a href="{{route('postponse_apps.index')}}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -60,7 +60,7 @@
             <p>Đã từ chối</p>
             </div>
             <div class="icon">
-            <i class="ion ion-pie-graph"></i>
+            <i class="fa fa-fw fa-close"></i>
             </div>
             <a href="{{route('postponse_apps.index')}}" class="small-box-footer">Chi tiết <i class="fa fa-arrow-circle-right"></i></a>
         </div>

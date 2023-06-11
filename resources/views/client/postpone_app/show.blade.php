@@ -23,8 +23,8 @@
             <input type="text" class="form-control" value="{{$app->users->name}}" disabled>
         </div>
         <div class="col-md-6">
-            <label for="inputPassword4" class="form-label">Thời gian tiếp nhận</label>
-            <input type="text" class="form-control" value="{{$app->created_at}}" disabled>
+            <label for="inputPassword4" class="form-label">Họ tên giảng viên</label>
+            <input type="text" class="form-control" value="{{$app->teach->name}}" disabled>
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Tên học phần</label>
@@ -65,7 +65,7 @@
             <input type="text" class="form-control" value="{{strip_tags($app->teach_description)}}" disabled>
         </div>
         <div class="col-md-3">
-            <label for="inputPassword4" class="form-label">Quyết định của phó khoa</label>
+            <label for="inputPassword4" class="form-label">Quyết định của lãnh đạo khoa</label>
             <input type="text" class="form-control"
                    value="@if($app->dean_status == '1') Chấp nhận @elseif($app->dean_status == '0') Không chấp nhận @else Đang chờ... @endif"                   disabled>
         </div>
@@ -74,7 +74,7 @@
             <input type="text" class="form-control" value="{{strip_tags($app->dean_description)}}" disabled>
         </div>
         <div class="col-md-3">
-            <label for="inputPassword4" class="form-label">Quyết định của trưởng khoa</label>
+            <label for="inputPassword4" class="form-label">Quyết định của ban giám hiệu</label>
             <input type="text" class="form-control"
                    value="@if($app->headmaster_status == '1') Chấp nhận @elseif($app->headmaster_status == '0') Không chấp nhận @else Đang chờ... @endif"                   disabled>
         </div>

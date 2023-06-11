@@ -16,7 +16,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">TRANG QUẢN LÝ - @if($role == 1) ADMIN @elseif($role == 2) TRƯỞNG KHOA @elseif($role == 3) PHÓ KHOA @else GIẢNG VIÊN @endif</li>
+        <li class="header">TRANG QUẢN LÝ - @if($role == 1) ADMIN @elseif($role == 2) BAN GIÁM HIỆU @elseif($role == 3) LÃNH ĐẠO KHOA @else GIẢNG VIÊN @endif</li>
         @can('isAdmin')
         <li class="treeview">
           <a href="{{route('users.index')}}">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <title>Snooze/Cập nhật đơn</title>
+    <title>Cập nhật đơn</title>
 
     <!-- Content Wrapper. Contains page content -->
 
@@ -50,6 +50,12 @@
 {{--                                <textarea required type="text" class="form-control" name="user_id" value="{{$apply->users->name}}">{{$apply->users->name}}</textarea>--}}
 {{--                            </div>--}}
 {{--                        </div>--}}
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Mã học phần</label>
+                            <div class="col-sm-10">
+                                <input disabled type="text" class="form-control" name="group" value="{{$apply->group}}">
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Học phần</label>
@@ -64,16 +70,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Nhóm</label>
-                            <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" name="group" value="{{$apply->group}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Học kì</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" value="{{$apply->semester_id}}">
+                                <input disabled type="text" class="form-control" value="@if($apply->semester_id == 3)Hè@else{{$apply->semester_id}} @endif">
                             </div>
                         </div>
 
@@ -97,9 +96,16 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Lý do (bổ sung)</label>
+                            <div class="col-sm-10">
+                                <a href="{{asset($apply->proof) }}"> &nbspTập tin bổ sung</a>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Giảng viên</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" name="teach_id" value="{{$apply->users->name}}"></input>
+                                <input disabled type="text" class="form-control" name="teach_id" value="{{$apply->teach->name}}"></input>
                             </div>
                         </div>
 
@@ -110,51 +116,51 @@
                                 <select name="teach_status" class="form-control">
                                      <option value="" disabled>Đang chờ...</option>
                                      <option value="1" @if($apply->teach_status == '1') selected @endif>Đồng ý</option>
-                                    <option value="2" @if($apply->teach_status == '0') selected @endif>Không đồng ý</option>
+                                    <option value="0" @if($apply->teach_status == '0') selected @endif>Không đồng ý</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ý kiến giảng viên</label>
                             <div class="col-sm-10">
-                                <textarea id="editor2" type="text" class="form-control ck-editor__editable_inline" name="teach_description">{{$apply->teach_description}}</textarea>
+                                <textarea id="editor1" type="text" class="form-control ck-editor__editable_inline" name="teach_description">{{$apply->teach_description}}</textarea>
                             </div>
                         </div>
                         @endcan
 
                         @can('isDean')
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Quyết định phó khoa</label>
+                            <label class="col-sm-2 col-form-label">Quyết định của lãnh đạo khoa</label>
                             <div class="col-sm-10">
                                 <select name="dean_status" class="form-control">
                                     <option value="" disabled>Đang chờ...</option>
                                     <option value="1" @if($apply->dean_status == '1') selected @endif>Đồng ý</option>
-                                    <option value="2" @if($apply->dean_status == '0') selected @endif>Từ chối</option>
+                                    <option value="0" @if($apply->dean_status == '0') selected @endif>Từ chối</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Ý kiến phó khoa</label>
+                            <label class="col-sm-2 col-form-label">Ý kiến của lãnh đạo khoa</label>
                             <div class="col-sm-10">
-                                <textarea type="text" class="form-control ck-editor__editable_inline" name="dean_description">{{$apply->dean_description}}</textarea>
+                                <textarea type="text" id="editor2" class="form-control ck-editor__editable_inline" name="dean_description">{{$apply->dean_description}}</textarea>
                             </div>
                         </div>
                         @endcan
 
                         @can('isHeadmaster')
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Quyết định trưởng khoa</label>
+                            <label class="col-sm-2 col-form-label">Quyết định của ban giám hiệu</label>
                             <div class="col-sm-10">
                                 <select name="headmaster_status" class="form-control">
-                                    <option value="">Đang chờ...</option>
+                                    <option value="" disabled>Đang chờ...</option>
                                     <option value="1" @if($apply->headmaster_status == '1') selected @endif>Đồng ý</option>
-                                    <option value="2" @if($apply->headmaster_status == '0') selected @endif>Từ chối</option>
+                                    <option value="0" @if($apply->headmaster_status == '0') selected @endif>Từ chối</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Ý kiến trưởng khoa</label>
+                            <label class="col-sm-2 col-form-label">Ý kiến của ban giám hiệu</label>
                             <div class="col-sm-10">
                                 <textarea type="text" id="editor3" class="form-control ck-editor__editable_inline" name="headmaster_description">{{$apply->headmaster_description}}</textarea>
                             </div>
@@ -165,12 +171,12 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Kết quả</label>
                             <div class="col-sm-10">
-                                <select name="result" class="form-control"
-                                @if($apply->dean_status == null || $apply->headmaster_status == null) disabled @endif
-                                        @if($apply->teach_status == '0' || $apply->dean_status == '0'
-                                            || $apply->headmaster_status == '0') disabled @endif>
+                                <select name="result" class="form-control">
+{{--                                @if($apply->dean_status == null || $apply->headmaster_status == null) disabled @endif--}}
+{{--                                        @if($apply->teach_status == '0' || $apply->dean_status == '0'--}}
+{{--                                            || $apply->headmaster_status == '0') disabled @endif>--}}
                                     <option value="">Đang chờ...</option>
-                                    <option value="1" @if($apply->result == '1') selected @endif>Đồng ý</option>
+                                    <option value="1" @if($apply->result == '1') selected @elseif($apply->headmaster_status == '1') selected @endif>Đồng ý</option>
                                     <option value="0" @if($apply->result == '0') selected @endif
                                             @if($apply->teach_status == '0' || $apply->dean_status == '0' || $apply->headmaster_status == '0')
                                         selected @endif>Từ chối</option>
@@ -222,6 +228,16 @@
 
     <script>
         ClassicEditor
+            .create( document.querySelector( '#editor1' ) )
+            .then( editor => {
+                console.log( editor );
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+    <script>
+        ClassicEditor
             .create( document.querySelector( '#editor2' ) )
             .then( editor => {
                 console.log( editor );
@@ -230,6 +246,11 @@
                 console.error( error );
             } );
     </script>
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 200px;
+        }
+    </style>
     <script>
         ClassicEditor
             .create( document.querySelector( '#editor3' ) )

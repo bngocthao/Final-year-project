@@ -28,6 +28,10 @@ class PostponeApplicationController extends Controller
         return view('mail.layout_mail');
     }
 
+    public function export(){
+        return view('mail.layout_mail');
+    }
+
     //send form (*****************************)
     public function post_form(Request $request)
     {
@@ -257,8 +261,11 @@ class PostponeApplicationController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if ($request->headmaster_status == '1'){
+            $app = PostponeApplication::find($id)->update('result', '1');
+        }
         // Save the date student have an i from professor
-        if($request->result == 'i' || $request->result == 'I'){
+        if($request->result == '1'){
             $i_result_date = Carbon::today();
             $date = PostponeApplication::find($id)
                 ->update(['i_result_date'=>$i_result_date]);

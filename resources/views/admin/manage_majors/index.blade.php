@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <!-- Content Header (Page header) -->
-    <title>Snooze/Quản lý chuyên ngành</title>
+    <title>Quản lý chuyên ngành</title>
 
     <div class="box" style="align-items: stretch">
       <div class="box-header">

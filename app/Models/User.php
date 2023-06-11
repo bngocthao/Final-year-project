@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Athenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
 
 class User extends Athenticatable
 {
@@ -77,6 +79,14 @@ class User extends Athenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    #[searchUsingPrefix(['name'])]
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+        ];
     }
 
 }

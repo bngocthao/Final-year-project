@@ -3,9 +3,9 @@
     <!-- Logo -->
     <a href="{{route('home')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>S</b>Z</span>
+      <span class="logo-mini"><b>H</b>T</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>S</b>NOOZE</span>
+      <span class="logo-lg"><b>H</b>OÃN <b>T</b>HI</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -43,8 +43,8 @@
               <!-- Menu Footer-->
               <li>
                     <a class="dropdown-item" href="#">{{$user->name ?? 'Trống'}}</a>
-                    <form action="{{ route('logout') }}" method="post">@csrf</form>
-                    <a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a>
+                    <form action="{{ route('user.getLogout') }}" method="post">@csrf</form>
+                    <a class="dropdown-item" href="{{ route('user.getLogout') }}">Đăng xuất</a>
               </li>
             </ul>
         </ul>

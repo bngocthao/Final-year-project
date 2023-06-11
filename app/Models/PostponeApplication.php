@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
 
 class PostponeApplication extends Model
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens, Notifiable, Searchable;
 
     protected $table = 'postpone_applications';
 
@@ -32,7 +36,14 @@ class PostponeApplication extends Model
         'point',
         'proof',
         'i_result_date',
+        'mark',
+        'mark_reason',
+        'headmaster_id',
+        'marked_semester_id',
+        'marked_year_id'
     ];
+
+
 
     // Một đơn xin vắng có nhiều ý kiến
     public function comments()
@@ -66,5 +77,24 @@ class PostponeApplication extends Model
     public function years()
     {
         return $this->belongsTo(Year::class, 'year_id', 'id');
+    }
+
+    public function marked_semesters()
+    {
+        return $this->belongsTo(Semester::class,'marked_semester_id', 'id');
+    }
+
+    // 1 năm học
+    public function marked_years()
+    {
+        return $this->belongsTo(Year::class, 'marked_year_id', 'id');
+    }
+
+    #[searchUsingPrefix(['user_id'])]
+    public function toSearchableArray()
+    {
+        return [
+          'user_id' => $this->user_id,
+        ];
     }
 }

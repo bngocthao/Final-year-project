@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Đơn xin vắng</title>
+    <title>Đăng nhập</title>
     <!-- Boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -22,30 +22,30 @@
         top: 100px;max-width: 600px;padding-left: 5rem; padding-right: 5rem;
     }
 </style>
-<div class="card container-md border py-3 my-3">
+<div class="card container-md border py-3 my-3  shadow p-3 mb-5 bg-body rounded">
     <br>
-    <form action="{{route('user.postLogin')}}" method="POST">
+    <form action="{{route('user.postLogin')}}" method="POST" style="padding-right: 5em; padding-left: 5em;">
         @csrf
         <div class="mb-3" style="text-align: center;">
-            <h3 style='color: #258BCE' class="fw-bold">SNOOZE</h3>
+            <h3 style='color: #5777BA' class="fw-bold">HOÃN THI</h3>
         </div>
         <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <label for="exampleInputEmail1" class="form-label" style='color: #5777BA'>Email</label>
             <input class="form-control" type="email" name="email" placeholder="Email" required>
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Mật khẩu</label>
+            <label for="exampleInputPassword1" class="form-label" style='color: #5777BA'>Mật khẩu</label>
             <input id="password-field" type="password" class="form-control" name="password" placeholder="Password" required>
         </div>
         {{--        <div class="mb-3 form-check">--}}
         {{--            <input type="checkbox" class="form-check-input" id="exampleCheck1">--}}
         {{--            <label class="form-check-label" for="exampleCheck1">Check me out</label>--}}
         {{--        </div>--}}
-        <div class="mb-3" style="text-align: right;>
-            <a href="{{ route('user.getRegister') }}">Tạo tài khoản</a>
-</div>
+        <div class="mb-3" style="text-align: right;">
+            <a href="{{ route('user.getRegister') }}" style="color:#5777BA">Tạo tài khoản</a>
+        </div>
 <div class="d-flex justify-content-center">
-    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+    <button type="submit" class="btn" style="background-color: #5777BA; color:white">Đăng nhập</button>
 </div>
 </form>
 <br>
