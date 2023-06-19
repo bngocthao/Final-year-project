@@ -190,9 +190,9 @@ class OtherController extends Controller
         dd($id);
         $app = PostponeApplication::find($id)->update($request->all());
         if($app){
-            return redirect()->back()->with('message', 'Đơn đã được cập nhật');
+            return redirect()->intended('/admin/postponse_apps')->with('message', 'Đơn đã được cập nhật');
         }else
-            return redirect()->back()->with('error', 'Có lỗi xảy ra, cập nhật thất bại');
+            return redirect()->intended('/admin/postponse_apps')->with('error', 'Có lỗi xảy ra, cập nhật thất bại');
     }
 
 }

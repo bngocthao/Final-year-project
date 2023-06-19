@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>HOÃN THI</title>
+    <title>ĐIỂM I</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -49,7 +49,7 @@
     <div class="container d-flex align-items-center justify-content-between">
 
         <div class="logo">
-            <h1><a href="#">HOÃN THI</a></h1>
+            <h1><a href="#">ĐIỂM I</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         </div>
@@ -71,8 +71,8 @@
         <div class="row">
             <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1" data-aos="fade-up">
                 <div>
-                    <h1>Chào mừng bạn đến với <h1 style="text-align: center"> Hoãn Thi</h1></h1>
-                    <h2>Hoãn Thi là nền tảng trực tuyến, cho phép sinh viên xin hoãn lại kỳ thi một cách nhanh chóng và thuận tiện</h2>
+                    <h1>Chào mừng bạn đến với <h1 style="text-align: center">Điểm I</h1></h1>
+                    <h2>Điểm I là nền tảng trực tuyến, cho phép sinh viên xin hoãn lại kỳ thi một cách nhanh chóng và thuận tiện</h2>
                     <nav id="navbar" class="navbar" style="justify-content: center;">
                         <a class="getstarted scrollto" style="font-size: 2vw;" href="{{route('user.getLogin')}}">Bắt đầu gửi đơn</a>
                     </nav>
@@ -109,7 +109,7 @@
         <div class="container">
 
             <div class="section-title card shadow p-3 mb-5 bg-white rounded">
-                <h2>Về Hoãn Thi</h2>
+                <h2>Về Điểm I</h2>
                 <p>
                     Với một giao diện thân thiện người dùng, trang web cung cấp một giải pháp toàn diện để đáp ứng những thay đổi trong kế hoạch của bạn, cho bạn thêm thời gian để giải quyết các vấn đề có thể ảnh hưởng đến việc tham gia kỳ thi.
                 </p>
@@ -150,7 +150,7 @@
         <br><br>
         <div class="container section-title">
             <h4 style="color: #5777BA;">Liệu bạn có đang cảm thấy quá tải với những bài kiểm tra sắp tới ? Hay bạn cần thêm thời gian để học ?</h4>
-            <p style="color: #5777BA;">Hoãn thi là giải pháp dành cho bạn</p><br>
+            <p style="color: #5777BA;">Điểm I là giải pháp dành cho bạn</p><br>
 {{--            <a role="button" href="{{route('user.getLogin')}}" class="btn" style="background-color:#5777BA;color: white;">Gửi đơn</a>--}}
             <nav id="navbar" class="navbar" style="justify-content: center;">
                 <a class="getstarted scrollto" style="font-size: 1vw;" href="{{route('user.getLogin')}}">Gửi đơn</a>

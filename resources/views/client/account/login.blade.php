@@ -27,7 +27,7 @@
     <form action="{{route('user.postLogin')}}" method="POST" style="padding-right: 5em; padding-left: 5em;">
         @csrf
         <div class="mb-3" style="text-align: center;">
-            <h3 style='color: #5777BA' class="fw-bold">HOÃN THI</h3>
+            <h3 style='color: #5777BA' class="fw-bold">ĐIỂM I</h3>
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label" style='color: #5777BA'>Email</label>

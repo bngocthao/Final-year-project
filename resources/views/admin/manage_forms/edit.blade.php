@@ -36,7 +36,7 @@
                     <form action="{{route('postponse_apps.update', $apply, $apply->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        {{-- <input hidden name="ma_nguoi_dung" > --}}
+                         <input hidden name="id" value="{{$apply->id}}" >
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Họ tên sinh viên</label>
                             <div class="col-sm-10">
@@ -195,6 +195,8 @@
 {{--                        </div>--}}
 
                         <div class="form-group pull-right">
+                            <a href="/admin/postponse_apps" type="button" class="btn btn-primary float-right btn-round">Bỏ qua</a>
+
                             <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
 {{--                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>--}}
                         </div>

@@ -40,7 +40,7 @@ Route::middleware(['auth','admin.auth'])->prefix('admin')->group(function () {
     Route::resource('/users', UsersController::class);
     Route::resource('/roles', \App\Http\Controllers\Admin\RolesController::class);
     Route::get('/postponse_apps/{postponse_app}/edit_mark',[PostponeApplicationsController::class,'edit_mark'])->name('edit_mark');
-    Route::post('/postponse_apps/update_mark',[OtherController::class,'update_mark'])->name('mark_update');
+    Route::post('/postponse_apps/update_mark',[OtherController::class,'update_mark'])->name('update_mark');
     Route::get('/postponse_apps/filter_index',[PostponeApplicationsController::class,'filter_index'])->name('filter_index');
     Route::resource('/postponse_apps', PostponeApplicationsController::class);
     Route::resource('/units', UnitsController::class);

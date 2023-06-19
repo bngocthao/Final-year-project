@@ -41,7 +41,7 @@
 
         <li class="treeview">
           <a href="#">
-            <span>Đơn xin điểm i</span>
+            <span>Đơn xin điểm I</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

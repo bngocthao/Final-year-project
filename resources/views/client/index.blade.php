@@ -28,7 +28,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light navbar-shrink fixed-top" id="mainNav" style="background-color:#5777BA !important;">
     <div class="container">
-        <a class="navbar-brand " href="#" style="color: white !important; font-family: 'Times New Roman' ;!important">HOÃN THI</a>
+        <a class="navbar-brand " href="#" style="color: white !important; font-family: 'Times New Roman' ;!important">ĐIỂM I</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars ms-1"></i>

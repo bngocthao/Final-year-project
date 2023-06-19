@@ -72,10 +72,10 @@
                 </tr>
                 </thead>
                 <tbody>
-
+                <?php $i = 1; ?>
                 @foreach($app as $u)
                     <tr>
-                        <td style="width:10px;">{{ $u->id}}</td>
+                        <td  style="width:10px;"><?php echo $i++;?></td>
                         <td >{{ strip_tags($u->users->name) }}</td>
                         <td>{{ strip_tags($u->subject->name)}}</td>
 {{--                        <td>{{ $u->group}}</td>--}}
@@ -87,7 +87,8 @@
                             <a href="{{route('form.show', $u->id)}}" style="color: black">
                                 <button class="btn btn-success btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>
-                                </button></a>
+                                </button>
+                            </a>
                             @cannot('isAdmin')
                             <a href="{{route('postponse_apps.edit', $u->id)}}">
                                 <form action="{{ route('postponse_apps.edit',  $u->id)}}" class="tabledit-edit-button btn btn primary waves-effect waves-light">
@@ -114,34 +115,15 @@
                         </td>
                         @can('isProfessor')
                         <td class="tabledit-toolbar-column" style="text-align: center; padding-top: 15px;">
-                            <a href="{{route('edit_mark', $u->id)}}" style="color: black">
-                                <button class="btn btn-md" style="background-color: #183153;color: white; font-size: 16px;">
+{{--                            <a href="{{route('edit_mark', $u->id)}}" >--}}
+{{--                                <button class="btn btn-success btn-md" >--}}
+{{--                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 576 512"><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/></svg>--}}
+{{--                                </button>--}}
+{{--                            </a>&nbsp;--}}
+                            <a href="{{route('edit_mark', $u->id)}}" @if($u->result != '1') style="pointer-events: none;" @endif>
+                                <button class="btn btn-primary btn-md" @if($u->result != '1') disabled @endif>
                                     <i class="fa fa-fw fa-gear"></i>
                                 </button>
-
-                                <!-- Button trigger modal -->
-{{--                                <button type="button" class="btn btn-primary btn-md" style="background-color: #183153;color: white; font-size: 16px;" data-toggle="modal" data-target="#myModal">--}}
-{{--                                    <i class="fa fa-fw fa-gear"></i>--}}
-{{--                                </button>--}}
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </a>
                         </td>
                         @endcan

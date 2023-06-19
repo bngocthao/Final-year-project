@@ -328,7 +328,7 @@
                         {{--end result--}}
                         @endcanany
                         <div>
-                            <a href="javascript:history.go(-1)" class="btn btn--radius-2 btn--blue" role="button" style="color: rebeccapurple; text-decoration: none;">Trở lại</a>
+                            <a href="/admin/postponse_apps" type="button" class="btn btn-success float-right btn-round">Bỏ qua</a>
 
                             <button class="btn btn--radius-2 btn--blue pull-right" style="color: rebeccapurple;font-family: 'Roboto Slab'" type="submit">GỞI</button>
                         </div>

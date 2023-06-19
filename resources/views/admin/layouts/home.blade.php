@@ -1,9 +1,10 @@
 @extends('layouts.app')
 @section('content')
-
+<!-- JS chart -->
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js" integrity="sha512-mlz/Fs1VtBou2TrUkGzX4VoGvybkD9nkeXWJm3rle0DPHssYYx4j+8kIS15T78ttGfmOjH0lLaBXGcShaVkdkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>--}}
 <!-- Main content -->
 <section class="content">
-<!-- Small boxes (Stat box) -->
+<!-- Donut chart (Stat box) -->
     <div class="row">
         <div class="col-lg-3 col-xs-6">
         <!-- small box -->
@@ -68,49 +69,101 @@
         <!-- ./col -->
     </div>
 
+
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title"></h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+{{--                <div class="box-body" style="width: 600px !important; height: 400px !important;">--}}
+            <canvas id="myChart"></canvas>
+        </div>
+
+{{--        <input id="year" value="{{json_encode($years_statistic_name)}}">--}}
+    </div>
 </section>
-{{--<div class="container">--}}
-{{--    <div class="row">--}}
-{{--        <div class="col-md-3">--}}
-{{--            <div class="form-group">--}}
-{{--                <div class="card">--}}
-{{--                    <div class="card-header">--}}
-{{--                        <div class="card-title">--}}
-{{--                            asdasdsad--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="card-body">--}}
-{{--                        aAAAA--}}
-{{--                    </div>--}}
-{{--                    <div class="card-footer">--}}
-{{--                        Fotter Card--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+{{--<script src="{{asset('admin/bower_components/chart.js/Chart.js')}}"></script>--}}
 
-{{--        <div class="col-md-3">--}}
-{{--            <div class="form-group">--}}
-{{--                Cột 2--}}
-{{--            </div>--}}
-{{--        </div>--}}
+<script src="{{asset('admin/bower_components/fastclick/lib/fastclick.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-{{--        <div class="col-md-3">--}}
-{{--            <div class="form-group">--}}
-{{--                Cột 3--}}
-{{--            </div>--}}
-{{--        </div>--}}
+<script>
+    const data = {
+        // lấy theo năm
+        labels: @json($years_statistic_name),
+        datasets: [
+            {
+                label: "Số đơn được duyệt HK1",
+                data: {{json_encode($first_acc)}},
+                backgroundColor: "#444488",
+                stack: "first",
+            },
+            {
+                label: "Số đơn bị từ chối HK1",
+                data: {{json_encode($first_de)}},
+                backgroundColor: "#8888CC",
+                stack: "first",
+            },
+            {
+                label: "Số đơn được duyệt HK2",
+                data: {{json_encode($sencound_acc)}},
+                backgroundColor: "#444488",
+                stack: "second",
+            },
+            {
+                label: "Số đơn bị từ chối HK2",
+                data: {{json_encode($sencound_de)}},
+                backgroundColor: "#8888CC",
+                stack: "second",
+            },
+            {
+                label: "Số đơn được duyệt HK hè",
+                data: {{json_encode($third_acc)}},
+                backgroundColor: "#444488",
+                stack: "third",
+            },
+            {
+                label: "Số đơn bị từ chối HK hè",
+                data: {{json_encode($third_de)}},
+                backgroundColor: "#8888CC",
+                stack: "third",
+            },
+        ],
+    };
 
-{{--        <div class="col-md-3">--}}
-{{--            <div class="form-group">--}}
-{{--                Cột 4--}}
-{{--            </div>--}}
-{{--        </div>--}}
+    const options = {
+        type: "bar",
+        data: data,
+        options: {
+            scales: {
+                xAxes: [{
+                    type: "category",
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Năm học",
+                    },
+                }],
+                yAxes: [{
+                    type: "linear",
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Số lượng",
+                    },
+                }],
+            },
+        },
+    };
 
-{{--    </div>--}}
+    const chart = new Chart(document.getElementById("myChart"), options);
 
-{{--</div>--}}
-<!-- /.content -->
+
+
+</script>
 
 @endsection
 

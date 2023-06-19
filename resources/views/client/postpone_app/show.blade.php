@@ -96,6 +96,23 @@
                    value="@if($app->result == '1') Chấp nhận @elseif($app->result == '0') Không chấp nhận @else Đang chờ... @endif"
                    disabled>
         </div>
+        @if($app->mark != null)
+        <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Điểm điều chỉnh</label>
+            <input type="text" class="form-control"
+                   value="{{$app->mark}}"
+                   disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Lý do</label>
+            <input type="text" class="form-control"
+                   value="{{$app->mark_reason}}"
+                   disabled>
+        </div>
+        @endif
+        <div class="form-group pull-right" style="text-align: right;">
+            <a href="/admin/postponse_apps" type="button" class="btn btn-lg btn-primary float-right btn-round">Trở về</a>
+        </div>
     </form>
     <br>
 </div>

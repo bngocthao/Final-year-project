@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\DB;
 use App\Providers\AppServiceProvider;
 use App\Services\RoleService;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
+use function Webmozart\Assert\Tests\StaticAnalysis\length;
+
 class PostponeApplicationsController extends Controller
 {
     // Inject the service into the controller.
@@ -56,24 +58,27 @@ class PostponeApplicationsController extends Controller
         $user = Auth::user();
         $role =  $this->roleService->inden_role();
 
-        $post_query = PostponeApplication::query();
+//        $post_query = PostponeApplication::query();
 
         $search_param = $request->query('q');
 
-//        $user_id = User::where('name', $search_param)->get();
-//
-//        if($search_param) {
-//            $post_query = PostponeApplication::search($user_id[0]['id']);
-//        }
-
-        $find_user_id = User::where('name', $search_param)->get();
-        // tìm đơn có user_id = user_id
         if($search_param) {
-            $post_query = PostponeApplication::search($find_user_id[0]['id']);
+            $user_query = User::where('name', 'like', "%$search_param%")->get();
+        }
+        $users_ids = [];
+        foreach ($user_query as $u){
+            $users_ids[] = $u['id'];
         }
 
-        $app = $post_query->orderBy('created_at','desc')->get();
-
+        // if there is more than one user, for each user found, get all user's post
+        if(count($user_query) > 1){
+            $users_post = PostponeApplication::whereIn('user_id', $users_ids)->get();
+            $app = $users_post;
+        }else {
+            $posts_found = PostponeApplication::where('user_id', $user_query[0]['id'])
+                ->orderBy('created_at', 'desc')->get();
+            $app = $posts_found;
+        }
 
         $context = [
             'user' => $user,
@@ -346,7 +351,7 @@ class PostponeApplicationsController extends Controller
             $date = PostponeApplication::find($id)
                 ->update(['i_result_date'=>$i_result_date]);
         }
-        $update = PostponeApplication::find($id)->update($request->all());
+        $update = PostponeApplication::find($request->id)->update($request->all());
         if($update){
 //            Alert::success('Xóa thành công');
 //            alert()->success('It worked!', 'The form was submitted');

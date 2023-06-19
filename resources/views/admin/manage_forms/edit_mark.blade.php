@@ -33,10 +33,17 @@
             <h4 class="sub-title">CẬP NHẬT ĐIỂM</h4>
             <div class=" box box-info">
                 <div class="box-body">
-                    <form action="{{route('mark_update', $apply, $apply->id)}}" method="POST" enctype="multipart/form-data">
+{{--                    <form>--}}
+{{--                        <input name="id" >--}}
+{{--                        <div class="form-group pull-right">--}}
+{{--                            <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>--}}
+{{--                        </div>--}}
+{{--                    </form>--}}
+                    <form action="{{route('update_mark',$apply->id, $apply)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         {{-- <input hidden name="ma_nguoi_dung" > --}}
+                        <input name="id" value="{{$apply->id}}" hidden>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Mã số sinh viên</label>
                             <div class="col-sm-10">
@@ -61,7 +68,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Học phần</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" value="{{$sub}}" disabled>
+                                <input type="text" class="form-control" value="{{strip_tags($sub)}}" disabled>
                             </div>
                         </div>
 
@@ -82,7 +89,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Học kì</label>
                             <div class="col-sm-10">
-                                <select disabled name="marked_semester_id" class="form-control">
+                                <select name="marked_semester_id" readonly class="form-control">
                                     <option value="{{$marked_sem}}" selected>@if($marked_sem == '3')Hè@else{{$marked_sem}}@endif</option>
                                 </select>
                             </div>
@@ -102,18 +109,20 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Lý do</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" name="marked_reason" value="Đã nhập điểm I ở HK: {{$apply->semesters->name}}, NH: {{$apply->years->name}}"></input>
+                                <input type="text" class="form-control" name="mark_reason" value="Đã nhập điểm I ở HK: {{$apply->semesters->name}}, NH: {{$apply->years->name}}"></input>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Lãnh đạo đơn vị</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" name="marked_reason" value="{{$head_of_unit_name}}"></input>
+                                <input type="text" class="form-control" name="marked_reason" value="{{$head_of_unit_name}}" readonly></input>
                             </div>
                         </div>
 
                         <div class="form-group pull-right">
+                            <a href="/admin/postponse_apps" type="button" class="btn btn-primary float-right btn-round">Bỏ qua</a>
+
                             <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
                             {{--                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>--}}
                         </div>

@@ -12,7 +12,7 @@ use Laravel\Scout\Searchable;
 
 class User extends Athenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable, Searchable;
 
     /**
      * The attributes that are mass assignable.
