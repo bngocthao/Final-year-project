@@ -75,7 +75,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Điểm</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="mark">
+                                <input type="text" class="form-control" name="mark" value="{{ $apply->mark ?? "" }}">
                             </div>
                         </div>
 
@@ -113,16 +113,19 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Lãnh đạo đơn vị</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="marked_reason" value="{{$head_of_unit_name}}" readonly></input>
-                            </div>
-                        </div>
+                        @can('isHeadmaster')
+                            <input name="headmaster_acceptance" value="1" hidden>
+                        @endcan
+
+{{--                        <div class="form-group row">--}}
+{{--                            <label class="col-sm-2 col-form-label">Lãnh đạo đơn vị</label>--}}
+{{--                            <div class="col-sm-10">--}}
+{{--                                <input type="text" class="form-control" name="marked_reason" value="{{$head_of_unit_name}}" readonly></input>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
                         <div class="form-group pull-right">
                             <a href="/admin/postponse_apps" type="button" class="btn btn-primary float-right btn-round">Bỏ qua</a>
-
                             <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
                             {{--                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>--}}
                         </div>

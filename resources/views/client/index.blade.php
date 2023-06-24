@@ -76,7 +76,8 @@
             <th style="width:10px; !important; text-align: center;!important">#</th>
             <th style="text-align: center;">Môn học</th>
             <th style="text-align: center">Giảng viên</th>
-            <th style="text-align: center">Kết quả</th>
+            <th style="text-align: center">Kết quả đơn</th>
+            <th style="text-align: center">Điểm</th>
             <th style="text-align: center">Học kỳ</th>
             <th style="text-align: center">Năm học</th>
             @cannot('isStudent')
@@ -90,7 +91,9 @@
                 <td style="width:10px;">{{ $u->id}}</td>
                 <td style="text-align: center">{{ strip_tags($u->subject->name) ?? "Trống" }}</td>
                 <td style="text-align: center">{{ $u->teach->name}}</td>
-                <td style="text-align: center">{!! $u->result ?? "Chưa có kết quả" !!}</td>
+{{--                <td style="text-align: center">{!! $u->result ?? "Chưa có kết quả" !!}</td>--}}
+                <td style="text-align: center">@if($u->result == '') Chưa có kết quả @elseif($u->result == '1') Chấp nhận @else Không chấp nhận @endif</td>
+                <td style="text-align: center">@if($u->headmaster_acceptance == '1' && $u->mark != null) {{$u->mark}} @else Trống @endif</td>
                 <td style="text-align: center">{{$u->semesters->name}}</td>
                 <td style="text-align: center">{{$u->years->name}}</td>
                 @cannot('isStudent')

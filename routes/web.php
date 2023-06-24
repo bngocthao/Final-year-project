@@ -49,6 +49,8 @@ Route::middleware(['auth','admin.auth'])->prefix('admin')->group(function () {
     Route::resource('/comments', CommentsController::class);
 //    Route::resource('/forms', PostponeApplicationController::class);
     Route::resource('/years', \App\Http\Controllers\Admin\YearsController::class);
+    Route::get('/export',[PostponeApplication::class,
+        'exportForm'])->name('export-form');
 });
 
 

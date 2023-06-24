@@ -28,7 +28,7 @@
         </div>
         <div class="col-md-6">
             <label for="inputPassword4" class="form-label">Tên học phần</label>
-            <input type="text" class="form-control" value="{{$sub}}" disabled>
+            <input type="text" class="form-control" value="{{strip_tags($sub)}}" disabled>
         </div>
         <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Nhóm</label>

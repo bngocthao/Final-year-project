@@ -34,6 +34,11 @@ class PostponeApplicationsController extends Controller
         $this->roleService = $roleService;
     }
 
+    public function exportForm(Request $request)
+    {
+        // lấy dữ liệu xong để export
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -96,6 +101,7 @@ class PostponeApplicationsController extends Controller
         $id = Auth::id();
         $user = Auth::user();
         $role =  $this->roleService->inden_role();
+        // headmaster
         if ($role == '2'){
             // Get unit
             $unit_id = $user->majors->unit_id;
@@ -267,8 +273,8 @@ class PostponeApplicationsController extends Controller
     {
         $appli = PostponeApplication::find($id);
         $id = Auth::user();
-        $role = $id->roles[0]['id'];
-        $user = User::find($id);
+        $role =  $this->roleService->inden_role();
+        $user = User::where('id', $id['id'])->get();
         $user->name = $user[0]['name'];
         $subjects = Subject::all();
         $semesters = Semester::all();

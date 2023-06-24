@@ -39,6 +39,7 @@ class PostponeApplication extends Model
         'mark',
         'mark_reason',
         'headmaster_id',
+        'headmaster_acceptance',
         'marked_semester_id',
         'marked_year_id'
     ];

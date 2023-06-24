@@ -94,6 +94,7 @@ return new class extends Migration
             $table->string('mark')->nullable();
             $table->string('mark_reason')->nullable();
             $table->unsignedBigInteger('headmaster_id')->nullable();
+            $table->tinyInteger('headmaster_acceptance')->nullable();
             $table->unsignedBigInteger('marked_semester_id')->nullable();
             $table->unsignedBigInteger('marked_year_id')->nullable();
             $table->timestamps();
