@@ -62,13 +62,13 @@ class OtherController extends Controller
         // student auth
         if (Auth::attempt($credentials) && in_array(5, $u_roles))
         {
-            $request->session()->regenerate();
+//            $request->session()->regenerate();
             toastr()->success('Đăng nhập thành công');
             return redirect()->route('index');
         }
         // professor auth
         elseif (Auth::attempt($credentials) && in_array(4, $u_roles)) {
-            $request->session()->regenerate();
+//            $request->session()->regenerate();
             return redirect()->route('home');
             // app return student sent for professor
             $app = PostponeApplication::where('teach_id', $loginEmail->id)->get();
@@ -81,7 +81,7 @@ class OtherController extends Controller
         }
         // Dean
         elseif(Auth::attempt($credentials) && in_array(3, $u_roles)) {
-            $request->session()->regenerate();
+//            $request->session()->regenerate();
             return redirect()->route('home');
             // -- Those professor that have the same unit -- //
             // Get the current user

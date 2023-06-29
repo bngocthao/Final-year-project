@@ -86,9 +86,10 @@
         </tr>
         </thead>
         <tbody>
+            <?php $i = 1; ?>
         @foreach($app as $u)
             <tr>
-                <td style="width:10px;">{{ $u->id}}</td>
+                <td  style="width:10px;"><?php echo $i++;?></td>
                 <td style="text-align: center">{{ strip_tags($u->subject->name) ?? "Trống" }}</td>
                 <td style="text-align: center">{{ $u->teach->name}}</td>
 {{--                <td style="text-align: center">{!! $u->result ?? "Chưa có kết quả" !!}</td>--}}

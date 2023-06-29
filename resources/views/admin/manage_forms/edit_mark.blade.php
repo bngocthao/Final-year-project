@@ -111,6 +111,7 @@
             <a href="/admin/postponse_apps" type="button" class="btn btn-primary float-right btn-round">Trở về</a>
             @cannot('isHeadmaster')
                 <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
+
             @endcannot
             @can('isHeadmaster')
                 <button type="submit" class="btn btn-success float-right btn-round">Chấp nhận</button>

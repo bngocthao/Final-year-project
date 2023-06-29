@@ -30,7 +30,7 @@ class UserController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $app = PostponeApplication::where('user_id',$id)->get();
+        $app = PostponeApplication::where('user_id',$id)->orderBy('created_at','asc')->get();
         $this->getUpdateGrade($app);
         return view('client.index', compact('app'));
     }

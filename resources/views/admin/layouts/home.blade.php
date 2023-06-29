@@ -100,13 +100,13 @@
             {
                 label: "Số đơn được duyệt HK1",
                 data: {{json_encode($first_acc)}},
-                backgroundColor: "#444488",
+                backgroundColor: "#0000FF",
                 stack: "first",
             },
             {
                 label: "Số đơn bị từ chối HK1",
                 data: {{json_encode($first_de)}},
-                backgroundColor: "#8888CC",
+                backgroundColor: "#7393B3",
                 stack: "first",
             },
             {
@@ -124,13 +124,13 @@
             {
                 label: "Số đơn được duyệt HK hè",
                 data: {{json_encode($third_acc)}},
-                backgroundColor: "#444488",
+                backgroundColor: "#008000",
                 stack: "third",
             },
             {
                 label: "Số đơn bị từ chối HK hè",
                 data: {{json_encode($third_de)}},
-                backgroundColor: "#8888CC",
+                backgroundColor: "#355E3B",
                 stack: "third",
             },
         ],

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Exports\FormExport;
 use App\Models\Semester;
 use App\Models\Unit;
 use App\Models\UserRole;
@@ -36,7 +37,7 @@ class PostponeApplicationsController extends Controller
 
     public function exportForm(Request $request)
     {
-        // lấy dữ liệu xong để export
+        return Excel::download(new FormExport, 'users.xlsx');
     }
 
     /**
@@ -349,6 +350,14 @@ class PostponeApplicationsController extends Controller
 
         if ($request->headmaster_status == '1'){
             $app = PostponeApplication::find($id)->update(['result' => '1']);
+        }else{
+            $app = PostponeApplication::find($id)->update(['result' => '0']);
+        }
+        if ($request->teach_status == '0'){
+            $app = PostponeApplication::find($id)->update(['result' => '0']);
+        }
+        if ($request->dean_status == '0'){
+            $app = PostponeApplication::find($id)->update(['result' => '0']);
         }
         // Save the date student have an i from professor
         if($request->result == '1' || $request->headmaster_status == '1'){

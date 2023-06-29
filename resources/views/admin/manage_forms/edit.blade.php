@@ -212,7 +212,20 @@
                         <div class="form-group pull-right">
                             <a href="/admin/postponse_apps" type="button" class="btn btn-primary float-right btn-round">Bỏ qua</a>
 
-                            <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
+{{--                            // sau khi trưởng bm cn -> gv k đc cn--}}
+{{--                            // sau khi ban giám hiệu cn -> trưởng bm k đc cn--}}
+                            @can('isProfessor')
+                                <button type="submit" class="btn btn-success float-right btn-round"
+                                @if($apply->dean_status == '1') style="pointer-events: none;" @elseif($apply->headmaster_status == '1')  style="pointer-events: none;" @endif>Cập nhật</button>
+                            @endcan
+                            @can('isDean')
+                                <button type="submit" class="btn btn-success float-right btn-round"
+                                        @if($apply->headmaster_status  == '1') style="pointer-events: none;" @endif>Cập nhật
+                                </button>
+                            @endcan
+                                {{--                                <button style="pointer-events: none;" class="btn btn-primary btn-md">--}}
+{{--                                    <i class="fa fa-fw fa-gear"></i>--}}
+{{--                                </button>--}}
 {{--                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>--}}
                         </div>
 
