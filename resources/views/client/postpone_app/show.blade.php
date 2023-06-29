@@ -82,14 +82,9 @@
             <label for="inputPassword4" class="form-label">Lý do</label>
             <input type="text" class="form-control" value="{{strip_tags($app->headmaster_description)}}" disabled>
         </div>
-{{--        <div class="col-6">--}}
-{{--            <label for="inputAddress" class="form-label">Thời gian tiếp nhận</label>--}}
-{{--            <input type="text" class="form-control" placeholder="1234 Main St">--}}
-{{--        </div>--}}
-{{--        <div class="col-6">--}}
-{{--            <label for="inputAddress2" class="form-label">Thời hạn giải quyết</label>--}}
-{{--            <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">--}}
-{{--        </div>--}}
+        @can('isHeadmaster')
+            <input name="headmaster_acceptance" value="1" hidden>
+        @endcan
         <div class="col-12">
             <label for="inputAddress2" class="form-label">Kết quả</label>
             <input type="text" class="form-control"
@@ -111,7 +106,11 @@
         </div>
         @endif
         <div class="form-group pull-right" style="text-align: right;">
-            <a href="/admin/postponse_apps" type="button" class="btn btn-lg btn-primary float-right btn-round">Trở về</a>
+            <a href="/admin/postponse_apps" type="button" class="btn btn-primary float-right btn-round">Trở về</a>
+        @can('isHeadmaster')
+                <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
+        @endcan
+
         </div>
     </form>
     <br>

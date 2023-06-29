@@ -63,31 +63,19 @@ class PostponeApplicationsController extends Controller
         $user = Auth::user();
         $role =  $this->roleService->inden_role();
 
-//        $post_query = PostponeApplication::query();
-
+        if ($request->query('q') == null) {
+            return redirect()->intended('/admin/postponse_apps');
+        }else
         $search_param = $request->query('q');
 
-        if($search_param) {
-            $user_query = User::where('name', 'like', "%$search_param%")->get();
-        }
-        $users_ids = [];
-        foreach ($user_query as $u){
-            $users_ids[] = $u['id'];
-        }
+        $user_query = PostponeApplication::whereHas('users', function ($query) use ($search_param) {
+            $query->where('name', 'like', "%$search_param%");
+        })->get();
 
-        // if there is more than one user, for each user found, get all user's post
-        if(count($user_query) > 1){
-            $users_post = PostponeApplication::whereIn('user_id', $users_ids)->get();
-            $app = $users_post;
-        }else {
-            $posts_found = PostponeApplication::where('user_id', $user_query[0]['id'])
-                ->orderBy('created_at', 'desc')->get();
-            $app = $posts_found;
-        }
 
         $context = [
             'user' => $user,
-            'app' => $app,
+            'app' => $user_query,
             'role' => $role
         ];
 
@@ -332,7 +320,7 @@ class PostponeApplicationsController extends Controller
         $head_of_unit_name = $head_of_unit[0]['name'];
         $role = $this->roleService->inden_role();
         $context = [
-            'apply' => $apply,
+            'app' => $apply,
             'user' => $user,
             'sub' => $sub,
             'marked_years' => $years_avai,
@@ -346,8 +334,19 @@ class PostponeApplicationsController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    public function update_mark(Request $request, string $id)
+    {
+        dd($id);
+        $app = PostponeApplication::find($id)->update($request->all());
+        if($app){
+            return redirect()->intended('/admin/postponse_apps')->with('message', 'Đơn đã được cập nhật');
+        }else
+            return redirect()->intended('/admin/postponse_apps')->with('error', 'Có lỗi xảy ra, cập nhật thất bại');
+    }
+
     public function update(Request $request, string $id)
     {
+
         if ($request->headmaster_status == '1'){
             $app = PostponeApplication::find($id)->update(['result' => '1']);
         }
@@ -366,6 +365,7 @@ class PostponeApplicationsController extends Controller
         else{
             return redirect()->intended('/admin/postponse_apps')->with('error', 'Có lỗi xảy ra, cập nhật thất bại');
         }
+        dd($request->all());
 //        return Redirect::to($request->request->get('http_referrer'));
 //        return redirect()->back()->withInput();
     }

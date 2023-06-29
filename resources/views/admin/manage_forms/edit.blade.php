@@ -96,9 +96,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Lý do (bổ sung)</label>
+                            <label class="col-sm-2 col-form-label">Tập tin bổ sung</label>
                             <div class="col-sm-10">
-                                <a href="{{asset($apply->proof) }}"> &nbspTập tin bổ sung</a>
+                                <a href="{{asset($apply->proof) }}"> @if(asset($apply->proof) == 'http://127.0.0.1:8000/') Trống @else &nbspTập tin bổ sung @endif</a>
                             </div>
                         </div>
 
@@ -109,11 +109,11 @@
                             </div>
                         </div>
 
-                        @can('isProfessor')
+{{--                        @can('isProfessor')--}}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Quyết định giảng viên</label>
                             <div class="col-sm-10">
-                                <select name="teach_status" class="form-control">
+                                <select name="teach_status" class="form-control" @cannot('isProfessor') disabled @endcannot>
                                      <option value="" disabled>Đang chờ...</option>
                                      <option value="1" @if($apply->teach_status == '1') selected @endif>Đồng ý</option>
                                     <option value="0" @if($apply->teach_status == '0') selected @endif>Không đồng ý</option>
@@ -122,18 +122,23 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ý kiến giảng viên</label>
-                            <div class="col-sm-10">
-                                <textarea id="editor1" type="text" class="form-control ck-editor__editable_inline" name="teach_description">{{$apply->teach_description}}</textarea>
+                            <div class="col-sm-10" >
+                                @can('isProfessor')
+                                    <textarea id="editor1" type="text" class="form-control ck-editor__editable_inline" name="teach_description">{{$apply->teach_description}}</textarea>
+                                @endcan
+                                @cannot('isProfessor')
+                                    <input type="text" class="form-control" name="teach_description" value="{{strip_tags($apply->teach_description)}}" disabled>
+                                @endcannot
                             </div>
                         </div>
-                        @endcan
+{{--                        @endcan--}}
 
-                        @can('isDean')
+{{--                        @can('isDean')--}}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Quyết định của lãnh đạo khoa</label>
                             <div class="col-sm-10">
-                                <select name="dean_status" class="form-control">
-                                    <option value="" disabled>Đang chờ...</option>
+                                <select name="dean_status" class="form-control" @cannot('isDean') disabled @endcannot>
+                                    <option value="" @if($apply->dean_status == '') selected @endif disabled>Đang chờ...</option>
                                     <option value="1" @if($apply->dean_status == '1') selected @endif>Đồng ý</option>
                                     <option value="0" @if($apply->dean_status == '0') selected @endif>Từ chối</option>
                                 </select>
@@ -142,17 +147,22 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ý kiến của lãnh đạo khoa</label>
                             <div class="col-sm-10">
-                                <textarea type="text" id="editor2" class="form-control ck-editor__editable_inline" name="dean_description">{{$apply->dean_description}}</textarea>
+                                @can('isDean')
+                                    <textarea type="text" id="editor2" class="form-control ck-editor__editable_inline" name="dean_description">{{$apply->dean_description}}</textarea>
+                                @endcan
+                                @cannot('isDean')
+                                    <input value="{{strip_tags($apply->dean_description)}}" type="text" class="form-control " name="dean_description" disabled>
+                                @endcannot
                             </div>
                         </div>
-                        @endcan
+{{--                        @endcan--}}
 
-                        @can('isHeadmaster')
+{{--                        @can('isHeadmaster')--}}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Quyết định của ban giám hiệu</label>
                             <div class="col-sm-10">
-                                <select name="headmaster_status" class="form-control">
-                                    <option value="" disabled>Đang chờ...</option>
+                                <select name="headmaster_status" class="form-control" @cannot('isHeadmaster') disabled @endcannot>
+                                    <option value="" @if($apply->headmaster_status == '') selected @endif disabled>Đang chờ...</option>
                                     <option value="1" @if($apply->headmaster_status == '1') selected @endif>Đồng ý</option>
                                     <option value="0" @if($apply->headmaster_status == '0') selected @endif>Từ chối</option>
                                 </select>
@@ -162,28 +172,33 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Ý kiến của ban giám hiệu</label>
                             <div class="col-sm-10">
-                                <textarea type="text" id="editor3" class="form-control ck-editor__editable_inline" name="headmaster_description">{{$apply->headmaster_description}}</textarea>
+                                @can('isHeadmaster')
+                                    <textarea type="text" id="editor3" class="form-control ck-editor__editable_inline" name="headmaster_description">{{$apply->headmaster_description}}</textarea>
+                                @endcan
+                                @cannot('isHeadmaster')
+                                    <input type="text" class="form-control" name="headmaster_description" value="{{strip_tags($apply->headmaster_description)}}" disabled>
+                                @endcannot
                             </div>
                         </div>
-                        @endcan
+{{--                        @endcan--}}
 
-                        @can('isProfessor')
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Kết quả</label>
-                            <div class="col-sm-10">
-                                <select name="result" class="form-control">
+{{--                        @can('isProfessor')--}}
+{{--                        <div class="form-group row">--}}
+{{--                            <label class="col-sm-2 col-form-label">Kết quả</label>--}}
+{{--                            <div class="col-sm-10">--}}
+{{--                                <select name="result" class="form-control">--}}
 {{--                                @if($apply->dean_status == null || $apply->headmaster_status == null) disabled @endif--}}
 {{--                                        @if($apply->teach_status == '0' || $apply->dean_status == '0'--}}
 {{--                                            || $apply->headmaster_status == '0') disabled @endif>--}}
-                                    <option value="">Đang chờ...</option>
-                                    <option value="1" @if($apply->result == '1') selected @elseif($apply->headmaster_status == '1') selected @endif>Đồng ý</option>
-                                    <option value="0" @if($apply->result == '0') selected @endif
-                                            @if($apply->teach_status == '0' || $apply->dean_status == '0' || $apply->headmaster_status == '0')
-                                        selected @endif>Từ chối</option>
-                                </select>
-                            </div>
-                        </div>
-                        @endcan
+{{--                                    <option value="">Đang chờ...</option>--}}
+{{--                                    <option value="1" @if($apply->result == '1') selected @elseif($apply->headmaster_status == '1') selected @endif>Đồng ý</option>--}}
+{{--                                    <option value="0" @if($apply->result == '0') selected @endif--}}
+{{--                                            @if($apply->teach_status == '0' || $apply->dean_status == '0' || $apply->headmaster_status == '0')--}}
+{{--                                        selected @endif>Từ chối</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        @endcan--}}
 
 {{--                        <div class="form-group row">--}}
 {{--                            <label class="col-sm-2 col-form-label">Proof</label>--}}

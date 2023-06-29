@@ -1,210 +1,126 @@
-@extends('layouts.app')
-@section('content')
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đơn xin vắng</title>
+    <!-- Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Cập nhật điểm</title>
-
-    <!-- Content Wrapper. Contains page content -->
-
-
-    <style>
-        .image-cropper {
-            width: 200px;
-            height: 200px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 50%;
-        }
-        .card {
-            margin: auto;
-            width: 100%;
-            border: 3px;
-            padding: 10px;
-        }
-    </style>
-
-    <div class="col-sm-20">
-        <!-- Basic Form Inputs card start -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-header-right">
-                    <i class="icofont icofont-spinner-alt-5"></i>
-                </div>
-            </div>
-            <h4 class="sub-title">CẬP NHẬT ĐIỂM</h4>
-            <div class=" box box-info">
-                <div class="box-body">
-{{--                    <form>--}}
-{{--                        <input name="id" >--}}
-{{--                        <div class="form-group pull-right">--}}
-{{--                            <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-                    <form action="{{route('update_mark',$apply->id, $apply)}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        {{-- <input hidden name="ma_nguoi_dung" > --}}
-                        <input name="id" value="{{$apply->id}}" hidden>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Mã số sinh viên</label>
-                            <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" style="font-weight: bold" value="{{$apply->users->user_code}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Họ tên sinh viên</label>
-                            <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" style="font-weight: bold" value="{{$apply->users->name}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Mã học phần</label>
-                            <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" name="group" value="{{$apply->group}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Học phần</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" value="{{strip_tags($sub)}}" disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Điểm</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="mark" value="{{ $apply->mark ?? "" }}">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Cán bộ chấm điểm</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" value="{{$apply->teach->name}}">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Học kì</label>
-                            <div class="col-sm-10">
-                                <select name="marked_semester_id" readonly class="form-control">
-                                    <option value="{{$marked_sem}}" selected>@if($marked_sem == '3')Hè@else{{$marked_sem}}@endif</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Năm học</label>
-                            <div class="col-sm-10">
-                                <select name="marked_year_id" class="form-control">
-                                    @foreach ($marked_years as $item)
-                                        <option value="{{$item->id}}" @if($apply->year_id == $item->id) selected @endif>{{$item->name?? 'Trống'}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Lý do</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="mark_reason" value="Đã nhập điểm I ở HK: {{$apply->semesters->name}}, NH: {{$apply->years->name}}"></input>
-                            </div>
-                        </div>
-
-                        @can('isHeadmaster')
-                            <input name="headmaster_acceptance" value="1" hidden>
-                        @endcan
-
-{{--                        <div class="form-group row">--}}
-{{--                            <label class="col-sm-2 col-form-label">Lãnh đạo đơn vị</label>--}}
-{{--                            <div class="col-sm-10">--}}
-{{--                                <input type="text" class="form-control" name="marked_reason" value="{{$head_of_unit_name}}" readonly></input>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-
-                        <div class="form-group pull-right">
-                            <a href="/admin/postponse_apps" type="button" class="btn btn-primary float-right btn-round">Bỏ qua</a>
-                            <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
-                            {{--                            <button type="button" class="btn btn-info float-right btn-round" value="Go back!" onclick="location.href='/admin/majors'">Return</button>--}}
-                        </div>
-
-                    </form>
-                </div>
-            </div>
+    <!-- CSS -->
+    <link href="{{asset("client/application/main.css")}}" rel="stylesheet" media="all">
+</head>
+<body>
+<div class="card container">
+    <form class="row g-3" action="{{route('update_mark', $app, $app->id)}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="form-header">
+            <p>Đơn Xin Hoãn Thi</p>
         </div>
-    </div>
 
-    <script>
-        // Get a reference to our file input
-        // const fileInput = document.querySelector('input[type="file"]');
-        const fileInput = document.getElementById("proof");
-        const link = document.getElementById("file_link").value;
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Họ tên sinh viên</label>
+            <input type="text" class="form-control" value="{{$app->users->name}}" disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Họ tên giảng viên</label>
+            <input type="text" class="form-control" value="{{$app->teach->name}}" disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Tên học phần</label>
+            <input type="text" class="form-control" value="{{strip_tags($sub)}}" disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Nhóm</label>
+            <input type="text" class="form-control" value="{{$app->group}}" disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Học kỳ</label>
+            <input type="text" class="form-control" value="{{$app->semesters->name}}" disabled>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPassword4" class="form-label">Năm học</label>
+            <input type="text" class="form-control" value="{{$app->years->name}}" disabled>
+        </div>
+        <input hidden name="id" value="{{$app->id}}">
+        <div class="col-12">
+            <label for="inputAddress" class="form-label">Lý do</label>
+            <input type="text" class="form-control" value="{{ strip_tags($app->reason)}}" disabled>
+        </div>
+        {{--        <div class="col-3">--}}
+        {{--            <div class="name">Lý do (bổ sung)</div>--}}
+        {{--            <div class="value">--}}
+        {{--                    <input type="text" hidden="" id="file_link" value="{{asset($app->proof)}}">--}}
 
-        // Create a new File object
-        const myFile = new File(['file_link'],link, {
-            type: 'file',
-            lastModified: new Date(),
+        {{--                    <input class="input--style-5" type="file" id="proof" name="proof" value="{{asset($app->proof)}}" disabled="disabled" />--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
+        <div class="col-md-3">
+            <label for="inputPassword4" class="form-label">Quyết định của giảng viên</label>
+            <input type="text" class="form-control"
+                   value="@if($app->teach_status == '1') Chấp nhận @elseif($app->teach_status == '0') Không chấp nhận @else Đang chờ... @endif"
+                   disabled>
+        </div>
+        <div class="col-md-9">
+            <label for="inputPassword4" class="form-label">Lý do</label>
+            <input type="text" class="form-control" value="{{strip_tags($app->teach_description)}}" disabled>
+        </div>
+        <div class="col-md-3">
+            <label for="inputPassword4" class="form-label">Quyết định của lãnh đạo khoa</label>
+            <input type="text" class="form-control"
+                   value="@if($app->dean_status == '1') Chấp nhận @elseif($app->dean_status == '0') Không chấp nhận @else Đang chờ... @endif" disabled>
+        </div>
+        <div class="col-md-9">
+            <label for="inputPassword4" class="form-label">Lý do</label>
+            <input type="text" class="form-control" value="{{strip_tags($app->dean_description)}}" disabled>
+        </div>
+        <div class="col-md-3">
+            <label for="inputPassword4" class="form-label">Quyết định của ban giám hiệu</label>
+            <input type="text" class="form-control"
+                   value="@if($app->headmaster_status == '1') Chấp nhận @elseif($app->headmaster_status == '0') Không chấp nhận @else Đang chờ... @endif"                   disabled>
+        </div>
+        <div class="col-md-9">
+            <label for="inputPassword4" class="form-label">Lý do</label>
+            <input type="text" class="form-control" value="{{strip_tags($app->headmaster_description)}}" disabled>
+        </div>
+        @can('isHeadmaster')
+            <input name="headmaster_acceptance" value="1" hidden>
+        @endcan
+        <div class="col-12">
+            <label for="inputAddress2" class="form-label">Kết quả</label>
+            <input type="text" class="form-control"
+                   value="@if($app->result == '1') Chấp nhận @elseif($app->result == '0') Không chấp nhận @else Đang chờ... @endif"
+                   disabled>
+        </div>
+{{--        @if($app->mark != null)--}}
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Điểm điều chỉnh</label>
+                <input type="text" class="form-control" name="mark"
+                       value="{{$app->mark}}"
+                    @cannot('isProfessor') disabled @endcannot>
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Lý do</label>
+                <input type="text" class="form-control" name="mark_reason" value="Đã nhập điểm I ở HK: {{$app->semesters->name}}, NH: {{$app->years->name}}" @cannot('isProfessor') disabled @endcannot>
+            </div>
+{{--        @endif--}}
+        <div class="form-group pull-right" style="text-align: right;">
+            <a href="/admin/postponse_apps" type="button" class="btn btn-primary float-right btn-round">Trở về</a>
+            @cannot('isHeadmaster')
+                <button type="submit" class="btn btn-success float-right btn-round">Cập nhật</button>
+            @endcannot
+            @can('isHeadmaster')
+                <button type="submit" class="btn btn-success float-right btn-round">Chấp nhận</button>
+            @endcan
 
-        });
-
-        // Now let's create a DataTransfer to get a FileList
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(myFile);
-        fileInput.files = dataTransfer.files;
-
-    </script>
-
-    <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor1' ) )
-            .then( editor => {
-                console.log( editor );
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
-    <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor2' ) )
-            .then( editor => {
-                console.log( editor );
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
-    <style>
-        .ck-editor__editable_inline {
-            min-height: 200px;
-        }
-    </style>
-    <script>
-        ClassicEditor
-            .create( document.querySelector( '#editor3' ) )
-            .then( editor => {
-                console.log( editor );
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
-    </script>
-    <style>
-        .ck-editor__editable_inline {
-            min-height: 200px;
-        }
-    </style>
-    {{--    <script>--}}
-    {{--        function sweetalert2(){--}}
-    {{--            Swal({--}}
-    {{--                title: 'Success',--}}
-    {{--                text: 'Do you want to continue',--}}
-    {{--                type: 'success',--}}
-    {{--                confirmButtonText: 'Cool'--}}
-    {{--            })--}}
-    {{--        }--}}
-    {{--    </script>--}}
-
-@endsection
+        </div>
+    </form>
+    <br>
+</div>
+</body>
+<!-- Boostrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</html>

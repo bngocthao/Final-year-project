@@ -50,7 +50,7 @@
 {{--                        <select class="table-filter" onchange="filter_rows()">--}}
 {{--                            <option value="all"></option>--}}
 {{--                        </select></th>--}}
-                    <th col-index=4>Kết quả
+                    <th col-index=4 >Trạng thái đơn
                         <select class="table-filter" onchange="filter_rows()">
                             <option value="all"></option>
                         </select>
@@ -60,7 +60,7 @@
                             <option value="all"></option>
                         </select>
                     </th>
-                    <th col-index=6>Năm học
+                    <th col-index=6 style="width:10px; !important">Năm học
                         <select class="table-filter" onchange="filter_rows()">
                             <option value="all"></option>
                         </select>
@@ -82,8 +82,9 @@
                         <td >{{ strip_tags($u->users->name) }}</td>
                         <td>{{ strip_tags($u->subject->name)}}</td>
 {{--                        <td>{{ $u->group}}</td>--}}
-                        <td>@if($u->result == '1') Đồng ý @elseif($u->headmaster_status == '1') Đồng ý @elseif($u->headmaster_status == '0') Từ chối @elseif($u->result == '0') Không đồng ý
-                            @else Đang chờ... @endif</td>
+{{--                        <td>@if($u->result == '1') Đồng ý @elseif($u->headmaster_status == '1') Đồng ý @elseif($u->headmaster_status == '0') Từ chối @elseif($u->result == '0') Không đồng ý--}}
+{{--                            @else Đang chờ... @endif</td>--}}
+                        <td>@if($u->result == '') Đang chờ... @elseif($u->result == '1' && $u->mark == '') Đang hoãn @elseif($u->result == '0') Từ chối @else Có điểm @endif</td>
                         <td>{{$u->semesters->name}}</td>
                         <td>{{$u->years->name}}</td>
                         <td class="tabledit-toolbar-column" style="text-align: center;">
